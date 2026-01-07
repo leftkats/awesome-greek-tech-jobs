@@ -21,7 +21,7 @@ A curated list of high-quality engineering and business-tech opportunities in th
 | **Skroutz** | E-commerce / Fintech | [Apply Here](https://apply.workable.com/skroutz/) | [LinkedIn](https://www.linkedin.com/company/skroutz-gr/) |
 ---
 
-## 🛠 Useful Search Queries (Greece)
+## Useful Search Queries (Greece)
 * [LinkedIn: Software Engineer in Greece](https://www.linkedin.com/jobs/search/?keywords=Software%20Engineer&location=Greece)
 * [LinkedIn: Data Engineer in Greece](https://www.linkedin.com/jobs/search/?keywords=Data%20Engineer&location=Greece)
 * [Kariera.gr: Tech Jobs](https://www.kariera.gr/en/jobs/it-telecoms)
