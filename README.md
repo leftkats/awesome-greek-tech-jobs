@@ -56,6 +56,7 @@ A curated list of high-quality engineering and business-tech opportunities in th
 * [LinkedIn: Software Engineer in Greece](https://www.linkedin.com/jobs/search/?keywords=Software%20Engineer&location=Greece)
 * [LinkedIn: Data Engineer in Greece](https://www.linkedin.com/jobs/search/?keywords=Data%20Engineer&location=Greece)
 * [Kariera.gr: Tech Jobs](https://www.kariera.gr/en/jobs/it-telecoms)
+* [Startup Pirate: Learn what matters in Greek tech and startups](https://startuppirate.gr/)
 
 ---
 
