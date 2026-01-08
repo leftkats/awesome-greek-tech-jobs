@@ -152,7 +152,7 @@
   linkedin_url_offset: "upstream"
 - name: VIVA.com
   sector: Fintech / Payments
-  careers_url: "https://www.viva.com/en-gr/careers"
+  careers_url: "https://www.viva.com/el-gr/about/careers"
   linkedin_url_offset: "vivacom-gr"
 - name: Workable
   sector: SaaS
@@ -174,3 +174,19 @@
   sector: IoT and Smart Systems
   careers_url: "https://www.yodiwo.gr/careers/"
   linkedin_url_offset: yodiwo
+- name: Qualcomm Greece
+  sector: IoT and Smart Systems
+  careers_url: "http://careers.qualcomm.com/careers"
+  linkedin_url_offset: qualcomm
+- name: Uni Systems
+  sector: IT Services & Solutions
+  careers_url: "https://www.unisystems.com/careers"
+  linkedin_url_offset: uni-systems
+- name: Qualco
+  sector: Fintech & Debt Management Software
+  careers_url: "https://www.qualco.eu/careers/open-positions"
+  linkedin_url_offset: qualco
+- name: Intracom Defense
+  sector: Defense & Security Systems
+  careers_url: "https://www.intracomdefense.com/work-with-us/job-opportunities/"
+  linkedin_url_offset: intracom-defense
