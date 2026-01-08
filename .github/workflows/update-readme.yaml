@@ -27,5 +27,5 @@ jobs:
       - name: Commit and Push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-                commit_message: "chore(📚): update readme with fresh content"
-                file_pattern: 'readme.md'
+          commit_message: "chore(📚): update readme with fresh content"
+          file_pattern: 'readme.md'
