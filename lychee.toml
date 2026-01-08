@@ -1,0 +1,12 @@
+exclude = [
+  '^https://www\.instagram\.com/.*',
+  '^https://www\.linkedin\.com/.*',
+  '^https://www\.facebook\.com/.*',
+  '.*/media/pwa/.*' # Clears those 404s for the icons
+]
+
+accept = [200, 429]
+
+user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+
+exclude_path = ["node_modules", ".git"]

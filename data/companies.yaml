@@ -1,0 +1,172 @@
+- name: Accenture
+  sector: Consulting
+  linkedin_url_offset: "accenture-greece"
+  careers_url: "https://www.accenture.com/gr-en/careers"
+- name: Aegean Airlines
+  sector: TravelTech
+  careers_url: "https://en.aegeanair.com/corporate/careers/"
+  linkedin_url_offset: "aegean-airlines"
+- name: Beat (Free Now)
+  sector: Mobility / Apps
+  careers_url: "https://free-now.com/careers/"
+  linkedin_url_offset: "free-now"
+- name: Bespot
+  sector: AI / IoT / RetailTech
+  careers_url: "https://apply.workable.com/bespot/"
+  linkedin_url_offset: "bespot"
+- name: Blueground
+  sector: PropTech / SaaS
+  careers_url: "https://apply.workable.com/blueground/"
+  linkedin_url_offset: "blueground-co"
+- name: D ONE
+  sector: Data / Consulting
+  careers_url: "https://apply.workable.com/d-one/"
+  linkedin_url_offset: "d-one-athens"
+- name: DeepSea
+  sector: AI / Maritime
+  careers_url: "https://www.deepsea.ai/careers/"
+  linkedin_url_offset: "deepsea-technologies"
+- name: Deloitte
+  sector: Consulting / Tech Hub
+  careers_url: "https://deloittecm.avature.net/en_US/careers/SearchJobs"
+  linkedin_url_offset: "deloitte-greece"
+- name: efood
+  sector: E-commerce / Delivery
+  careers_url: "https://careers.deliveryhero.com/efood"
+  linkedin_url_offset: "efood-gr"
+- name: Elastic
+  sector: Search / Data / Cloud
+  careers_url: "https://jobs.elastic.co/jobs/country/greece"
+  linkedin_url_offset: "elastic-co"
+- name: Epsilon Net
+  sector: Software / Finance
+  careers_url: "https://www.epsilonnet.gr/career.aspx"
+  linkedin_url_offset: "epsilon-net"
+- name: Eurobank
+  sector: Banking Tech
+  careers_url: "https://www.eurobank.gr/el/omilos/anthropino-dinamiko/eykairies-apasxolisis"
+  linkedin_url_offset: "eurobank"
+- name: European Dynamics
+  sector: IT Services
+  careers_url: "https://www.eurodyn.com/careers/"
+  linkedin_url_offset: "european-dynamics"
+- name: EY Greece
+  sector: Consulting / Tech
+  careers_url: "https://www.ey.com/en_gr/careers"
+  linkedin_url_offset: "eygreece"
+- name: Ferryhopper
+  sector: TravelTech
+  careers_url: "https://startup.jobs/companies/ferryhopper"
+  linkedin_url_offset: "ferryhopper"
+- name: iTechScope
+  sector: Tech Recruitment
+  careers_url: "https://www.itechscope.com/jobs/search"
+  linkedin_url_offset: "itechscope"
+- name: Kaizen Gaming
+  sector: GameTech
+  careers_url: "https://careers.kaizengaming.com/"
+  linkedin_url_offset: "kaizen-gaming"
+- name: Kpler
+  sector: Data / Maritime
+  careers_url: "https://www.kpler.com/company/careers"
+  linkedin_url_offset: "kpler"
+- name: Mytilineos
+  sector: Energy / Digital
+  careers_url: "https://www.mytilineos.gr/human-resources/career-opportunities/"
+  linkedin_url_offset: "mytilineos-sa"
+- name: Netcompany-Intrasoft
+  sector: Software
+  careers_url: "https://netcompany.com/careers/greece/"
+  linkedin_url_offset: "netcompany-intrasoft"
+- name: Nokia
+  sector: Telecoms / Cloud
+  careers_url: "https://careers.nokia.com/jobs/search/5858062"
+  linkedin_url_offset: "nokia"
+- name: Novibet
+  sector: GameTech
+  careers_url: "https://apply.workable.com/novibet/"
+  linkedin_url_offset: "novibet"
+- name: Omilia
+  sector: AI / Conversational
+  careers_url: "https://omilia.com/careers/"
+  linkedin_url_offset: "omilia-conversational-ai"
+- name: OpenBet
+  sector: GameTech
+  careers_url: "https://www.openbet.com/careers"
+  linkedin_url_offset: "openbet"
+- name: Orfium
+  sector: MusicTech / Data
+  careers_url: "https://apply.workable.com/orfium/"
+  linkedin_url_offset: "orfium"
+- name: PeopleCert
+  sector: EdTech / Exams
+  careers_url: "https://www.peoplecert.org/About-Us/Careers"
+  linkedin_url_offset: "peoplecert"
+- name: Persado
+  sector: AI / Marketing
+  careers_url: "https://www.persado.com/company/careers/"
+  linkedin_url_offset: "persado"
+- name: Piraeus Bank
+  sector: Banking Tech
+  careers_url: "https://www.piraeusbank.gr/en/idiotes/trapeza/anthropino-dynamiko/eykairies-apasxolisis"
+  linkedin_url_offset: "piraeus-bank"
+- name: Plex-Earth
+  sector: Engineering SW
+  careers_url: "https://plex-earth.com/careers"
+  linkedin_url_offset: "plexscape"
+- name: Public Group
+  sector: E-commerce / Tech
+  careers_url: "https://publicgroup.gr/careers/"
+  linkedin_url_offset: "public-group-gr"
+- name: PwC Greece
+  sector: Consulting / Tech
+  careers_url: "https://www.pwc.gr/en/careers.html"
+  linkedin_url_offset: "pwc-greece"
+- name: Satori Analytics
+  sector: Data / AI
+  careers_url: "https://satorianalytics.com/about.html"
+  linkedin_url_offset: "satori-analytics"
+- name: Signal Group
+  sector: Maritime Tech
+  careers_url: "https://www.thesignalgroup.com/careers"
+  linkedin_url_offset: "the-signal-group"
+- name: Sitecore
+  sector: CMS / MarTech
+  careers_url: "https://www.sitecore.com/company/careers"
+  linkedin_url_offset: "sitecore"
+- name: Skroutz
+  sector: E-commerce / Fintech
+  careers_url: "https://apply.workable.com/skroutz/"
+  linkedin_url_offset: "skroutz-gr"
+- name: SoftOne
+  sector: ERP / SaaS
+  careers_url: "https://www.softone.gr/company/careers/"
+  linkedin_url_offset: "softone-technologies-s-a"
+- name: ThinkDigital
+  sector: Digital Ads / Tech
+  careers_url: "https://thinkdigitalgroup.net/careers/"
+  linkedin_url_offset: "thinkdigital"
+- name: Upstream
+  sector: Mobile Marketing
+  careers_url: "https://www.upstreamsystems.com/careers/"
+  linkedin_url_offset: "upstream"
+- name: VIVA.com
+  sector: Fintech / Payments
+  careers_url: "https://www.viva.com/en-gr/careers"
+  linkedin_url_offset: "vivacom-gr"
+- name: Workable
+  sector: SaaS
+  careers_url: "https://apply.workable.com/workable/"
+  linkedin_url_offset: "workable"
+- name: XM
+  sector: Fintech
+  careers_url: "https://jobs.eu.lever.co/xm"
+  linkedin_url_offset: "xm-global"
+- name: Sthenos AI
+  sector: Defense and Space Manufacturing / AI
+  careers_url: "https://sthenos.ai"
+  linkedin_url_offset: sthenos-ai
+- name: Moveo.ai
+  sector: Defense and Space Manufacturing / AI
+  careers_url: "https://moveo-ai.notion.site/Careers-at-Moveo-AI-6f7204b1e4fd49098c623f623df0592d"
+  linkedin_url_offset: moveo-ai
