@@ -27,5 +27,5 @@ jobs:
       - name: Commit and Push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "docs: update README.md from companies.yml [skip ci]"
-          file_pattern: 'readme.md'
+              commit_message: "chore(:books:): refresh readme with the latest companies.yaml updates"
+              file_pattern: 'readme.md'

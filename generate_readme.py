@@ -42,7 +42,7 @@ def generate():
         careers_link_md = (
             f"[Careers]({careers_link})" if careers_link != "N/A" else "N/A"
         )
-        linkedin_link = c.get("linkedin_url_offset", "N/A")
+        linkedin_link = c.get("linkedin_company_id", "N/A")
         if linkedin_link != "N/A":
             linkedin_link = f"https://www.linkedin.com/company/{linkedin_link}"
         linkedin_link_md = (

@@ -19,7 +19,7 @@ This repository organizes its data under the `data` directory. Below is a descri
       - name: "Company Name"
         sector: "Sector"
         careers_url: "https://example.com/careers"
-        linkedin_url_offset: example (** extracted by url -> "https://linkedin.com/company/example")
+        linkedin_company_id: example (** extracted by url -> "https://linkedin.com/company/example")
       ```
     - For `quries.yaml`: Add a new predefined search query:
       ```yaml
