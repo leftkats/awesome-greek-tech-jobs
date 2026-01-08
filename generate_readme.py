@@ -33,8 +33,7 @@ def generate():
 
     content += "## Engineering Hubs & Career Portals\n"
     total_number_of_companies = len({c["name"] for c in all_companies})
-    content += f"*A directory of {total_number_of_companies} tech companies \
-        in Greece with direct links to their jobs and LinkedIn presence.*\n\n"
+    content += f"*A directory of {total_number_of_companies} tech companies in Greece with direct links to their jobs and LinkedIn presence.*\n\n"
 
     content += "| Company | Focus Sector | Careers Page | LinkedIn Profile |\n"
     content += "| :--- | :--- | :--- | :--- |\n"
