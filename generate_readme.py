@@ -38,6 +38,12 @@ def generate():
     content += "| Company | Focus Sector | Careers Page | LinkedIn Profile |\n"
     content += "| :--- | :--- | :--- | :--- |\n"
     for c in all_companies:
+        company_url = c.get("url")
+        if company_url:
+            company_name_md = f"[{c['name']}]({company_url})"
+        else:
+            company_name_md = c["name"]
+
         careers_link = c.get("careers_url", "N/A")
         careers_link_md = (
             f"[Careers]({careers_link})" if careers_link != "N/A" else "N/A"
@@ -50,7 +56,7 @@ def generate():
         )
         focus_sector = c.get("sector", "N/A")
         content += (
-            f"| **{c['name']}** | {focus_sector} | {careers_link_md} | "
+            f"| **{company_name_md}** | {focus_sector} | {careers_link_md} | "
             f"{linkedin_link_md} |\n"
         )
     content += "\n---\n"
