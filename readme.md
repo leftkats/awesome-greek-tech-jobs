@@ -4,7 +4,7 @@ A comprehensive map of Greek tech companies, highlighting their focus sectors, c
 ---
 
 ## Engineering Hubs & Career Portals
-*A directory of 44 tech companies in Greece with direct links to their jobs and LinkedIn presence.*
+*A directory of 48 tech companies in Greece with direct links to their jobs and LinkedIn presence.*
 
 | Company | Focus Sector | Careers Page | LinkedIn Profile |
 | :--- | :--- | :--- | :--- |
@@ -23,6 +23,7 @@ A comprehensive map of Greek tech companies, highlighting their focus sectors, c
 | **European Dynamics** | IT Services | [Careers](https://www.eurodyn.com/careers/) | [LinkedIn](https://www.linkedin.com/company/european-dynamics) |
 | **EY Greece** | Consulting / Tech | [Careers](https://www.ey.com/en_gr/careers) | [LinkedIn](https://www.linkedin.com/company/eygreece) |
 | **Ferryhopper** | TravelTech | [Careers](https://startup.jobs/companies/ferryhopper) | [LinkedIn](https://www.linkedin.com/company/ferryhopper) |
+| **Intracom Defense** | Defense & Security Systems | [Careers](https://www.intracomdefense.com/work-with-us/job-opportunities/) | [LinkedIn](https://www.linkedin.com/company/intracom-defense) |
 | **iTechScope** | Tech Recruitment | [Careers](https://www.itechscope.com/jobs/search) | [LinkedIn](https://www.linkedin.com/company/itechscope) |
 | **Kaizen Gaming** | GameTech | [Careers](https://careers.kaizengaming.com/) | [LinkedIn](https://www.linkedin.com/company/kaizen-gaming) |
 | **Kpler** | Data / Maritime | [Careers](https://www.kpler.com/company/careers) | [LinkedIn](https://www.linkedin.com/company/kpler) |
@@ -40,6 +41,8 @@ A comprehensive map of Greek tech companies, highlighting their focus sectors, c
 | **Plex-Earth** | Engineering SW | [Careers](https://plex-earth.com/careers) | [LinkedIn](https://www.linkedin.com/company/plexscape) |
 | **Public Group** | E-commerce / Tech | [Careers](https://publicgroup.gr/careers/) | [LinkedIn](https://www.linkedin.com/company/public-group-gr) |
 | **PwC Greece** | Consulting / Tech | [Careers](https://www.pwc.gr/en/careers.html) | [LinkedIn](https://www.linkedin.com/company/pwc-greece) |
+| **Qualco** | Fintech & Debt Management Software | [Careers](https://www.qualco.eu/careers/open-positions) | [LinkedIn](https://www.linkedin.com/company/qualco) |
+| **Qualcomm Greece** | IoT and Smart Systems | [Careers](http://careers.qualcomm.com/careers) | [LinkedIn](https://www.linkedin.com/company/qualcomm) |
 | **Satori Analytics** | Data / AI | [Careers](https://satorianalytics.com/about.html) | [LinkedIn](https://www.linkedin.com/company/satori-analytics) |
 | **Signal Group** | Maritime Tech | [Careers](https://www.thesignalgroup.com/careers) | [LinkedIn](https://www.linkedin.com/company/the-signal-group) |
 | **Sitecore** | CMS / MarTech | [Careers](https://www.sitecore.com/company/careers) | [LinkedIn](https://www.linkedin.com/company/sitecore) |
@@ -47,8 +50,9 @@ A comprehensive map of Greek tech companies, highlighting their focus sectors, c
 | **SoftOne** | ERP / SaaS | [Careers](https://www.softone.gr/company/careers/) | [LinkedIn](https://www.linkedin.com/company/softone-technologies-s-a) |
 | **Sthenos AI** | Defense and Space Manufacturing / AI | [Careers](https://sthenos.ai) | [LinkedIn](https://www.linkedin.com/company/sthenos-ai) |
 | **ThinkDigital** | Digital Ads / Tech | [Careers](https://thinkdigitalgroup.net/careers/) | [LinkedIn](https://www.linkedin.com/company/thinkdigital) |
+| **Uni Systems** | IT Services & Solutions | [Careers](https://www.unisystems.com/careers) | [LinkedIn](https://www.linkedin.com/company/uni-systems) |
 | **Upstream** | Mobile Marketing | [Careers](https://www.upstreamsystems.com/careers/) | [LinkedIn](https://www.linkedin.com/company/upstream) |
-| **VIVA.com** | Fintech / Payments | [Careers](https://www.viva.com/en-gr/careers) | [LinkedIn](https://www.linkedin.com/company/vivacom-gr) |
+| **VIVA.com** | Fintech / Payments | [Careers](https://www.viva.com/el-gr/about/careers) | [LinkedIn](https://www.linkedin.com/company/vivacom-gr) |
 | **Workable** | SaaS | [Careers](https://apply.workable.com/workable/) | [LinkedIn](https://www.linkedin.com/company/workable) |
 | **XM** | Fintech | [Careers](https://jobs.eu.lever.co/xm) | [LinkedIn](https://www.linkedin.com/company/xm-global) |
 | **Yodiwo** | IoT and Smart Systems | [Careers](https://www.yodiwo.gr/careers/) | [LinkedIn](https://www.linkedin.com/company/yodiwo) |
