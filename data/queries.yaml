@@ -1,0 +1,9 @@
+queries:
+  - name: "LinkedIn: Software Engineer in Greece"
+    url: https://www.linkedin.com/jobs/search/?keywords=Software%20Engineer&location=Greece
+  - name: "LinkedIn: Data Engineer in Greece"
+    url: https://www.linkedin.com/jobs/search/?keywords=Data%20Engineer&location=Greece
+  - name: "Kariera.gr: Tech Jobs"
+    url: https://www.kariera.gr/en/jobs/it-telecoms
+  - name: "Startup Pirate: Learn what matters in Greek tech and startups"
+    url: https://startuppirate.gr/

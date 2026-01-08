@@ -1,0 +1,16 @@
+title: "awesome-greek-tech-jobs"
+description: "A comprehensive map of Greek tech companies,
+  highlighting their focus sectors, careers pages, and LinkedIn
+  profiles. This repository is designed to help professionals
+  explore opportunities and connect with organizations in the
+  Greek tech ecosystem."
+footer:
+  description: "A huge thanks to the community for helping improve this project to grow!!"
+  notes:
+    - title: "Remote vs. Hybrid"
+      content: "Many Athens-based companies are moving to 1-2 days in office."
+    - title: "Salary Insight"
+      content: "Remote roles for international companies (via B2B) usually pay higher than local Greek contracts.
+        Be careful with trade-offs when private health coverage is provided by the latter."
+    - title: "Interview Prep"
+      content: "Focus on System Design for Senior roles and LeetCode (Medium) for mid-level."
