@@ -108,7 +108,7 @@
   linkedin_url_offset: "persado"
 - name: Piraeus Bank
   sector: Banking Tech
-  careers_url: "https://www.piraeusbank.gr/en/idiotes/trapeza/anthropino-dynamiko/eykairies-apasxolisis"
+  careers_url: "https://www.piraeusgroup.gr/en/career/career-opportunities-in-piraeus-group"
   linkedin_url_offset: "piraeus-bank"
 - name: Plex-Earth
   sector: Engineering SW
@@ -190,3 +190,126 @@
   sector: Defense & Security Systems
   careers_url: "https://www.intracomdefense.com/work-with-us/job-opportunities/"
   linkedin_url_offset: intracom-defense
+- name: Alpha Bank
+  sector: Banking & Financial Services
+  careers_url: https://careers.alpha.gr/
+  linkedin_url_offset: alpha-bank
+- name: Trasys (part of NRB Group)
+  sector: Information Technology & Services
+  careers_url: https://nrbcareers.com/
+  linkedin_url_offset: trasys
+- name: RocketX
+  sector: Management Consulting & Recruitment
+  careers_url: "https://rocketx.group/"
+  linkedin_url_offset: rocketx
+- name: Public Power Corporation S.A. (PPC / DEH)
+  sector: Utilities & Energy
+  careers_url: "https://www.ppcgroup.com/el/anthropino-dynamiko/efkairies-karieras/"
+  linkedin_url_offset: ppc-s.a.
+- name: Revotech
+  sector: Technology & Healthcare Investments
+  careers_url: https://revotech.com/careers
+  linkedin_url_offset: revotech
+- name: Silvare
+  sector: Recruitment & Executive Search
+  careers_url: "https://job-boards.eu.greenhouse.io/silvare"
+  linkedin_url_offset: silvare
+- name: Vodafone
+  sector: Telecommunications
+  careers_url: https://www.vodafone.gr/vodafone-ellados/kariera
+  linkedin_url_offset: vodafone
+- name: COSMOTE
+  sector: Telecommunications
+  careers_url: https://www.cosmote.gr/static/otegroup/el/page/careers-bios
+  linkedin_url_offset: cosmote
+- name: Betsson Group
+  sector: iGaming & Entertainment
+  careers_url: https://betssongroup.com/careers/
+  linkedin_url_offset: betsson-group
+- name: Etraveli Group
+  sector: Travel & Technology (OTA)
+  careers_url: https://www.etraveligroup.com/careers/
+  linkedin_url_offset: etraveli-group
+- name: Dialectica
+  sector: Information Services & Expert Networks
+  careers_url: https://www.dialectica.io/careers
+  linkedin_url_offset: dialectica
+- name: Dikaio AI
+  sector: Legal Tech & Artificial Intelligence
+  careers_url: https://www.dikaio.ai/en
+  linkedin_url_offset: dikaio-ai
+- name: Sui Foundation
+  sector: Blockchain & Web3
+  careers_url: https://jobs.sui.io/jobs
+  linkedin_url_offset: sui-foundation
+- name: Olympia Group
+  sector: International Investment Group (Retail, Energy Storage, Software)
+  careers_url: https://www.groupolympia.com/working-environment/
+  linkedin_url_offset: olympia-group-of-companies
+- name: UBITECH
+  sector: Software House & Systems Integration
+  careers_url: https://ubitech.eu/careers/
+  linkedin_url_offset: ubitech
+- name: Drakopoulos Law Firm
+  sector: Legal Services
+  careers_url: https://drakopoulos-law.com/careees/
+  linkedin_url_offset: drakopoulos-law-firm
+- name: ENTERSOFTONE (Entersoft & SoftOne Merger)
+  sector: Business Software (ERP, CRM, HCM, AI)
+  careers_url: https://apply.smartcv.co/entersoft-softone
+  linkedin_url_offset: entersoftone
+- name: EPAM Greece
+  sector: Digital Platform Engineering & IT Consulting
+  careers_url: https://www.epam.com/careers/locations/greece
+  linkedin_url_offset: epam-systems
+- name: Sophea AI (KIEFER Group)
+  sector: AI & Robotics
+  careers_url: https://home.sophea.ai/
+  linkedin_url_offset: sophea-ai
+- name: Plum Fintech
+  sector: Fintech (AI-powered Wealth Management)
+  careers_url: https://apply.workable.com/withplum/
+  linkedin_url_offset: plum-fintech
+- name: Intelligencia AI
+  sector: HealthTech & Pharmaceutical AI
+  careers_url: https://www.intelligencia.ai/careers/
+  linkedin_url_offset: intelligencia-ai
+- name: ReDataset
+  sector: AI Training Data & Data Operations
+  linkedin_url_offset: redataset
+- name: Uni Systems
+  sector: Information and Communications Technology (ICT) Systems Integration
+  careers_url: https://www.unisystems.com/careers
+  linkedin_url_offset: uni-systems
+- name: Uplodio
+  sector: AdTech & Influencer Marketing AI
+  url: https://www.uplodio.com/
+  linkedin_url_offset: uplodio
+- name: Papastratos (Philip Morris International)
+  sector: Tobacco & Innovation (Smoke-Free Products)
+  careers_url: https://join.pmicareers.com/gb/en/search-results?q=&location=Greece
+  linkedin_url_offset: papastratosmazi
+- name: Novelcore
+  sector: AI Research & Innovation Agency
+  careers_url: https://novelcore.eu/join-team/
+  linkedin_url_offset: novelcore
+- name: Elyos AI
+  sector: AI-powered Voice Automation (Trades & Field Services)
+  careers_url: https://careers.elyos.ai/
+  linkedin_url_offset: elyosai
+- name: Evenly (Evenly.care)
+  sector: AI-powered Accessibility & Inclusion Technology
+  careers_url: https://evenly.care/contact-us-el.html
+  linkedin_url_offset: evenly-care
+- name: Bewise
+  sector: Digital Transformation & ICT Managed Services
+  careers_url: https://www.bewise.gr/careers/
+  linkedin_url_offset: bewise-sa
+- name: Wolt Greece
+  sector: Last-mile Delivery & FoodTech
+  careers_url: https://careers.wolt.com/en/jobs?locations=Greece&location=Greece
+  linkedin_url_offset: wolt-oy
+- name: Hack The Box (HTB)
+  sector: Cybersecurity Training & Gamified Upskilling
+  careers_url: https://apply.workable.com/hack-the-box-ltd/
+  linkedin_url_offset: hackthebox
