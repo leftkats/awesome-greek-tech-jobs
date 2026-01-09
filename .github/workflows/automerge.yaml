@@ -42,7 +42,7 @@ jobs:
       with:
         script: |
           const pr = JSON.parse(core.getInput('pr'));
-          const baseBranch = pr.data.base.ref;
+          const baseBranch = process.env.BASE_BRANCH || pr.data.base.ref;
           const headBranch = pr.data.head.ref;
 
           const comparison = await github.repos.compareCommits({
@@ -57,12 +57,14 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: pr.data.number,
-              body: "Please rebase your branch with main before merging.",
+              body: `Please rebase your branch with ${baseBranch} before merging.`,
             });
             core.setOutput("upToDate", "false");
           } else {
             core.setOutput("upToDate", "true");
           }
+        env:
+          BASE_BRANCH: feature # Replace with your custom branch name
         with:
           pr: ${{ steps.pr-info.outputs.pr }}
 
