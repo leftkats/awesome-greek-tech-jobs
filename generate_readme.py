@@ -14,7 +14,7 @@ def generate():
 
     sectors = defaultdict(list)
     for company in companies_data:
-        sectors[company["sector"]].append(company)
+        sectors[",".join(company["sectors"])].append(company)
 
     for sector in sectors:
         sectors[sector].sort(key=lambda x: x["name"].lower())
@@ -28,15 +28,25 @@ def generate():
     for sector in sectors.values():
         all_companies.extend(sector)
 
-    # Sort companies by name
+    # Check for duplicate company names
+    seen = set()
+    duplicates = set()
+    for c in all_companies:
+        if c["name"] in seen:
+            duplicates.add(c["name"])
+        else:
+            seen.add(c["name"])
+    if duplicates:
+        raise ValueError(f"Duplicate company names found: {', '.join(duplicates)}")
+    # Sort all companies alphabetically
     all_companies.sort(key=lambda x: x["name"].lower())
 
     content += "## Engineering Hubs & Career Portals\n"
     total_number_of_companies = len({c["name"] for c in all_companies})
-    content += f"*A directory of {total_number_of_companies} tech companies in Greece with direct links to their jobs and LinkedIn presence.*\n\n"
+    content += f"> A directory of *{total_number_of_companies}* tech companies in Greece with direct links to their jobs and LinkedIn presence.\n\n"
 
-    content += "| Company | Focus Sector | Careers Page | LinkedIn Profile |\n"
-    content += "| :--- | :--- | :--- | :--- |\n"
+    content += "| Company Name | Sectors | Resources |\n"
+    content += "| :--- | :--- | :--- |\n"
     for c in all_companies:
         company_url = c.get("url")
         if company_url:
@@ -44,21 +54,19 @@ def generate():
         else:
             company_name_md = c["name"]
 
-        careers_link = c.get("careers_url", "N/A")
-        careers_link_md = (
-            f"[Careers]({careers_link})" if careers_link != "N/A" else "N/A"
-        )
-        linkedin_link = c.get("linkedin_company_id", "N/A")
-        if linkedin_link != "N/A":
+        careers_link = c.get("careers_url", "")
+        careers_link_md = f"[Careers]({careers_link})" if careers_link != "" else ""
+        linkedin_link = c.get("linkedin_company_id", "")
+        if linkedin_link != "":
             linkedin_link = f"https://www.linkedin.com/company/{linkedin_link}"
-        linkedin_link_md = (
-            f"[LinkedIn]({linkedin_link})" if linkedin_link != "N/A" else "N/A"
+        linkedin_link_md = f"[LinkedIn]({linkedin_link})" if linkedin_link != "" else ""
+        focus_sector = c.get("sectors", "")
+        focus_sector = (
+            ",".join(focus_sector) if isinstance(focus_sector, list) else focus_sector
         )
-        focus_sector = c.get("sector", "N/A")
-        content += (
-            f"| **{company_name_md}** | {focus_sector} | {careers_link_md} | "
-            f"{linkedin_link_md} |\n"
-        )
+        resources = [careers_link_md, linkedin_link_md]
+        resources = "-".join([r for r in resources if r != ""])
+        content += f"| **{company_name_md}** | {focus_sector} | {resources} |\n"
     content += "\n---\n"
 
     if "queries" in queries_data:

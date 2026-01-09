@@ -1,402 +1,601 @@
 - name: Accenture
-  sector: Strategy, Consulting, Technology, Operations
+  sectors:
+    - Strategy
+    - Consulting
+    - Technology
+    - Operations
   linkedin_company_id: accenture-greece
   careers_url: https://www.accenture.com/gr-en/careers
   url: https://www.accenture.com/gr-en
 - name: Aegean Airlines
-  sector: TravelTech
+  sectors:
+    - TravelTech
   careers_url: https://en.aegeanair.com/corporate/careers/
   linkedin_company_id: aegean-airlines
   url: https://en.aegeanair.com/
 - name: Free Now
-  sector: Mobility / Apps
+  sectors:
+    - Mobility Tech
+    - Ride Hailing
   careers_url: https://free-now.com/careers/
   linkedin_company_id: free-now
   url: https://free-now.com/
 - name: Bespot
-  sector: AI / IoT / RetailTech
+  sectors:
+    - AI
+    - IoT
+    - RetailTech
   careers_url: https://apply.workable.com/bespot/
   linkedin_company_id: bespot
   url: https://bespot.com/
 - name: Blueground
   url: https://www.theblueground.com/
-  sector: PropTech / SaaS
+  sectors:
+    - PropTech
+    - Real Estate
   careers_url: https://apply.workable.com/blueground/
   linkedin_company_id: blueground-co
-- name: D ONE
+- name: D-one
   url: https://d-one.gr/
-  sector: Data / Consulting
+  sectors:
+    - Software Development
+    - IT Services
+    - Data
+    - Consulting
   careers_url: https://apply.workable.com/d-one/
   linkedin_company_id: d-one-athens
 - name: DeepSea
   url: https://www.deepsea.ai/
-  sector: AI / Maritime
+  sectors:
+    - AI
+    - Data
+    - Maritime
   careers_url: https://www.deepsea.ai/careers/
   linkedin_company_id: deepsea-technologies
 - name: Deloitte
   url: https://www.deloitte.com/gr/en.html
-  sector: Consulting / Tech Hub
+  sectors:
+    - Consulting
+    - Tech
   careers_url: https://deloittecm.avature.net/en_US/careers/SearchJobs
   linkedin_company_id: deloitte-greece
 - name: efood
   url: https://www.efood.gr/
-  sector: E-commerce / Delivery
+  sectors:
+    - FoodTech
+    - Delivery
+    - E-commerce
   careers_url: https://careers.deliveryhero.com/efood
   linkedin_company_id: efood-gr
 - name: Elastic
   url: https://www.elastic.co/
-  sector: Search / Data / Cloud
+  sectors:
+    - Search
+    - Data
+    - Cloud
   careers_url: https://jobs.elastic.co/jobs/country/greece
   linkedin_company_id: elastic-co
 - name: Epsilon Net
   url: https://www.epsilonnet.gr/
-  sector: Software / Finance
+  sectors:
+    - Software
+    - IT Services
+    - Cloud
+    - ERP
   careers_url: https://www.epsilonnet.gr/career.aspx
   linkedin_company_id: epsilon-net
 - name: Eurobank
   url: https://www.eurobank.gr/
-  sector: Banking Tech
+  sectors:
+    - Banking
+    - Fintech
   careers_url: https://www.eurobank.gr/el/omilos/anthropino-dinamiko/eykairies-apasxolisis
   linkedin_company_id: eurobank
 - name: European Dynamics
   url: https://www.eurodyn.com/
-  sector: IT Services
+  sectors:
+    - Software
+    - IT Services
   careers_url: https://www.eurodyn.com/careers/
   linkedin_company_id: european-dynamics
 - name: EY Greece
   url: https://www.ey.com/en_gr
-  sector: Consulting / Tech
+  sectors:
+    - Assurance
+    - Tax
+    - Consulting
+    - Strategy
   careers_url: https://www.ey.com/en_gr/careers
   linkedin_company_id: eygreece
 - name: Ferryhopper
   url: https://www.ferryhopper.com/
-  sector: TravelTech
+  sectors:
+    - TravelTech
+    - Booking Platform
   careers_url: https://startup.jobs/companies/ferryhopper
   linkedin_company_id: ferryhopper
 - name: iTechScope
   url: https://www.itechscope.com/
-  sector: Tech Recruitment
+  sectors:
+    - Software
+    - IT Services
+    - Cloud
   careers_url: https://www.itechscope.com/jobs/search
   linkedin_company_id: itechscope
 - name: Kaizen Gaming
   url: https://www.kaizengaming.com/
-  sector: GameTech
+  sectors:
+    - GameTech
+    - iGaming
   careers_url: https://careers.kaizengaming.com/
   linkedin_company_id: kaizen-gaming
 - name: Kpler
   url: https://www.kpler.com/
-  sector: Data / Maritime
+  sectors:
+    - Data
+    - Analytics
+    - Maritime
   careers_url: https://www.kpler.com/company/careers
   linkedin_company_id: kpler
 - name: Mytilineos
   url: https://www.metlengroup.com/
-  sector: Energy / Digital
+  sectors:
+    - Energy
+    - Industrials
+    - Tech
   careers_url: https://www.metlengroup.com/our-people/career-opportunities/
   linkedin_company_id: mytilineos-sa
 - name: Netcompany-Intrasoft
   url: https://netcompany-intrasoft.com/
-  sector: Software
+  sectors:
+    - IT Services
+    - Software
+    - Consulting
   careers_url: https://netcompany.com/careers/greece/
   linkedin_company_id: netcompany-intrasoft
 - name: Nokia
   url: https://www.nokia.com/
-  sector: Telecoms / Cloud
+  sectors:
+    - Telecommunications
+    - 5G
+    - Network Infrastructure
+    - Networks
   careers_url: https://careers.nokia.com/jobs/search/5858062
   linkedin_company_id: nokia
 - name: Novibet
   url: https://www.novibet.com/
-  sector: GameTech
+  sectors:
+    - GameTech
+    - iGaming
+    - Sports betting
   careers_url: https://apply.workable.com/novibet/
   linkedin_company_id: novibet
 - name: Omilia
   url: https://omilia.com/
-  sector: AI / Conversational
+  sectors:
+    - Conversational AI
+    - Voice Technology
+    - AI
   careers_url: https://omilia.com/careers/
   linkedin_company_id: omilia-conversational-ai
 - name: OpenBet
   url: https://www.openbet.com/
-  sector: GameTech
+  sectors:
+    - Sports Betting
+    - iGaming
   careers_url: https://www.openbet.com/careers
   linkedin_company_id: openbet
 - name: Orfium
   url: https://orfium.com/
-  sector: MusicTech / Data
+  sectors:
+    - Music Tech
+    - Rights Management
+    - AI
   careers_url: https://apply.workable.com/orfium/
   linkedin_company_id: orfium
 - name: PeopleCert
   url: https://www.peoplecert.org/
-  sector: EdTech / Exams
+  sectors:
+    - Certification
+    - IT Services
+    - Tech
   careers_url: https://www.peoplecert.org/About-Us/Careers
   linkedin_company_id: peoplecert
 - name: Persado
   url: https://www.persado.com/
-  sector: AI / Marketing
+  sectors:
+    - AI
+    - Marketing Tech
+    - Digital Marketing
   careers_url: https://www.persado.com/company/careers/
   linkedin_company_id: persado
 - name: Piraeus Bank
   url: https://www.piraeusbank.gr/
-  sector: Banking Tech
+  sectors:
+    - Banking
+    - Fintech
   careers_url: https://www.piraeusgroup.gr/en/career/career-opportunities-in-piraeus-group
   linkedin_company_id: piraeus-bank
 - name: Public Group
   url: https://www.publicgroup.gr/
-  sector: E-commerce / Tech
+  sectors:
+    - Retail
+    - E-commerce
+    - Tech
   careers_url: https://jobs.workable.com/company/6FKx25wcUhzj6towYPKDJF/jobs-at-public-group
   linkedin_company_id: publicgroupgr
 - name: PwC Greece
   url: https://www.pwc.gr/
-  sector: Consulting / Tech
+  sectors:
+    - Consulting
+    - Tech
+    - Advisory
   careers_url: https://www.pwc.gr/en/careers.html
   linkedin_company_id: pwc-greece
 - name: Satori Analytics
   url: https://satorianalytics.com/
-  sector: Data / AI
+  sectors:
+    - Data
+    - Big Data
+    - AI
   linkedin_company_id: satori-analytics
 - name: Signal Group
   url: https://www.thesignalgroup.com/
-  sector: Maritime Tech
+  sectors:
+    - Digital Transformation
+    - IT Services
+    - Tech
   careers_url: https://www.thesignalgroup.com/careers
   linkedin_company_id: the-signal-group
 - name: Sitecore
   url: https://www.sitecore.com/
-  sector: CMS / MarTech
+  sectors:
+    - Digital Experience
+    - CMS
+    - Marketing Tech
   careers_url: https://www.sitecore.com/company/careers
   linkedin_company_id: sitecore
 - name: Skroutz
   url: https://www.skroutz.gr/
-  sector: E-commerce / Fintech
+  sectors:
+    - E-commerce
+    - Tech
   careers_url: https://apply.workable.com/skroutz/
   linkedin_company_id: skroutz-gr
 - name: ThinkDigital
   url: https://thinkdigitalgroup.net/
-  sector: Digital Ads / Tech
+  sectors:
+    - Digital Marketing
+    - AdTech
+    - Media
   careers_url: https://thinkdigitalgroup.net/careers/
   linkedin_company_id: thinkdigital
 - name: Upstream
   url: https://www.upstreamsystems.com/
-  sector: Mobile Marketing
+  sectors:
+    - Mobile Marketing
+    - AdTech
+    - SaaS
+    - Marketing Tech
   careers_url: https://www.upstreamsystems.com/careers/
   linkedin_company_id: upstream
 - name: Viva.com
   url: https://www.viva.gr/
-  sector: Fintech / Payments
+  sectors:
+    - Fintech
+    - Payments
+    - E-commerce
   careers_url: https://www.viva.com/el-gr/about/careers
   linkedin_company_id: viva-com
 - name: Workable
   url: https://www.workable.com/
-  sector: SaaS
+  sectors:
+    - HR Tech
+    - Recruitment Software
+    - SaaS
   careers_url: https://apply.workable.com/workable/
   linkedin_company_id: workable
 - name: XM
   url: https://www.xm.com/
-  sector: Fintech
+  sectors:
+    - Fintech
+    - Trading Platform
+    - Investment Services
   careers_url: https://jobs.eu.lever.co/xm
   linkedin_company_id: xm-global
 - name: Sthenos AI
   url: https://sthenos.ai
-  sector: Defense and Space Manufacturing / AI
+  sectors:
+    - AI
+    - Cybersecurity
   linkedin_company_id: sthenos-ai
 - name: Moveo.ai
   url: https://moveo.ai
-  sector: Defense and Space Manufacturing / AI
+  sectors:
+    - AI
+    - Automotive
+    - Smart Mobility
   careers_url: https://moveo-ai.notion.site/Careers-at-Moveo-AI-6f7204b1e4fd49098c623f623df0592d
   linkedin_company_id: moveo-ai
 - name: Yodiwo
   url : https://www.yodiwo.gr/
-  sector: IoT and Smart Systems
+  sectors:
+    - IoT Platforms
+    - Smart Systems
+    - Edge Computing
   careers_url: https://www.yodiwo.gr/careers/
   linkedin_company_id: yodiwo
 - name: Qualcomm Greece
   url: https://www.qualcomm.com/
-  sector: IoT and Smart Systems
+  sectors:
+    - Semiconductors
+    - Telecommunications
+    - 5G
   careers_url: http://careers.qualcomm.com/careers
   linkedin_company_id: qualcomm
 - name: Uni Systems
   url: https://www.unisystems.com/
-  sector: IT Services & Solutions
+  sectors:
+    - ICT Systems Integration
   careers_url: https://www.unisystems.com/careers
   linkedin_company_id: uni-systems
 - name: Qualco
   url: https://www.qualco.eu/
-  sector: Fintech & Debt Management Software
+  sectors:
+    - Financial Software
+    - Debt Management Solutions
+    - Fintech
   careers_url: https://www.qualco.eu/careers/open-positions
   linkedin_company_id: qualco
 - name: Intracom Defense
   url: https://www.intracomdefense.com/
-  sector: Defense & Security Systems
+  sectors:
+    - Defense Technology
+    - Security
+    - IT Services
   careers_url: https://www.intracomdefense.com/work-with-us/job-opportunities/
   linkedin_company_id: intracom-defense
 - name: Alpha Bank
   url: https://www.alpha.gr/
-  sector: Banking & Financial Services
+  sectors:
+    - Banking
   careers_url: https://careers.alpha.gr/
   linkedin_company_id: alpha-bank
 - name: Trasys (part of NRB Group)
   url: https://trasys.gr/
-  sector: Information Technology & Services
+  sectors:
+    - IT Services
+    - Software Development
+    - Consulting
   careers_url: https://nrbcareers.com/
   linkedin_company_id: trasys
 - name: RocketX
   url: https://rocketx.group/
-  sector: Management Consulting & Recruitment
+  sectors:
+    - Venture Capital
+    - Startups
+    - Technology Investments
   linkedin_company_id: rocketx
 - name: Public Power Corporation S.A. (PPC / DEH)
   url: https://www.ppc.gr/
-  sector: Utilities & Energy
+  sectors:
+    - Energy
+    - Utilities
   careers_url: https://www.ppcgroup.com/el/anthropino-dynamiko/efkairies-karieras/
   linkedin_company_id: ppc-s.a.
 - name: Revotech
   url: https://revotech.com/
-  sector: Technology & Healthcare Investments
+  sectors:
+    - Automotive Technology
+    - EV Charging Solutions
+    - Smart Mobility
   careers_url: https://revotech.com/careers
   linkedin_company_id: revotech
 - name: Silvare
   url: https://silvare.gr/
-  sector: Recruitment & Executive Search
+  sectors:
+    - Software Development
+    - Recruitment
   careers_url: https://job-boards.eu.greenhouse.io/silvare
   linkedin_company_id: silvare
 - name: Vodafone
   url: https://www.vodafone.gr/
-  sector: Telecommunications
+  sectors:
+    - Telecommunications
   careers_url: https://www.vodafone.gr/vodafone-ellados/kariera
   linkedin_company_id: vodafone
-- name: COSMOTE
+- name: Cosmote
   url: https://www.cosmote.gr/
-  sector: Telecommunications
+  sectors:
+    - Telecommunications
   careers_url: https://www.cosmote.gr/static/otegroup/el/page/careers-bios
   linkedin_company_id: cosmote
 - name: Betsson Group
   url: https://betssongroup.com/
-  sector: iGaming & Entertainment
+  sectors:
+    - iGaming
+    - Entertainment
+    - Online Gaming
   careers_url: https://betssongroup.com/careers/
   linkedin_company_id: betsson-group
 - name: Etraveli Group
   url: https://www.etraveligroup.com/
-  sector: Travel & Technology (OTA)
+  sectors:
+    - TravelTech
+    - Online Travel Agency
+    - Booking Platform
   careers_url: https://www.etraveligroup.com/careers/
   linkedin_company_id: etraveli-group
 - name: Dialectica
   url: https://www.dialectica.io/
-  sector: Information Services & Expert Networks
+  sectors:
+    - Market Research
+    - AI
   careers_url: https://www.dialectica.io/careers
   linkedin_company_id: dialectica
 - name: Dikaio AI
   url: https://www.dikaio.ai/en
-  sector: Legal Tech & Artificial Intelligence
+  sectors:
+    - Legal Tech
+    - AI
   linkedin_company_id: dikaio-ai
 - name: Sui Foundation
   url: https://sui.io/
-  sector: Blockchain & Web3
+  sectors:
+    - Blockchain
+    - Web3
+    - Cryptocurrency
   careers_url: https://jobs.sui.io/jobs
   linkedin_company_id: sui-foundation
 - name: Olympia Group
   url: https://www.groupolympia.com/
-  sector: International Investment Group (Retail, Energy Storage, Software)
+  sectors:
+    - Retail
+    - FMCG
+    - Technology
+    - Innovation
   careers_url: https://www.groupolympia.com/working-environment/
   linkedin_company_id: olympia-group-of-companies
-- name: UBITECH
+- name: Ubitech
   url: https://ubitech.eu/
-  sector: Software House & Systems Integration
+  sectors:
+    - IT Services
+    - Software Development
+    - Cloud Solutions
   careers_url: https://ubitech.eu/careers/
   linkedin_company_id: ubitech
 - name: Entersoft & SoftOne Merger
   url: https://www.entersoft.gr/
-  sector: Business Software (ERP, CRM, HCM, AI)
+  sectors:
+    - ERP
+    - Business Software
+    - IT Servicess
   careers_url: https://apply.smartcv.co/entersoft-softone
   linkedin_company_id: entersoftone
-- name: EPAM Greece
+- name: Epam
   url: https://www.epam.com/
-  sector: Digital Platform Engineering & IT Consulting
+  sectors:
+    - Software Engineering
+    - Consulting
+    - Digital Platform Development
   careers_url: https://www.epam.com/careers/locations/greece
   linkedin_company_id: epam-systems
 - name: Sophea AI (KIEFER Group)
   url: https://home.sophea.ai/
-  sector: AI & Robotics
+  sectors:
+    - AI
+    - Robotics
   linkedin_company_id: sophea-ai
 - name: Plum Fintech
   url: https://withplum.com/
-  sector: Fintech (AI-powered Wealth Management)
+  sectors:
+    - Fintech
+    - Personal Finance
+    - AI
   careers_url: https://apply.workable.com/withplum/
   linkedin_company_id: plum-fintech
 - name: Intelligencia AI
   url: https://www.intelligencia.ai/
-  sector: HealthTech & Pharmaceutical AI
+  sectors:
+    - AI
+    - Pharmaceuticals
   careers_url: https://www.intelligencia.ai/careers/
   linkedin_company_id: intelligencia-ai
 - name: ReDataset
   url: https://redataset.com/
-  sector: AI Training Data & Data Operations
+  sectors:
+    - Data
+    - AI
   linkedin_company_id: redataset
-- name: Uni Systems
-  url: https://www.unisystems.com/
-  sector: Information and Communications Technology (ICT) Systems Integration
-  careers_url: https://www.unisystems.com/careers
-  linkedin_company_id: uni-systems
 - name: Uplodio
   url: https://www.uplodio.com/
-  sector: AdTech & Influencer Marketing AI
+  sectors:
+    - Video Technology
+    - AI
   linkedin_company_id: uplodio
 - name: Papastratos
   url: https://www.pmi.com/markets/greece/en/overview/
-  sector: Tobacco & Innovation (Smoke-Free Products)
+  sectors:
+    - Tobacco Industry
   careers_url: https://join.pmicareers.com/gb/en/search-results?q=&location=Greece
   linkedin_company_id: papastratosmazi
 - name: Novelcore
   url: https://novelcore.eu/
-  sector: AI Research & Innovation Agency
+  sectors:
+    - AI
+    - Agency
   careers_url: https://novelcore.eu/join-team/
   linkedin_company_id: novelcore
 - name: Elyos AI
   url: https://elyos.ai/
-  sector: AI-powered Voice Automation (Trades & Field Services)
+  sectors:
+    - AI
+    - Voice Technology
+    - Automation
   careers_url: https://careers.elyos.ai/
   linkedin_company_id: elyosai
 - name: Evenly
   url: https://evenly.care/
-  sector: AI-powered Accessibility & Inclusion Technology
+  sectors:
+    - AI
+    - Accessibility Tech
+    - Inclusion Tech
   careers_url: https://evenly.care/contact-us-el.html
   linkedin_company_id: evenly-care
 - name: Bewise
   url: https://www.bewise.gr/
-  sector: Digital Transformation & ICT Managed Services
+  sectors:
+    - Digital Transformation
+    - ICT Managed Services
   careers_url: https://www.bewise.gr/careers/
   linkedin_company_id: bewise-sa
 - name: Wolt Greece
   url: https://wolt.com/en/grc
-  sector: Last-mile Delivery & FoodTech
+  sectors:
+    - FoodTech
+    - E-commerce
   careers_url: https://careers.wolt.com/en/jobs?locations=Greece&location=Greece
   linkedin_company_id: wolt-oy
 - name: Hack The Box
   url: https://www.hackthebox.com/
-  sector: Cybersecurity Training & Gamified Upskilling
+  sectors:
+    - Cybersecurity
+    - Penetration Testing
+    - Security Training
+    - Security Labs
   careers_url: https://apply.workable.com/hack-the-box-ltd/
   linkedin_company_id: hackthebox
 - name: Spotawheel
   url: https://www.spotawheel.com/
-  sector: Automotive & E-commerce Platform
+  sectors:
+    - PropTech
+    - Used Car Marketplace
   careers_url: https://apply.workable.com/spotawheel/
   linkedin_company_id: spotawheel
-- name: Spitogatos (Real Web Group)
+- name: Spitogatos
   url: https://www.spitogatos.gr/
-  sector: PropTech & Real Estate Marketplace
+  sectors:
+    - PropTech
+    - Real Estate
   careers_url: https://apply.workable.com/spitogatos-gr/
   linkedin_company_id: spitogatos.gr
-- name: EY Greece (Ernst & Young)
-  url: https://www.ey.com/en_gr
-  sector: Assurance, Tax, Consulting, Strategy & Transactions
-  careers_url: https://www.ey.com/en_gr/careers/job-search
-  linkedin_company_id: ernstandyoung
 - name: SquareDev
   url: https://squaredev.io/
-  sector: Data & AI Agency
+  sectors:
+    - Software Development
+    - IT Services
+    - Cloud Solutions
   careers_url: https://www.careers-page.com/squaredev
   linkedin_company_id: squaredev
 - name: Travelmyth
   url: https://www.travelmyth.com/
-  sector: TravelTech
+  sectors:
+    - TravelTech
+    - Booking Platform
   linkedin_company_id: travelmyth
 - name: Yodeck
   url: https://www.yodeck.com/
-  sector: Digital Signage
+  sectors:
+    - Digital Signage
   careers_url: https://www.yodeck.com/careers/
   linkedin_company_id: flipnode-llc

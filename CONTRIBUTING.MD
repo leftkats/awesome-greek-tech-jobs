@@ -1,4 +1,4 @@
-# Contributing to Awesome Greek Computing Jobs
+# Contributing to Awesome Greek Tech Jobs
 
 Thank you for wanting to improve this list! We love community contributions. To keep the repository organized, please follow these simple steps to add or update content.
 
@@ -6,7 +6,8 @@ Thank you for wanting to improve this list! We love community contributions. To 
 
 This repository organizes its data under the `data` directory. Below is a description of the files you can contribute to:
 
-- **`data/companies.yaml`**: Contains a list of companies hiring for tech roles. Each entry includes the company name, sector, careers page URL, and LinkedIn URL.
+- **`data/companies.yaml`**: Contains a list of companies hiring for tech roles. Each entry includes the company name, sector, careers page URL, and LinkedIn ID. For the LinkedIn ID find the company's LinkedIn page and copy the company ID.
+https://www.linkedin.com/company/**company-id**/.
 - **`data/quries.yaml`**: Contains predi
 
 ## How to Contribute via Pull Request
@@ -16,10 +17,12 @@ This repository organizes its data under the `data` directory. Below is a descri
 3. **Add or Update Content**: Predefined search queries for automated scouting
     - For `companies.yaml`: Add a new company entry in the following format:
       ```yaml
-      - name: "Company Name"
-        sector: "Sector"
-        careers_url: "https://example.com/careers"
-        linkedin_company_id: example (** extracted by url -> "https://linkedin.com/company/example")
+      - name: Company Name
+        url: https://www.company-website.com/
+        sectors:
+          - Sector Name
+        careers_url: Careers full url
+        linkedin_company_id: Company LinkedIn ID
       ```
     - For `quries.yaml`: Add a new predefined search query:
       ```yaml
@@ -43,6 +46,4 @@ This repository uses GitHub Actions to validate contributions:
 - **Link Checker**: Verifies that all URLs are reachable.
 - **Alphabetical Order Check**: Confirms that entries are sorted alphabetically.
 
-Before submitting your pull request, you can run these checks locally using the provided scripts in the `scripts` directory.
-
-Thank you for contributing to Awesome Greek Computing Jobs!
+Thank you for contributing to Awesome Greek Tech Jobs!
