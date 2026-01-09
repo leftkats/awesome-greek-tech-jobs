@@ -1,8 +1,12 @@
-name: Auto Merge
+name: PR Check and Auto-Merge
+
 on:
-  workflow_run:
-    workflows: ["PR Check"]
-    types: [completed]
+  pull_request:
+    paths:
+      - 'data/companies.yaml'
+      - 'data/queries.yaml'
+      - 'generate_readme.py'
+      - 'readme.yaml'
 
 permissions:
   pull-requests: write
@@ -71,7 +75,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: prNumber,
-              body: `Thanks for the contribution to the Greek Tech Map, @${pr.user.login}! 🇬🇷 Your changes are being merged now.`,
+              body: `Thanks for the contribution to the Greek Tech Map, @${pr.user.login}! Your changes are being merged now.`,
             });
 
             // 5. Squash and Merge
