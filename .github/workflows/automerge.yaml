@@ -1,50 +1,83 @@
-name: PR Check and Auto-Merge
-
+name: Auto Merge
 on:
-  pull_request:
-    paths:
-      - 'data/companies.yaml'
-      - 'data/queries.yaml'
-      - 'generate_readme.py'
-      - 'readme.yaml'
+  workflow_run:
+    workflows: ["PR Check"]
+    types: [completed]
+
+permissions:
+  pull-requests: write
+  contents: write
 
 jobs:
-  validate:
+  auto-merge:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Process PR, Approve and Merge
+        uses: actions/github-script@v7
         with:
-          python-version: '3.10'
+          script: |
+            // 1. Find the open PR associated with this branch
+            const { data: pullRequests } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              head: `${context.repo.owner}:${github.event.workflow_run.head_branch}`
+            });
 
-      - name: Install dependencies
-        run: pip install pyyaml
+            const pr = pullRequests[0];
+            if (!pr) {
+              console.log("No open pull request found.");
+              return;
+            }
 
-      - name: Test README Generation
-        run: python -m generate_readme
+            const prNumber = pr.number;
+            const baseBranch = pr.base.ref;
 
-      - name: Check Links
-        uses: lycheeverse/lychee-action@v2
-        with:
-          args: --verbose --no-progress 'README.md'
+            // 2. Check if rebase is needed
+            const comparison = await github.rest.repos.compareCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              base: baseBranch,
+              head: pr.head.sha,
+            });
 
-  automerge:
-    needs: validate
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-      contents: write
-    steps:
-      - name: Merge PR
-        uses: pascalgn/automerge-action@v0.16.4
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          MERGE_LABELS: ""
-          MERGE_METHOD: "squash"
-          MERGE_FORK_PR: "false"
-          MERGE_RETRIES: "6"
-          MERGE_RETRY_SLEEP: "10000"
+            if (comparison.data.behind_by > 0) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: `⚠️ @${pr.user.login}, please rebase your branch with **${baseBranch}** before merging.`,
+              });
+              core.setFailed("PR is out of date.");
+              return;
+            }
+
+            // 3. Approve the PR
+            await github.rest.pulls.createReview({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+              event: "APPROVE",
+              body: "Automated approval following successful CI checks."
+            });
+
+            // 4. Post the Thank You Comment
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: `Thanks for the contribution to the awesome-greek-tech-jobs, @${pr.user.login}! Your changes are being merged now.`,
+            });
+
+            // 5. Squash and Merge
+            await github.rest.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+              merge_method: "squash",
+            });
