@@ -1,74 +1,50 @@
-name: Auto Merge
-on:
-  workflow_run:
-    workflows: ["PR Check"]
-    types: [completed]
+name: PR Check and Auto-Merge
 
-permissions:
-  pull-requests: write
-  contents: write
+on:
+  pull_request:
+    paths:
+      - 'data/companies.yaml'
+      - 'data/queries.yaml'
+      - 'generate_readme.py'
+      - 'readme.yaml'
 
 jobs:
-  auto-merge:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  validate:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - name: Process PR and Merge
-        uses: actions/github-script@v7
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          script: |
-            // 1. Find the PR associated with this workflow run
-            const { data: pullRequests } = await github.rest.pulls.list({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              state: 'open',
-              head: `${context.repo.owner}:${github.event.workflow_run.head_branch}`
-            });
+          python-version: '3.10'
 
-            const pr = pullRequests[0];
-            if (!pr) {
-              console.log("No open pull request found for this branch.");
-              return;
-            }
+      - name: Install dependencies
+        run: pip install pyyaml
 
-            const prNumber = pr.number;
-            const baseBranch = pr.base.ref;
-            const headBranch = pr.head.ref;
+      - name: Test README Generation
+        run: python -m generate_readme
 
-            // 2. Check if the PR is up-to-date (rebased)
-            const comparison = await github.rest.repos.compareCommits({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              base: baseBranch,
-              head: headBranch,
-            });
+      - name: Check Links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --verbose --no-progress 'README.md'
 
-            if (comparison.data.behind_by > 0) {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: prNumber,
-                body: `⚠️ Please rebase your branch with **${baseBranch}** before merging.`,
-              });
-              core.setFailed("PR is out of date.");
-              return;
-            }
-
-            // 3. Comment and Merge
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: prNumber,
-              body: `Thanks for the contribution, @${pr.user.login}! Merging now...`,
-            });
-
-            await github.rest.pulls.merge({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: prNumber,
-              merge_method: "squash",
-            });
+  automerge:
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+    steps:
+      - name: Merge PR
+        uses: pascalgn/automerge-action@v0.16.4
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          MERGE_LABELS: ""
+          MERGE_METHOD: "squash"
+          MERGE_FORK_PR: "false"
+          MERGE_RETRIES: "6"
+          MERGE_RETRY_SLEEP: "10000"
