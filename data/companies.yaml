@@ -375,23 +375,23 @@
   url: https://www.spotawheel.com/
   sector: Automotive & E-commerce Platform
   careers_url: https://apply.workable.com/spotawheel/
-  linkedin_url_offset: spotawheel
+  linkedin_company_id: spotawheel
 - name: Spitogatos (Real Web Group)
   url: https://www.spitogatos.gr/
   sector: PropTech & Real Estate Marketplace
   careers_url: https://apply.workable.com/spitogatos-gr/
-  linkedin_url_offset: spitogatos.gr
+  linkedin_company_id: spitogatos.gr
 - name: EY Greece (Ernst & Young)
   url: https://www.ey.com/en_gr
   sector: Assurance, Tax, Consulting, Strategy & Transactions
   careers_url: https://www.ey.com/en_gr/careers/job-search
-  linkedin_url_offset: ernstandyoung
+  linkedin_company_id: ernstandyoung
 - name: SquareDev
   url: https://squaredev.io/
   sector: Data & AI Agency
   careers_url: https://www.careers-page.com/squaredev
-  linkedin_url_offset: squaredev
+  linkedin_company_id: squaredev
 - name: Travelmyth
   url: https://www.travelmyth.com/
   sector: TravelTech
-  linkedin_url_offset: travelmyth
+  linkedin_company_id: travelmyth
