@@ -391,3 +391,7 @@
   sector: Data & AI Agency
   careers_url: https://www.careers-page.com/squaredev
   linkedin_url_offset: squaredev
+- name: Travelmyth
+  url: https://www.travelmyth.com/
+  sector: TravelTech
+  linkedin_url_offset: travelmyth
