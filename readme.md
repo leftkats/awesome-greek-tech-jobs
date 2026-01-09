@@ -4,7 +4,7 @@ A comprehensive map of Greek tech companies, highlighting their focus sectors, c
 ---
 
 ## Engineering Hubs & Career Portals
-*A directory of 79 tech companies in Greece with direct links to their jobs and LinkedIn presence.*
+*A directory of 80 tech companies in Greece with direct links to their jobs and LinkedIn presence.*
 
 | Company | Focus Sector | Careers Page | LinkedIn Profile |
 | :--- | :--- | :--- | :--- |
@@ -77,6 +77,7 @@ A comprehensive map of Greek tech companies, highlighting their focus sectors, c
 | **[Sui Foundation](https://sui.io/)** | Blockchain & Web3 | [Careers](https://jobs.sui.io/jobs) | [LinkedIn](https://www.linkedin.com/company/sui-foundation) |
 | **[ThinkDigital](https://thinkdigitalgroup.net/)** | Digital Ads / Tech | [Careers](https://thinkdigitalgroup.net/careers/) | [LinkedIn](https://www.linkedin.com/company/thinkdigital) |
 | **[Trasys (part of NRB Group)](https://trasys.gr/)** | Information Technology & Services | [Careers](https://nrbcareers.com/) | [LinkedIn](https://www.linkedin.com/company/trasys) |
+| **[Travelmyth](https://www.travelmyth.com/)** | TravelTech | N/A | N/A |
 | **[UBITECH](https://ubitech.eu/)** | Software House & Systems Integration | [Careers](https://ubitech.eu/careers/) | [LinkedIn](https://www.linkedin.com/company/ubitech) |
 | **[Uni Systems](https://www.unisystems.com/)** | IT Services & Solutions | [Careers](https://www.unisystems.com/careers) | [LinkedIn](https://www.linkedin.com/company/uni-systems) |
 | **[Uni Systems](https://www.unisystems.com/)** | Information and Communications Technology (ICT) Systems Integration | [Careers](https://www.unisystems.com/careers) | [LinkedIn](https://www.linkedin.com/company/uni-systems) |
