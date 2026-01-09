@@ -66,7 +66,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: prNumber,
-              body: `Thanks for the contribution, @${pr.user.login}! 🇬🇷 Updating the map now...`,
+              body: `Thanks for the contribution, @${pr.user.login}!`,
             });
 
             await github.rest.pulls.merge({
@@ -102,6 +102,6 @@ jobs:
           git config --local user.name "github-actions[bot]"
 
           # Commit and push directly to main
-          git add README.md
+          git add readme.md
           git diff-index --quiet HEAD || git commit -m "chore(📚): update readme with fresh content"
           git push origin main
