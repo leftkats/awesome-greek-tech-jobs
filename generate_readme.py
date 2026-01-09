@@ -65,7 +65,7 @@ def generate():
             ",".join(focus_sector) if isinstance(focus_sector, list) else focus_sector
         )
         resources = [careers_link_md, linkedin_link_md]
-        resources = "-".join([r for r in resources if r != ""])
+        resources = " - ".join([r for r in resources if r != ""])
         content += f"| **{company_name_md}** | {focus_sector} | {resources} |\n"
     content += "\n---\n"
 
