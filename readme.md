@@ -1,6 +1,8 @@
 # awesome-greek-tech-jobs
 A comprehensive map of Greek tech companies, highlighting their focus sectors, careers pages, and LinkedIn profiles. This repository is designed to help professionals explore opportunities and connect with organizations in the Greek tech ecosystem.
 
+[**🌐 View the Live Directory**](https://leftkats.github.io/awesome-greek-tech-jobs/)
+
 ---
 
 ## Engineering Hubs & Career Portals
