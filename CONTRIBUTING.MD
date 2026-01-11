@@ -23,6 +23,9 @@ https://www.linkedin.com/company/**company-id**/.
           - Sector Name
         careers_url: Careers full url
         linkedin_company_id: Company LinkedIn ID
+        locations:
+          - Athens
+        work_policy: remote
       ```
     - For `quries.yaml`: Add a new predefined search query:
       ```yaml
