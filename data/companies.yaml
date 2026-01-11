@@ -7,27 +7,39 @@
   linkedin_company_id: accenture-greece
   careers_url: https://www.accenture.com/gr-en/careers
   url: https://www.accenture.com/gr-en
+  work_policy: hybrid
+  locations:
+    - Athens
+    - Thessaloniki
 - name: Aegean Airlines
   sectors:
     - TravelTech
-  careers_url: https://en.aegeanair.com/corporate/careers/
+  careers_url: https://jobs.aegeanair.com/go/All-Jobs/8966755/
   linkedin_company_id: aegean-airlines
   url: https://en.aegeanair.com/
 - name: Free Now
   sectors:
     - Mobility Tech
     - Ride Hailing
-  careers_url: https://free-now.com/careers/
+  careers_url: https://www.free-now.com/career/jobs/
   linkedin_company_id: free-now
   url: https://free-now.com/
+  locations:
+    - Athens
+  work_policy: hybrid
 - name: Bespot
   sectors:
     - AI
     - IoT
     - RetailTech
+    - Fraud Prevention
+    - Location Intelligence
   careers_url: https://apply.workable.com/bespot/
   linkedin_company_id: bespot
   url: https://bespot.com/
+  locations:
+    - Athens
+  work_policy: hybrid
 - name: Blueground
   url: https://www.theblueground.com/
   sectors:
@@ -35,6 +47,9 @@
     - Real Estate
   careers_url: https://apply.workable.com/blueground/
   linkedin_company_id: blueground-co
+  locations:
+    - Athens
+  work_policy: hybrid
 - name: D-one
   url: https://d-one.gr/
   sectors:
@@ -44,6 +59,9 @@
     - Consulting
   careers_url: https://apply.workable.com/d-one/
   linkedin_company_id: d-one-athens
+  locations:
+    - Athens
+  work_policy: hybrid
 - name: DeepSea
   url: https://www.deepsea.ai/
   sectors:
@@ -52,6 +70,9 @@
     - Maritime
   careers_url: https://www.deepsea.ai/careers/
   linkedin_company_id: deepsea-technologies
+  locations:
+    - Athens
+  work_policy: remote
 - name: Deloitte
   url: https://www.deloitte.com/gr/en.html
   sectors:
@@ -59,6 +80,13 @@
     - Tech
   careers_url: https://deloittecm.avature.net/en_US/careers/SearchJobs
   linkedin_company_id: deloitte-greece
+  locations:
+    - Athens
+    - Thessaloniki
+    - Heraklion
+    - Ioannina
+    - Patras
+  work_policy: hybrid
 - name: efood
   url: https://www.efood.gr/
   sectors:
@@ -67,6 +95,7 @@
     - E-commerce
   careers_url: https://careers.deliveryhero.com/efood
   linkedin_company_id: efood-gr
+  work_policy: remote
 - name: Elastic
   url: https://www.elastic.co/
   sectors:
@@ -75,6 +104,7 @@
     - Cloud
   careers_url: https://jobs.elastic.co/jobs/country/greece
   linkedin_company_id: elastic-co
+  work_policy: remote
 - name: Epsilon Net
   url: https://www.epsilonnet.gr/
   sectors:
@@ -83,7 +113,8 @@
     - Cloud
     - ERP
   careers_url: https://www.epsilonnet.gr/career.aspx
-  linkedin_company_id: epsilon-net
+  linkedin_company_id: epsilonnet
+  work_policy: hybrid
 - name: Eurobank
   url: https://www.eurobank.gr/
   sectors:
@@ -91,6 +122,7 @@
     - Fintech
   careers_url: https://www.eurobank.gr/el/omilos/anthropino-dinamiko/eykairies-apasxolisis
   linkedin_company_id: eurobank
+  work_policy: hybrid
 - name: European Dynamics
   url: https://www.eurodyn.com/
   sectors:
@@ -98,6 +130,10 @@
     - IT Services
   careers_url: https://www.eurodyn.com/careers/
   linkedin_company_id: european-dynamics
+  work_policy: hybrid # remote, on-site
+  locations:
+    - Athens
+    - Thessaloniki
 - name: EY Greece
   url: https://www.ey.com/en_gr
   sectors:
@@ -106,14 +142,22 @@
     - Consulting
     - Strategy
   careers_url: https://www.ey.com/en_gr/careers
+  locations:
+    - Athens
+    - Thessaloniki
+  work_policy: hybrid # remote
   linkedin_company_id: eygreece
 - name: Ferryhopper
   url: https://www.ferryhopper.com/
   sectors:
-    - TravelTech
-    - Booking Platform
-  careers_url: https://startup.jobs/companies/ferryhopper
+    - Leisure
+    - Travel
+    - Tourism
+  careers_url: https://apply.workable.com/ferryhopper/
   linkedin_company_id: ferryhopper
+  locations:
+    - Athens
+  work_policy: hybrid
 - name: iTechScope
   url: https://www.itechscope.com/
   sectors:
@@ -122,6 +166,10 @@
     - Cloud
   careers_url: https://www.itechscope.com/jobs/search
   linkedin_company_id: itechscope
+  locations:
+    - Athens
+    - Thessaloniki
+  work_policy: on-site
 - name: Kaizen Gaming
   url: https://www.kaizengaming.com/
   sectors:
@@ -129,14 +177,22 @@
     - iGaming
   careers_url: https://careers.kaizengaming.com/
   linkedin_company_id: kaizen-gaming
+  locations:
+    - Athens
+    - Thessaloniki
+  work_policy: hybrid
 - name: Kpler
   url: https://www.kpler.com/
   sectors:
     - Data
     - Analytics
     - Maritime
+    - Global Trade Intelligence
   careers_url: https://www.kpler.com/company/careers
   linkedin_company_id: kpler
+  locations:
+    - Athens
+  work_policy: remote # hybrid
 - name: Mytilineos
   url: https://www.metlengroup.com/
   sectors:
@@ -145,6 +201,7 @@
     - Tech
   careers_url: https://www.metlengroup.com/our-people/career-opportunities/
   linkedin_company_id: mytilineos-sa
+  work_policy: on-site
 - name: Netcompany-Intrasoft
   url: https://netcompany-intrasoft.com/
   sectors:
@@ -153,6 +210,10 @@
     - Consulting
   careers_url: https://netcompany.com/careers/greece/
   linkedin_company_id: netcompany-intrasoft
+  locations:
+    - Athens
+    - Thessaloniki
+  work_policy: hybrid
 - name: Nokia
   url: https://www.nokia.com/
   sectors:
@@ -162,6 +223,9 @@
     - Networks
   careers_url: https://careers.nokia.com/jobs/search/5858062
   linkedin_company_id: nokia
+  locations:
+    - Athens
+  work_policy: hybrid # on-site
 - name: Novibet
   url: https://www.novibet.com/
   sectors:
@@ -170,6 +234,9 @@
     - Sports betting
   careers_url: https://apply.workable.com/novibet/
   linkedin_company_id: novibet
+  locations:
+    - Athens
+  work_policy: hybrid
 - name: Omilia
   url: https://omilia.com/
   sectors:
@@ -178,6 +245,9 @@
     - AI
   careers_url: https://omilia.com/careers/
   linkedin_company_id: omilia-conversational-ai
+  locations:
+    - Athens
+  work_policy: remote
 - name: OpenBet
   url: https://www.openbet.com/
   sectors:
@@ -185,6 +255,9 @@
     - iGaming
   careers_url: https://www.openbet.com/careers
   linkedin_company_id: openbet
+  locations:
+    - Athens
+  work_policy: hybrid
 - name: Orfium
   url: https://orfium.com/
   sectors:
@@ -192,7 +265,10 @@
     - Rights Management
     - AI
   careers_url: https://apply.workable.com/orfium/
-  linkedin_company_id: orfium
+  linkedin_company_id:
+  locations:
+    - Athens
+  work_policy: hybrid
 - name: PeopleCert
   url: https://www.peoplecert.org/
   sectors:
@@ -201,6 +277,9 @@
     - Tech
   careers_url: https://www.peoplecert.org/About-Us/Careers
   linkedin_company_id: peoplecert
+  locations:
+    - Athens
+  work_policy: on-site
 - name: Persado
   url: https://www.persado.com/
   sectors:
@@ -209,6 +288,9 @@
     - Digital Marketing
   careers_url: https://www.persado.com/company/careers/
   linkedin_company_id: persado
+  locations:
+    - Athens
+  work_policy: remote
 - name: Piraeus Bank
   url: https://www.piraeusbank.gr/
   sectors:
@@ -216,6 +298,10 @@
     - Fintech
   careers_url: https://www.piraeusgroup.gr/en/career/career-opportunities-in-piraeus-group
   linkedin_company_id: piraeus-bank
+  locations:
+    - Athens
+    - Thessaloniki
+  work_policy: hybrid
 - name: Public Group
   url: https://www.publicgroup.gr/
   sectors:
@@ -224,14 +310,21 @@
     - Tech
   careers_url: https://jobs.workable.com/company/6FKx25wcUhzj6towYPKDJF/jobs-at-public-group
   linkedin_company_id: publicgroupgr
+  locations:
+    - Athens
+  work_policy: hybrid
 - name: PwC Greece
   url: https://www.pwc.gr/
   sectors:
     - Consulting
     - Tech
     - Advisory
-  careers_url: https://www.pwc.gr/en/careers.html
+  careers_url: https://www.pwc.com/gr/en/careers.html
   linkedin_company_id: pwc-greece
+  locations:
+    - Athens
+    - Thessaloniki
+  work_policy: hybrid
 - name: Satori Analytics
   url: https://satorianalytics.com/
   sectors:
@@ -239,6 +332,10 @@
     - Big Data
     - AI
   linkedin_company_id: satori-analytics
+  careers_url: https://apply.workable.com/satori-analytics-1/
+  locations:
+    - Athens
+  work_policy: hybrid
 - name: Signal Group
   url: https://www.thesignalgroup.com/
   sectors:
@@ -255,6 +352,8 @@
     - Marketing Tech
   careers_url: https://www.sitecore.com/company/careers
   linkedin_company_id: sitecore
+  locations:
+    - Athens
 - name: Skroutz
   url: https://www.skroutz.gr/
   sectors:
@@ -262,6 +361,9 @@
     - Tech
   careers_url: https://apply.workable.com/skroutz/
   linkedin_company_id: skroutz-gr
+  locations:
+    - Athens
+  work_policy: hybrid
 - name: ThinkDigital
   url: https://thinkdigitalgroup.net/
   sectors:
@@ -269,7 +371,10 @@
     - AdTech
     - Media
   careers_url: https://thinkdigitalgroup.net/careers/
-  linkedin_company_id: thinkdigital
+  linkedin_company_id:
+  locations:
+    - Athens
+    - Patras
 - name: Upstream
   url: https://www.upstreamsystems.com/
   sectors:
@@ -279,6 +384,9 @@
     - Marketing Tech
   careers_url: https://www.upstreamsystems.com/careers/
   linkedin_company_id: upstream
+  locations:
+    - Athens
+  work_policy: hybrid
 - name: Viva.com
   url: https://www.viva.gr/
   sectors:
@@ -287,14 +395,20 @@
     - E-commerce
   careers_url: https://www.viva.com/el-gr/about/careers
   linkedin_company_id: viva-com
+  locations:
+    - Athens
+  work_policy: hybrid # on-site
 - name: Workable
   url: https://www.workable.com/
   sectors:
     - HR Tech
     - Recruitment Software
     - SaaS
-  careers_url: https://apply.workable.com/workable/
+  careers_url: https://apply.workable.com/careers/
   linkedin_company_id: workable
+  locations:
+    - Athens
+  work_policy: hybrid
 - name: XM
   url: https://www.xm.com/
   sectors:
@@ -303,6 +417,9 @@
     - Investment Services
   careers_url: https://jobs.eu.lever.co/xm
   linkedin_company_id: xm-global
+  locations:
+    - Athens
+  work_policy: hybrid
 - name: Sthenos AI
   url: https://sthenos.ai
   sectors:
@@ -317,14 +434,20 @@
     - Smart Mobility
   careers_url: https://moveo-ai.notion.site/Careers-at-Moveo-AI-6f7204b1e4fd49098c623f623df0592d
   linkedin_company_id: moveo-ai
+  locations:
+    - Athens
+  work_policy: on-site
 - name: Yodiwo
   url : https://www.yodiwo.gr/
   sectors:
-    - IoT Platforms
+    - IoT
     - Smart Systems
     - Edge Computing
+    - Consulting
   careers_url: https://www.yodiwo.gr/careers/
   linkedin_company_id: yodiwo
+  locations:
+    - Athens
 - name: Qualcomm Greece
   url: https://www.qualcomm.com/
   sectors:
@@ -333,12 +456,19 @@
     - 5G
   careers_url: http://careers.qualcomm.com/careers
   linkedin_company_id: qualcomm
+  locations:
+    - Athens
+    - Patras
+  work_policy: hybrid
 - name: Uni Systems
   url: https://www.unisystems.com/
   sectors:
     - ICT Systems Integration
   careers_url: https://www.unisystems.com/careers
-  linkedin_company_id: uni-systems
+  linkedin_company_id: 
+  locations:
+    - Athens
+  work_policy: hybrid
 - name: Qualco
   url: https://www.qualco.eu/
   sectors:
@@ -346,7 +476,10 @@
     - Debt Management Solutions
     - Fintech
   careers_url: https://www.qualco.eu/careers/open-positions
-  linkedin_company_id: qualco
+  linkedin_company_id: 
+  locations:
+    - Athens
+  work_policy: hybrid
 - name: Intracom Defense
   url: https://www.intracomdefense.com/
   sectors:
@@ -361,6 +494,8 @@
     - Banking
   careers_url: https://careers.alpha.gr/
   linkedin_company_id: alpha-bank
+  locations:
+    - Athens
 - name: Trasys (part of NRB Group)
   url: https://trasys.gr/
   sectors:
@@ -369,6 +504,9 @@
     - Consulting
   careers_url: https://nrbcareers.com/
   linkedin_company_id: trasys
+  locations:
+    - Athens
+  work_policy: hybrid
 - name: RocketX
   url: https://rocketx.group/
   sectors:
@@ -383,6 +521,8 @@
     - Utilities
   careers_url: https://www.ppcgroup.com/el/anthropino-dynamiko/efkairies-karieras/
   linkedin_company_id: ppc-s.a.
+  locations:
+    - Athens
 - name: Revotech
   url: https://revotech.com/
   sectors:
@@ -391,6 +531,9 @@
     - Smart Mobility
   careers_url: https://revotech.com/careers
   linkedin_company_id: revotech
+  locations:
+    - Athens
+  work_policy: hybrid
 - name: Silvare
   url: https://silvare.gr/
   sectors:
@@ -398,12 +541,16 @@
     - Recruitment
   careers_url: https://job-boards.eu.greenhouse.io/silvare
   linkedin_company_id: silvare
+  locations:
+    - Athens
 - name: Vodafone
   url: https://www.vodafone.gr/
   sectors:
     - Telecommunications
   careers_url: https://www.vodafone.gr/vodafone-ellados/kariera
   linkedin_company_id: vodafone
+  locations:
+    - Athens
 - name: Cosmote
   url: https://www.cosmote.gr/
   sectors:
