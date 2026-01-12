@@ -28,8 +28,8 @@ jobs:
         id: run_scripts
         continue-on-error: true
         run: |
-          python -m generate_readme
-          python -m generate_index
+          python -m scripts.generate_readme
+          python -m scripts.generate_index
 
       - name: Automated Feedback
         uses: actions/github-script@v7
