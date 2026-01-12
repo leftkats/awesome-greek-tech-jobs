@@ -818,3 +818,242 @@
     - Technology
   careers_url: https://www.bestprice.gr/careers
   linkedin_company_id: bestprice-gr
+- name: Delian Alliance Industries
+  url: https://delian.ai/
+  sectors:
+    - Defense
+    - Space Manufacturingw
+    - AI
+  careers_url: https://delian.ai/careers
+  linkedin_company_id: delian-ai
+  locations:
+    - Athens
+  work_policy: hybrid
+- name: SMPnet
+  url: https://www.smpnet.tech/
+  sectors:
+    - Software Development
+  careers_url: https://www.smpnet.tech/careers
+  linkedin_company_id: smpnet
+  locations:
+    - Athens
+  work_policy: hybrid
+- name: THEON INTERNATIONAL
+  url: https://theon.com/
+  sectors:
+    - Advance Optronics
+    - Thermal Imaging
+    - Night Vision
+  careers_url: https://theon.com/career/job-opportunities/
+  linkedin_company_id: theon-international
+  locations:
+    - Athens
+  work_policy: on-site
+- name: Kenotom
+  url: https://www.kenotom.com/
+  sectors:
+    - Embedded Systems
+    - Industrial Automation
+  careers_url: https://www.kenotom.com/career/
+  linkedin_company_id: kenotom
+  locations:
+    - Thessaloniki
+  work_policy: hybrid
+- name: Progressive Robotics
+  url: https://progressiverobotics.ai/
+  sectors:
+    - Robotics
+    - AI
+  careers_url: https://progressiverobotics.ai/careers/
+  linkedin_company_id: progressive-robotics-ai
+  locations:
+    - Thessaloniki
+  work_policy: on-site
+- name: OPAP
+  url: https://www.opap.gr/
+  sectors:
+    - Betting
+  careers_url: https://corporate.opap.gr/etairia/eukairies-karieras
+  linkedin_company_id: opap-s.a.
+  locations:
+    - Athens
+  work_policy: hybrid
+- name: Kivon
+  url: https://www.kivon.gr/
+  sectors:
+    - iGaming
+    - Recruitment
+    - HR Tech
+  careers_url: https://www.kivon.gr/jobs/
+  linkedin_company_id: kivon
+  locations:
+    - Athens
+- name: Welcome Pickups
+  url: https://www.welcomepickups.com/
+  sectors:
+    - Travel
+    - Transportation
+    - Hospitality
+    - Travel Tech
+  careers_url: https://apply.workable.com/welcome/
+  linkedin_company_id: welcomepickups
+  locations:
+    - Athens
+  work_policy: hubrid
+
+- name: Pfizer
+  url: https://www.pfizer.com/
+  sectors:
+    - Pharmaceuticals
+  careers_url: https://www.pfizer.com/about/careers
+  linkedin_company_id: pfizer
+  locations:
+    - Thessaloniki
+  work_policy: hybrid
+- name: Chubb
+  url: https://www.chubb.com/us-en
+  sectors:
+    - Insurance
+  careers_url: https://fa-ewgu-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2001
+  linkedin_company_id: chubb
+  locations:
+    - Thessaloniki
+  work_policy: hybrid
+- name: Athens Technology Center
+  url: https://www.atc.gr/
+  sectors:
+    - Consulting
+    - Software Development
+    - IT Services
+  careers_url: https://apply.workable.com/athens-technology-center-1/
+  linkedin_company_id: athens-technology-center
+  locations:
+    - Athens
+    - Thessaloniki
+  work_policy: hybrid
+- name: Amdocs
+  url: https://www.amdocs.com/about
+  sectors:
+    - Software Development
+    - Telecommunications
+    - 5G
+  careers_url: https://www.amdocs.com/careers/home
+  linkedin_company_id: amdocs
+  locations:
+    - Athens
+  work_policy: hybrid
+
+- name: Validata Group
+  url: https://www.validata-software.com/
+  sectors:
+    - Fintech
+    - AI
+    - Banktech
+  careers_url: https://www.validata-software.com/company/career/
+  linkedin_company_id: validata-group
+  locations:
+    - Athens
+  work_policy: hybrid
+- name: DuckDuckGo
+  url: https://duckduckgo.com/
+  sectors:
+    - Search Engine
+    - Privacy Tech
+    - Internet Services
+  careers_url: https://duckduckgo.com/hiring
+  linkedin_company_id: duck-duck-go
+  work_policy: remote
+- name: SPACE HELLAS S.A.
+  url: https://www.space.gr/en
+  sectors:
+    - Consulting
+    - IT Services
+    - Systems Integration
+  careers_url: https://www.space.gr/en/career
+  linkedin_company_id: pace-hellas-s.a.
+  locations:
+    - Athens
+- name: RSight
+  url: https://www.rsight.com/
+  sectors:
+    - Staffing
+    - Recruitment
+  careers_url: https://www.rsight.com/find-a-job
+  linkedin_company_id: rsight
+  locations:
+    - Athens
+  work_policy: hybrid # remote
+- name: NRB
+  url: https://www.nrb.be/fr
+  sectors:
+    - Consulting
+    - IT Services
+  careers_url: https://nrbcareers.com/
+  linkedin_company_id: nrb
+  locations:
+    - Athens
+  work_policy: on-site
+- name: Signify Technology
+  url: https://www.signifytechnology.com/
+  sectors:
+    - Staffing
+    - Recruitment
+  careers_url: https://www.signifytechnology.com/join-us/
+  linkedin_company_id: signify-technology
+  locations:
+    - Athens
+    - Patras
+  work_policy: hybrid
+- name: Sword Group
+  url: https://www.sword-group.com/
+  sectors:
+    - Consulting
+    - IT Services
+  careers_url: https://www.sword-group.com/careers/
+  linkedin_company_id: sword-group
+  locations:
+    - Athens
+  work_policy: hybrid
+
+- name: Cloud Office
+  url: https://www.cloud-office.com/gr
+  sectors:
+    - Cloud Services
+    - IT Services
+  linkedin_company_id: cloud-office
+  locations:
+    - Athens
+  work_policy: hybrid
+- name: WorkEthix
+  url: https://workethixrec.com/
+  sectors:
+    - Recruitment
+    - IT Services
+    - Consulting
+  careers_url: https://workethixrec.com/jobs
+  linkedin_company_id: workethix
+  locations:
+    - Athens
+  work_policy: hybrid
+- name: Synelixis Solutions SA
+  url: https://synelixis.com/
+  sectors:
+    - Telecommunications
+    - Networking
+    - Sensory
+    - Automation
+  careers_url: https://synelixis.com/career/
+  linkedin_company_id: synelixis-solutions-ltd
+  locations:
+    - Athens
+  work_policy: hybrid
+- name: UpcoMinds
+  url: https://upcominds.com/
+  sectors:
+    - Consulting
+    - IT Services
+  careers_url: https://upcominds.com/career/
+  linkedin_company_id: upcominds
+  locations:
+    - Athens
+  work_policy: hybrid
