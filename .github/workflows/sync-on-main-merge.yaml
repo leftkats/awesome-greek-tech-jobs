@@ -38,6 +38,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "chore(📚): auto-update docs with fresh content"
+            git commit -m "chore(📚): auto-update docs with fresh content [skip ci]"
             git push origin main
           fi
