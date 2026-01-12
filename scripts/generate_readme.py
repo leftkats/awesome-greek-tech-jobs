@@ -63,7 +63,9 @@ def generate():
         linkedin_link_md = f"[LinkedIn]({linkedin_link})" if linkedin_link != "" else ""
 
         focus_sector = c.get("sectors", "")
-        focus_sector = ",".join(focus_sector) if isinstance(focus_sector, list) else focus_sector
+        focus_sector = (
+            ",".join(focus_sector) if isinstance(focus_sector, list) else focus_sector
+        )
 
         content += f"| {idx} | **{company_name_md}** | {focus_sector} | {careers_link_md} | {linkedin_link_md} |\n"
     content += "\n---\n"
@@ -79,7 +81,10 @@ def generate():
         content += "## Useful Notes\n"
         if "notes" in readme_data["footer"]:
             content += "\n".join(
-                [f"- **{note['title']}:** {note['content']}" for note in readme_data["footer"]["notes"]]
+                [
+                    f"- **{note['title']}:** {note['content']}"
+                    for note in readme_data["footer"]["notes"]
+                ]
             )
             content += "\n"
 
@@ -87,6 +92,11 @@ def generate():
         content += "### Contributors\n"
         if "description" in readme_data["footer"]:
             content += f"\n{readme_data['footer']['description']}\n"
+
+    content += "\n---\n"
+    content += "### Disclaimer & Mission \n"
+    if readme_data.get("disclaimer"):
+        content += f"\n{readme_data['disclaimer']}\n"
 
     with open("readme.md", "w", encoding="utf-8") as f:
         f.write(content)
