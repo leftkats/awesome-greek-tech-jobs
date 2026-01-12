@@ -1,0 +1,59 @@
+name: PR Data Validation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'data/**'
+
+permissions:
+  pull-requests: write
+  issues: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Run Scripts
+        id: run_scripts
+        continue-on-error: true
+        run: |
+          python -m generate_readme
+          python -m generate_index
+
+      - name: Automated Feedback
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const creator = context.payload.pull_request.user.login;
+            const success = "${{ steps.run_scripts.outcome }}" === "success";
+
+            let body = "";
+
+            if (success) {
+              body = `🚀 Hello @${creator}! \n\nThanks for contributing to the **Awesome Greek Tech Jobs** list! Your changes look solid and the automation checks passed. \n\nOur mission to map the Greek ecosystem gets better with every PR. \n\nThe maintainer will review and merge this shortly. Stay awesome!`;
+            } else {
+              body = `⚠️ Hello @${creator}, \n\nIt looks like there's a small issue with the data format in your PR. The automated validation for the README or Index generation failed. \n\nPlease check your YAML files for syntax errors (tabs vs spaces, colons, etc.) and try again. If you're stuck, the maintainer will take a look soon!`;
+            }
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: body
+            });
+
+            // Ensure the job actually fails if the scripts failed
+            if (!success) {
+              core.setFailed("Validation failed. Check the logs for details.");
+            }

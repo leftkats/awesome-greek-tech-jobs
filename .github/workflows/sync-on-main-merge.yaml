@@ -1,0 +1,43 @@
+name: Update Docs and README on Merge
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'data/**'
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Sync Content
+        run: |
+          python -m generate_readme
+          python -m generate_index
+
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          git add README.md index.html
+
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore(📚): auto-update docs with fresh content"
+            git push origin main
+          fi
