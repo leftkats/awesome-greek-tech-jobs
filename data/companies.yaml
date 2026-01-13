@@ -1070,3 +1070,88 @@
     - Hyderabad
     - Santa Clara, CA
   work_policy: remote
+- name: Cyber Emphasis
+  url: https://cyberemphasis.com/en/
+  sectors:
+    - IT Services
+    - Consulting
+  careers_url: https://apply.workable.com/cyber-emphasis/
+  linkedin_company_id: cyberemphasis
+  locations:
+    - Athens
+  work_policy: hybrid
+- name: Optasia
+  url: https://optasia.com/work-with-us/?location=Greece
+  sectors:
+    - Fintech
+  careers_url: https://apply.workable.com/optasia/
+  linkedin_company_id: optasiaplatform
+  locations:
+    - Athens
+  work_policy: hybrid
+- name: Epignosis learning technologies
+  url: http://epignosishq.com/
+  sectors:
+    - Learning
+    - eLearning
+    - Software Development
+    - HR tech
+  careers_url: https://apply.workable.com/epignosis/
+  linkedin_company_id: epignosis-ltd
+  locations:
+    - Athens
+  work_policy: hybrid
+- name: Hemmersbach
+  url: https://www.hemmersbach.com/
+  sectors:
+    - IT Services
+  careers_url: https://www.hemmersbach.com/en/career/open-jobs
+  linkedin_company_id: hemmersbach
+  locations:
+    - Athens
+  work_policy: hybrid
+- name: Techbridge Global
+  url: https://techbridgeglobal.io/
+  sectors:
+    - Technology
+    - Information
+    - Internet
+    - Employment Solutions
+  careers_url: https://techbridge.org/careers/
+  linkedin_company_id: techbridgeltd
+  work_policy: remote
+- name: wherewework Hellas
+  url: https://www.wherewework.gr/el
+  sectors:
+    - Human Resources
+  linkedin_company_id: wherewework-gr
+  locations:
+    - Thessalonig
+    - Patras
+    - Piraues
+    - Larisa
+    - Iraklion
+  work_policy: on-site
+- name: Sticker Mule
+  url: https://www.stickermule.com/
+  sectors:
+    - Printing Services
+  careers_url: https://www.stickermule.com/careers
+  linkedin_company_id: sticker-mule
+  work_policy: remote
+- name: Agile Actors
+  url: http://www.agileactors.com/
+  sectors:
+    - IT Services
+    - Consulating
+  careers_url: https://www.agileactors.com/careers
+  locations:
+    - Athens
+  linkedin_company_id: agile-actors
+- name: Toptal
+  url: https://www.toptal.com/
+  sectors:
+    - Freelance Platforms
+  careers_url: https://www.toptal.com/careers
+  linkedin_company_id: toptal
+  work_policy: remote
