@@ -1,9 +1,18 @@
 title: "awesome-greek-tech-jobs"
-description: "A comprehensive map of Greek tech companies,
-  highlighting their focus sectors, careers pages, and LinkedIn
-  profiles. This repository is designed to help professionals
-  explore opportunities and connect with organizations in the
-  Greek tech ecosystem."
+description: "This a comprehensive map of companies that hire for tech jobs in Greece.
+    It highlights their focus sectors, careers pages, and LinkedIn profiles, while
+    explicitly including details on work policies (Remote, Hybrid, On-site)
+    and office locations. This repository is designed to help professionals
+    explore opportunities and connect with organizations across the Greek tech ecosystem. \n\n
+
+    [**✨ Explore the Live Directory**](https://leftkats.github.io/awesome-greek-tech-jobs/) curated with ❤️ for the community.
+    "
+disclaimer: "This project is a **community-driven initiative** aimed at providing a centralized resource for tech job seekers interested in the Greek market. \n\n
+  **Please note:**\n
+  * **Non-Affiliation:** This project is independent and is not affiliated with, sponsored by, or endorsed by any of the companies listed. All company names and website links are the property of their respective owners.\n
+  * **Accuracy:** Information is gathered from public sources like LinkedIn and corporate career pages. While I strive for accuracy, company policies change frequently. Always verify details on the official company website.\n
+  * **Contributions:** If you notice any inaccuracies or have suggestions for additions, please feel free to contribute via pull requests.\n
+  * **Liability:** As per the [MIT License](LICENSE), this information is provided as is without warranty of any kind.\n"
 footer:
   description: "A huge thanks to the community for helping improve this project to grow!!"
   notes:
