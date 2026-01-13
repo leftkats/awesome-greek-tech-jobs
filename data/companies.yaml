@@ -1057,3 +1057,16 @@
   locations:
     - Athens
   work_policy: hybrid
+- name: Aisera
+  url: https://aisera.com/
+  sectors:
+    - AI
+    - Software Development
+  careers_url: https://job-boards.greenhouse.io/aiserajobs
+  linkedin_company_id: aisera
+  locations:
+    - Athens
+    - Bangalore
+    - Hyderabad
+    - Santa Clara, CA
+  work_policy: remote
