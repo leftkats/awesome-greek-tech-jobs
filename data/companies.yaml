@@ -1164,3 +1164,64 @@
   careers_url: https://careers.atcom.gr/
   linkedin_company_id: atcom-sa
   work_policy: hybrid
+- name: SKY express
+  url: https://www.skyexpress.gr/el
+  sectors:
+    - Airlines
+    - Aviation
+  careers_url: https://www.skyexpress.gr/en/company/careers
+  locations:
+    - Athens
+    - Crete
+  linkedin_company_id: sky-express-airlines
+- name: Neurocom SA
+  url: https://www.neurocom.gr/
+  sectors:
+    - IT Services
+    - Consulting
+  careers_url: https://www.neurocom.gr/career/
+  locations:
+    - Athens
+  linkedin_company_id: neurocom-sa
+  work_policy: remote
+- name: More.com
+  url: https://www.more.com
+  sectors:
+    - Marketplace
+    - Internet Platform
+  careers_url: https://apply.workable.com/more-com/
+  locations:
+    - Athens
+  linkedin_company_id: moredotcom
+  work_policy: on-site
+- name: tgndata
+  url: https://tgndata.com/
+  sectors:
+    - Technology
+    - Price Intelligence
+  careers_url: https://apply.workable.com/tgndata
+  locations:
+    - Athens
+  linkedin_company_id: tgndata
+  work_policy: hybrid
+- name: Cisco
+  url: https://www.cisco.com/
+  sectors:
+    - Networks
+    - Telecommunications
+    - Network Infrastructure
+  careers_url: https://careers.cisco.com/global/en/search-results
+  locations:
+    - Athens
+  linkedin_company_id: cisco
+- name: Block Labs
+  url: https://careers.blocklabs.io/
+  sectors:
+    - Technology
+    - Information and Internet
+    - Web3
+  careers_url: https://careers.blocklabs.io/
+  locations:
+    - Athens
+  linkedin_company_id: block-labs-web3
+  work_policy: remote
