@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   deploy:
+    if: github.repository == 'leftkats/awesome-greek-tech-jobs'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
