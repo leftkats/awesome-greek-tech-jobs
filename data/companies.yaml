@@ -1234,3 +1234,23 @@
     - Crete
   linkedin_company_id: teamblue
   work_policy: remote
+- name: Code.Hub
+  url: https://www.codehub.gr/
+  sectors:
+    - IT Services
+    - Consulting
+  careers_url: https://codehub.gr/career/
+  locations:
+    - Athens
+  linkedin_company_id: code.Hub
+  work_policy: on-site # remote, hybrid
+- name: Pricefox.gr
+  url: https://www.codehub.gr/
+  sectors:
+    - Insurtech
+  careers_url: https://www.pricefox.gr/
+  locations:
+    - Athens
+  linkedin_company_id: pricefoxgr
+  work_policy: hybrid
+
