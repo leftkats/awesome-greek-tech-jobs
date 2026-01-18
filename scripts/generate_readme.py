@@ -57,7 +57,6 @@ def generate():
 
     # 3. The Main Table
     content += "## Engineering Hubs & Career Portals\n"
-    content += "> Browse the Greek tech landscape. Use `Ctrl+F` to filter by sector or policy.\n\n"
 
     content += "| # | Organization | Focus Sectors | Policy | Talent Portals |\n"
     content += "| :--- | :--- | :--- | :--- | :--- |\n"
@@ -68,11 +67,13 @@ def generate():
 
         # Policy Badge Logic
         policy = c.get("work_policy", "N/A").strip().lower().replace("-", "")
+
         p_color = {
-            "remote": "success",
-            "hybrid": "informational",
-            "onsite": "warning",
+            "remote": "brightgreen",
+            "hybrid": "blue",
+            "onsite": "orange",
         }.get(policy, "lightgrey")
+        print(policy, p_color)
         policy_badge = (
             f"![](https://img.shields.io/badge/-{policy}-{p_color}?style=flat-square)"
         )

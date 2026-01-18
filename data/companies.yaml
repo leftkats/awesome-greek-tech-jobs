@@ -899,8 +899,7 @@
   linkedin_company_id: welcomepickups
   locations:
     - Athens
-  work_policy: hubrid
-
+  work_policy: hybrid
 - name: Pfizer
   url: https://www.pfizer.com/
   sectors:
