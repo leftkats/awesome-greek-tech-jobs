@@ -73,7 +73,6 @@ def generate():
             "hybrid": "blue",
             "onsite": "orange",
         }.get(policy, "lightgrey")
-        print(policy, p_color)
         policy_badge = (
             f"![](https://img.shields.io/badge/-{policy}-{p_color}?style=flat-square)"
         )
@@ -116,6 +115,8 @@ def generate():
         content += "\n---\n"
         content += "### Contributors\n"
         if "description" in readme_data["footer"]:
+            repo_path = "leftkats/awesome-greek-tech-jobs"
+            content += f"[![Contributors](https://contrib.rocks/image?repo={repo_path})](https://github.com/{repo_path}/graphs/contributors)\n\n"
             content += f"\n{readme_data['footer']['description']}\n"
 
     # 6. Disclaimer & Mission
