@@ -1,5 +1,5 @@
 import yaml
-from collections import defaultdict, Counter
+from collections import Counter
 
 
 def generate():
@@ -12,95 +12,103 @@ def generate():
     with open("data/queries.yaml", "r", encoding="utf-8") as f:
         queries_data = yaml.safe_load(f)
 
-    sectors = defaultdict(list)
-    for company in companies_data:
-        sectors[",".join(company["sectors"])].append(company)
-
-    for sector in sectors:
-        sectors[sector].sort(key=lambda x: x["name"].lower())
-
-    # Build README content
-    content = f"# {readme_data['title']}\n"
-    content += f"{readme_data['description']}"
-
-    content += "\n\n---\n\n"
-    all_companies = []
-    for sector in sectors.values():
-        all_companies.extend(sector)
+    # Logic: Sort and clean data
+    all_companies = sorted(companies_data, key=lambda x: x["name"].lower())
 
     # Check for duplicate company names
     seen = set()
-    duplicates = set()
-    for c in all_companies:
-        if c["name"] in seen:
-            duplicates.add(c["name"])
-        else:
-            seen.add(c["name"])
+    duplicates = [
+        c["name"] for c in all_companies if c["name"] in seen or seen.add(c["name"])
+    ]
     if duplicates:
-        raise ValueError(f"Duplicate company names found: {', '.join(duplicates)}")
-    # Sort all companies alphabetically
-    all_companies.sort(key=lambda x: x["name"].lower())
+        raise ValueError(f"Duplicate company names found: {', '.join(set(duplicates))}")
 
-    content += "## Engineering Hubs & Career Portals\n"
-    total_number_of_companies = len({c["name"] for c in all_companies})
-
+    # Statistics Calculation
+    total_companies = len(all_companies)
     loc_counts = Counter(
-        [loc.strip().title() for c in all_companies for loc in c.get("locations", "")]
+        [loc.strip().title() for c in all_companies for loc in c.get("locations", [])]
     )
-
-    top_loc, top_count = loc_counts.most_common(1)[0]
+    top_loc, top_count = loc_counts.most_common(1)[0] if loc_counts else ("N/A", 0)
 
     policy_counts = Counter(
-        [c.get("work_policy", "n/a").strip().title() for c in all_companies]
+        [c.get("work_policy", "N/A").strip().title() for c in all_companies]
     )
+    remote_count = policy_counts.get("Remote", 0)
+    hybrid_count = policy_counts.get("Hybrid", 0)
 
-    remote_count = policy_counts.get("remote", 0)
-    remote_pct = (remote_count / len(all_companies)) * 100
+    # 1. Header & Dynamic Badges
+    content = f"# {readme_data['title']}\n\n"
+    content += f"![Companies](https://img.shields.io/badge/Companies-{total_companies}-blue?style=for-the-badge) "
+    content += f"![Primary Hub](https://img.shields.io/badge/Main_Hub-{top_loc}-red?style=for-the-badge) "
+    content += f"![Remote Friendly](https://img.shields.io/badge/Remote_Teams-{remote_count}-green?style=for-the-badge)\n\n"
 
+    content += f"## Overview\n{readme_data['description']}\n\n"
+
+    # 2. Professional Statistics Dashboard
+    content += "### Insights\n"
+    content += "| Metric | Data Point |\n| :--- | :--- |\n"
     content += (
-        f"> A community-driven hub featuring **{total_number_of_companies}** unique tech teams. "
-        f"With **{top_count}** offices in **{top_loc}**.\n\n"
+        f"| **Total Organizations** | **{total_companies}** curated tech teams |\n"
     )
+    content += f"| **Top Tech Hub** | **{top_loc}** ({top_count} offices) |\n"
+    content += f"| **Work Flexibility** | **{remote_count}** Remote · **{hybrid_count}** Hybrid |\n\n"
 
-    content += "| # | Company Name | Sectors | Careers | LinkedIn |\n"
+    content += "---\n\n"
+
+    # 3. The Main Table
+    content += "## Engineering Hubs & Career Portals\n"
+
+    content += "| # | Organization | Focus Sectors | Policy | Talent Portals |\n"
     content += "| :--- | :--- | :--- | :--- | :--- |\n"
+
     for idx, c in enumerate(all_companies, start=1):
-        company_url = c.get("url")
-        if company_url:
-            company_name_md = f"[{c['name']}]({company_url})"
-        else:
-            company_name_md = c["name"]
+        # Name and URL
+        company_name_md = f"[{c['name']}]({c['url']})" if c.get("url") else c["name"]
 
-        careers_link = c.get("careers_url", "")
-        careers_link_md = f"[Careers]({careers_link})" if careers_link != "" else ""
+        # Policy Badge Logic
+        policy = c.get("work_policy", "N/A").strip().lower().replace("-", "")
 
-        linkedin_link = c.get("linkedin_company_id", "")
-        if linkedin_link != "":
-            linkedin_link = f"https://www.linkedin.com/company/{linkedin_link}"
-        linkedin_link_md = f"[LinkedIn]({linkedin_link})" if linkedin_link != "" else ""
-
-        focus_sector = c.get("sectors", "")
-        focus_sector = (
-            ",".join(focus_sector) if isinstance(focus_sector, list) else focus_sector
+        p_color = {
+            "remote": "brightgreen",
+            "hybrid": "blue",
+            "onsite": "orange",
+        }.get(policy, "lightgrey")
+        print(policy, p_color)
+        policy_badge = (
+            f"![](https://img.shields.io/badge/-{policy}-{p_color}?style=flat-square)"
         )
 
-        content += f"| {idx} | **{company_name_md}** | {focus_sector} | {careers_link_md} | {linkedin_link_md} |\n"
+        # Formatting Links
+        careers = f"[Careers]({c['careers_url']})" if c.get("careers_url") else "—"
+        linkedin_id = c.get("linkedin_company_id", "")
+        linkedin = (
+            f"[LinkedIn](https://www.linkedin.com/company/{linkedin_id})"
+            if linkedin_id
+            else "—"
+        )
+
+        # Sector Tags
+        sectors = ", ".join([f"`{s}`" for s in c.get("sectors", [])])
+
+        content += f"| {idx:02} | **{company_name_md}** | {sectors} | {policy_badge} | {careers} • {linkedin} |\n"
+
     content += "\n---\n"
 
+    # 4. Search Queries (As before)
     if "queries" in queries_data:
         content += "## Useful Search Queries\n"
         for query in queries_data["queries"]:
             content += f"* [{query['name']}]({query['url']})\n"
+        content += "\n---\n"
 
-    content += "\n---\n"
-
+    # 5. Footer: Notes & Contributors
     if "footer" in readme_data:
         content += "## Useful Notes\n"
         if "notes" in readme_data["footer"]:
             content += "\n".join(
                 [
-                    f"- **{note['title']}:** {note['content']}"
-                    for note in readme_data["footer"]["notes"]
+                    f"- **{n['title']}:** {n['content']}"
+                    for n in readme_data["footer"]["notes"]
                 ]
             )
             content += "\n"
@@ -110,11 +118,13 @@ def generate():
         if "description" in readme_data["footer"]:
             content += f"\n{readme_data['footer']['description']}\n"
 
+    # 6. Disclaimer & Mission
     content += "\n---\n"
-    content += "### Disclaimer & Mission \n"
+    content += "### Disclaimer & Mission\n"
     if readme_data.get("disclaimer"):
         content += f"\n{readme_data['disclaimer']}\n"
 
+    # Write to file
     with open("readme.md", "w", encoding="utf-8") as f:
         f.write(content)
 

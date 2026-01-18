@@ -899,8 +899,7 @@
   linkedin_company_id: welcomepickups
   locations:
     - Athens
-  work_policy: hubrid
-
+  work_policy: hybrid
 - name: Pfizer
   url: https://www.pfizer.com/
   sectors:
@@ -1253,4 +1252,23 @@
     - Athens
   linkedin_company_id: pricefoxgr
   work_policy: hybrid
-
+- name: Firstsource
+  url: https://www.firstsource.com/
+  sectors:
+    - Outsourcing
+    - Consulting
+  careers_url: https://careers.firstsource.com/
+  linkedin_company_id: firstsource-solutions-limited
+  work_policy: remote
+- name: IKNOWHOW SA
+  url: http://www.iknowhow.com/
+  sectors:
+    - Software Engineering
+    - Digital Business Automation
+    - Digital Health
+    - Industrial Automation
+  careers_url: https://www.iknowhow.com/talent/
+  locations:
+    - Athens
+  linkedin_company_id: iknowhow-s.a.
+  work_policy: hybrid
