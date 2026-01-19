@@ -1272,3 +1272,14 @@
     - Athens
   linkedin_company_id: iknowhow-s.a.
   work_policy: hybrid
+- name: Intrum
+  url: http://www.intrum.com/
+  sectors:
+    - Financial Services
+    - Ethical Debt Resolution
+    - Credit Management Services
+  careers_url: https://intrum.wd3.myworkdayjobs.com/en-US/External
+  locations:
+    - Athens
+  linkedin_company_id: intrum
+  work_policy: hybrid
