@@ -50,6 +50,18 @@
   locations:
     - Athens
   work_policy: hybrid
+- name: DataScouting
+  url: https://datascouting.com/
+  sectors:
+    - Media Intelligence
+    - Information Technology
+    - Software Development
+    - Digital Libraries
+  careers_url: https://datascouting.com/careers/
+  linkedin_company_id: datascouting
+  locations:
+    - Thessaloniki
+  work_policy: hybrid
 - name: D-one
   url: https://d-one.gr/
   sectors:
