@@ -1399,3 +1399,26 @@
     - Athens
   linkedin_company_id: fractualcom
   work_policy: on-site
+- name: OpenStateStack
+  url: https://openstatestack.io/
+  sectors:
+    - Blockchain
+    - Digital Identity
+  locations:
+    - Athens
+  linkedin_company_id: openstatestack
+  work_policy: remote
+- name: Acronis
+  careers_url: https://www.acronis.com/en/careers/
+  url: https://www.acronis.com/
+  sectors:
+    - Cyber Protection
+  linkedin_company_id: acronis
+  work_policy: remote
+- name: TRG Tech Research Group
+  careers_url: https://www.careers.trgint.com/
+  url: https://www.trgint.com/
+  sectors:
+    - Intelligence Insights
+  linkedin_company_id: trg-intelligence-group
+  work_policy: remote
