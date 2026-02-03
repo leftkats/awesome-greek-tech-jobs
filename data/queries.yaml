@@ -1,4 +1,6 @@
 queries:
+  - name: "Wellfound: Tech Jobs in Athens, Greece"
+    url: https://wellfound.com/location/athens-greece
   - name: "LinkedIn: Software Engineer in Greece"
     url: https://www.linkedin.com/jobs/search/?keywords=Software%20Engineer&location=Greece
   - name: "LinkedIn: Data Engineer in Greece"

@@ -1422,3 +1422,25 @@
     - Intelligence Insights
   linkedin_company_id: trg-intelligence-group
   work_policy: remote
+- name: GWI
+  url: https://www.gwi.com/
+  sectors:
+    - Data Analytics
+    - Data Infrastructure
+    - AI
+  careers_url: https://www.gwi.com/careers
+  locations:
+    - Athens
+  linkedin_company_id: gwidotcom
+  work_policy: hybrid
+- name: Infiterra
+  url: https://infiterra.com/
+  sectors:
+    - IT Services
+    - Consulting
+  careers_url: https://infiterra.com/careers/
+  locations:
+    - Thessaloniki
+  linkedin_company_id: infiterra
+  work_policy: remote # on-site
+
