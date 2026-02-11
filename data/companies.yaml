@@ -1470,4 +1470,32 @@
     - Thessaloniki
   linkedin_company_id: infiterra
   work_policy: remote # on-site
-
+- name: Nestlé Nespresso SA
+  url: https://nestle-nespresso.com/
+  sectors:
+    - Coffee Industry
+  careers_url: https://nestle-nespresso.com/careers
+  locations:
+    - Athens
+  linkedin_company_id: nestl-nespresso
+  work_policy: hybrid
+- name: Mellon Group
+  url: https://mellongroup.com/companies/mellon-employment-services
+  sectors:
+    - Information Technology
+    - IT Services
+  careers_url: https://apply.workable.com/mellongroup/
+  locations:
+    - Piraeus
+  linkedin_company_id: mellongroupofcompanies
+  work_policy: hybrid
+- name: Cegeka
+  url: https://www.cegeka.com/
+  sectors:
+    - IT Services
+    - IT Consulting
+  careers_url: https://www.cegeka.com/el/jobs
+  locations:
+    - Athens
+  linkedin_company_id: cegeka/life/well-being/
+  work_policy: hybrid
