@@ -995,15 +995,6 @@
   locations:
     - Thessaloniki
   work_policy: on-site
-- name: OPAP
-  url: https://www.opap.gr/
-  sectors:
-    - Betting
-  careers_url: https://corporate.opap.gr/etairia/eukairies-karieras
-  linkedin_company_id: opap-s.a.
-  locations:
-    - Athens
-  work_policy: hybrid
 - name: Kivon
   url: https://www.kivon.gr/
   sectors:
@@ -1539,3 +1530,94 @@
     - Athens
   linkedin_company_id: cegeka/life/well-being/
   work_policy: hybrid
+- name: Samsung Greece
+  url: https://www.samsung.com/gr/
+  sectors:
+    - Computers
+    - Electronics Manufacturing
+  careers_url: https://www.samsung.com/gr/about-us/careers/
+  locations:
+    - Athens
+  linkedin_company_id: samsunggreece
+  work_policy: hybrid
+- name: HP Inc. Greece
+  url: http://www.hp.com/
+  sectors:
+    - Computers
+    - Electronics Manufacturing
+    - IT Services
+    - IT Consulting
+  careers_url: https://jobs.hp.com/
+  locations:
+    - Athens
+  linkedin_company_id: hp
+  work_policy: hybrid
+- name: Coca-Cola HBC
+  url: https://www.coca-cola.com/gr/el
+  sectors:
+    - Beverages
+  careers_url: https://gr.coca-colahellenic.com/gr/working-with-us
+  locations:
+    - Athens
+  linkedin_company_id: coca-cola-hbc
+  work_policy: hybrid
+- name: Qualco Group
+  url: http://qualco.group/
+  sectors:
+    - Software Development
+  careers_url: https://qualco.group/open-positions/
+  locations:
+    - Athens
+  linkedin_company_id: qualco-group
+  work_policy: hybrid
+- name: Aambience Services
+  url: https://aambience.gr/
+  sectors:
+    - IT Services
+    - IT Consulting
+  careers_url: https://aambience.gr/en/theseis-ergasias/
+  locations:
+    - Athens
+  linkedin_company_id: aambience-services
+  work_policy: hybrid
+- name: Enerwave S.A.
+  url: https://www.enerwave.gr/
+  sectors:
+    - Utilities
+  careers_url: https://www.enerwave.gr/el/h-etaireia/anthropino-dynamiko/kariera/
+  locations:
+    - Athens
+  linkedin_company_id: enerwave-s-a
+  work_policy: on-site
+- name: WITSIDE
+  url: https://www.witside.com/
+  sectors:
+    - IT Services
+    - IT Consulting
+    - Data
+    - AI
+  careers_url: https://www.witside.com/careers/
+  locations:
+    - Athens
+  linkedin_company_id: witsideco
+  work_policy: hybrid
+- name: VesselBot-Enabling Sustainable Supply Chains
+  url: https://www.vesselbot.com/
+  sectors:
+    - Software Development
+    - Vesselbot
+  careers_url: https://www.linkedin.com/company/vesselbot/
+  locations:
+    - Athens
+  linkedin_company_id: vesselbot
+  work_policy: on-site
+- name: Adecco
+  url: https://www.adecco.com/
+  sectors:
+    - Recruitment
+    - Staffing
+  careers_url: https://www.adecco.com/el-gr/ypopsifioi/theseis-ergasias
+  locations:
+    - Athens
+  linkedin_company_id: adecco
+  work_policy: on-site
