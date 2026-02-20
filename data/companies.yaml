@@ -1773,3 +1773,192 @@
     - Athens
   linkedin_company_id: novagreece
   work_policy: hybrid
+- name: PROTASIS SA
+  url: https://www.protasis.energy/
+  sectors:
+    - Engineering Services
+  careers_url: https://protasis.energy/en/careers/
+  locations:
+    - Athens
+  linkedin_company_id: protasis-sa
+  work_policy: hybrid
+- name: JUST ONE
+  url: https://www.justone.gr/
+  sectors:
+    - Office Administration
+  careers_url: https://www.justone.gr/job-opportunities
+  locations:
+    - Athens
+  linkedin_company_id: j1gr
+  work_policy: hybrid
+- name: Siemens Digital Industries Software
+  url: https://www.sw.siemens.com/
+  sectors:
+    - Software Development
+  careers_url: https://jobs.sw.siemens.com/
+  locations:
+    - Athens
+  linkedin_company_id: siemenssoftware
+  work_policy: hybrid
+- name: VODA.ai
+  url: https://www.voda.ai/
+  sectors:
+    - Asset Management
+  careers_url: https://careers.voda.ai/
+  locations:
+    - Athens
+  linkedin_company_id: voda-ai
+  work_policy: remote
+- name: ariverse
+  url: https://www.ariverse.ai/
+  sectors:
+    - IT Services
+    - IT Consulting
+  careers_url: https://www.ariverse.ai/
+  locations:
+    - Athens
+  linkedin_company_id: ariverse
+  work_policy: hybrid
+- name: Cloudbeds
+  url: https://www.cloudbeds.com/
+  sectors:
+    - Hospitality
+  careers_url: https://www.cloudbeds.com/careers/
+  locations:
+    - Athens
+  linkedin_company_id: cloudbeds
+  work_policy: hybrid
+- name: inventYOU IT Consulting
+  url: http://www.inventyou.se/
+  sectors:
+    - IT Services
+    - IT Consulting
+  careers_url: https://apply.workable.com/inventyou-ab/
+  locations:
+    - Athens
+  linkedin_company_id: inventyou
+  work_policy: hybrid
+- name: ITT Inc.
+  url: https://www.itt.com/
+  sectors:
+    - Industrial Machinery
+    - Manufacturing
+  careers_url: https://www.itt.com/people-careers
+  locations:
+    - Athens
+  linkedin_company_id: itt
+  work_policy: hybrid
+- name: Elpen Pharmaceutical Co. Inc.
+  url: http://www.elpen.gr/
+  sectors:
+    - Pharaceutical Manufacturing
+  careers_url: https://www.elpen.gr/en/article/392/eykairies-karieras
+  locations:
+    - Athens
+  linkedin_company_id: elpen-pharmaceutical-co-inc
+  work_policy: on-site
+- name: Metlen Energy & Metals
+  url: http://www.mytilineos.com/
+  sectors:
+    - Metal Ore Mining
+  careers_url: https://careers.metlen.com/
+  locations:
+    - Athens
+  linkedin_company_id: metlengroup
+  work_policy: hybrid
+- name: Swift Marine
+  url: https://swiftmarine.global/
+  sectors:
+    - Trasportation
+    - Logistics
+    - Supply Chain
+  careers_url: https://swiftmarine.global/careers/
+  locations:
+    - Athens
+  linkedin_company_id: swift-marine
+  work_policy: on-site
+- name: Motor Oil
+  url: http://www.moh.gr/
+  sectors:
+    - Oil
+    - Gas
+  careers_url: https://careers.moh.gr/
+  locations:
+    - Athens
+  linkedin_company_id: motor-oil-hellas
+  work_policy: on-site
+- name: InTTrust S.A.
+  url: http://www.inttrust.gr/
+  sectors:
+    - IT Services
+    - IT Consulting
+  careers_url: https://www.inttrust.gr/career-opportunities
+  locations:
+    - Athens
+  linkedin_company_id: inttrustae
+  work_policy: hybrid
+- name: Intralot
+  url: http://www.intralot.com/
+  sectors:
+    - IT Services
+    - IT Consulting
+  careers_url: https://www.intralot.com/the-company/careers/search-our-job-openings-and-apply/
+  locations:
+    - Athens
+  linkedin_company_id: ballysintralot
+  work_policy: hybrid
+- name: LearnWorlds
+  url: https://www.learnworlds.com/
+  sectors:
+    - E-learning
+  careers_url: https://www.learnworlds.com/careers/
+  locations:
+    - Athens
+  linkedin_company_id: learnworlds
+  work_policy: remote
+- name: Prodege, LLC
+  url: http://www.prodege.com/
+  sectors:
+    - Market Research
+  careers_url: https://www.prodege.com/careers/
+  locations:
+    - Athens
+  linkedin_company_id: prod-g-llc
+  work_policy: on-site
+- name: First Achieve
+  url: http://www.firstachieve.com/
+  sectors:
+    - Recruitment
+    - Staffing
+  careers_url: https://www.firstachieve.com/jobs/
+  locations:
+    - Athens
+  linkedin_company_id: first-achieve-ltd
+  work_policy: hybrid
+- name: VesselFront
+  url: https://www.vesselfront.com/
+  sectors:
+    - Maritime Transportation
+  locations:
+    - Athens
+  linkedin_company_id: vesselfront
+  work_policy: on-site
+- name: Grant Thornton Greece
+  url: http://www.grant-thornton.gr/
+  sectors:
+    - IT Consulting
+    - IT Services
+  careers_url: https://careers.grantthornton.gr/jobs
+  locations:
+    - Athens
+  linkedin_company_id: grant-thornton-greece
+  work_policy: hybrid
+- name: Sportradar
+  url: https://sportradar.com/
+  sectors:
+    - Information Services
+  careers_url: https://sportradar.com/careers/
+  locations:
+    - Athens
+  linkedin_company_id: sportradar
+  work_policy: hybrid
