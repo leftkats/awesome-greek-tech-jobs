@@ -2054,11 +2054,3 @@
     - Thessaloniki
   linkedin_company_id: exandiainc
   work_policy: remote
-- name: Plentific
-  url: https://www.plentific.com/
-  sectors:
-    - Software Development
-  locations:
-    - London, England
-  linkedin_company_id: plentific
-  work_policy: remote
