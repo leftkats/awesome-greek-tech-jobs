@@ -2037,15 +2037,6 @@
   careers_url: https://apply.workable.com/mind-friend/
   linkedin_company_id: mindfriend-pro
   work_policy: remote
-- name: OpenStateStack
-  url: https://openstatestack.io/
-  sectors:
-    - Technology
-    - Information and Internet
-  linkedin_company_id: openstatestack
-  locations:
-    - Dubai
-  work_policy: remote
 - name: Exandia
   url: http://exandia.com/
   sectors:
