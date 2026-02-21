@@ -2002,3 +2002,63 @@
     - Athens
   linkedin_company_id: sportradar
   work_policy: hybrid
+- name: The Flex
+  url: https://theflex.global/
+  sectors:
+    - Real Estate
+  careers_url: https://theflex.global/careers
+  linkedin_company_id: theflexglobal
+  work_policy: remote
+- name: DualEntry
+  url: https://www.dualentry.com
+  sectors:
+    - AI
+    - ERP
+    - Software Development
+  careers_url: https://www.dualentry.com/careers
+  linkedin_company_id: dualentry
+  locations:
+    - New York, NY
+  work_policy: remote
+- name: Repath Solutions
+  url: https://repathsolutions.com/
+  sectors:
+    - IT Services
+    - IT Consulting
+  careers_url: https://repathsolutions.com/careers/
+  locations:
+    - West End, England
+  work_policy: remote
+- name: MindFriend PRO
+  url: https://mindfriendpro.com/
+  sectors:
+    - Business Consulting
+    - IT Services
+  careers_url: https://apply.workable.com/mind-friend/
+  linkedin_company_id: mindfriend-pro
+  work_policy: remote
+- name: OpenStateStack
+  url: https://openstatestack.io/
+  sectors:
+    - Technology
+    - Information and Internet
+  linkedin_company_id: openstatestack
+  locations:
+    - Dubai
+  work_policy: remote
+- name: Exandia
+  url: http://exandia.com/
+  sectors:
+    - Software Development
+  locations:
+    - Thessaloniki
+  linkedin_company_id: exandiainc
+  work_policy: remote
+- name: Plentific
+  url: https://www.plentific.com/
+  sectors:
+    - Software Development
+  locations:
+    - London, England
+  linkedin_company_id: plentific
+  work_policy: remote
