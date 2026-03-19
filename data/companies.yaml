@@ -2214,3 +2214,14 @@
     - Athens
   linkedin_company_id: driveflexcar
   work_policy: on-site
+- name: ContactPigeon
+  url: https://www.contactpigeon.com/
+  sectors:
+    - Marketing Automation
+    - Customer Data Platform
+    - Retail Analytics & Big Data
+  careers_url: https://careers.contactpigeon.com/jobs
+  locations:
+    - Athens
+  linkedin_company_id: contactpigeon
+  work_policy: on-site
