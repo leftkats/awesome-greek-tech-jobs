@@ -1,19 +1,51 @@
-# https://git-cliff.org/docs/configuration
-# Release notes are generated for GitHub Releases via git-cliff in CI.
+# git-cliff Release Notes — structure matches project style.
+# Generate with: git-cliff --tag "$TAG" "$RANGE" --config cliff.toml
+# Header uses the tagged version; body lists commits by conventional type.
 
 [changelog]
-header = "## What's changed\n\n"
 trim = true
-# render = ...
+header = """
+# Release Notes: {{ releases[0].version | default(value="(pending)") }} — {{ releases[0].statistics.commit_count | default(value=0) }} updates
+
+"""
+
+footer = """
+This project is built by the community, for the community. Our goal is to make the Greek tech landscape more transparent and accessible for everyone.
+"""
+
+body = """
+{%- set feats = release.commits | filter(attribute="group", value="🚀 New Features") %}
+{%- if feats %}
+### 🚀 New Features
+{%- for commit in feats %}
+- {%- if commit.scope %}**{{ commit.scope | upper_first }}:** {% endif %}{{ commit.message | trim }}
+{%- endfor %}
+{% endif %}
+{%- set impr = release.commits | filter(attribute="group", value="🛠 Improvements") %}
+{%- if impr %}
+### 🛠 Improvements
+{%- for commit in impr %}
+- {%- if commit.scope %}**{{ commit.scope | upper_first }}:** {% endif %}{{ commit.message | trim }}
+{%- endfor %}
+{% endif %}
+"""
 
 [git]
 conventional_commits = true
 filter_unconventional = false
+sort_commits = "newest"
 
 commit_parsers = [
-    { message = "^feat", group = "Features" },
-    { message = "^fix", group = "Bug Fixes" },
-    { message = "^doc", group = "Documentation" },
-    { message = "^chore", group = "Chores" },
-    { message = ".*", group = "Other" },
+    { message = "^feat", group = "🚀 New Features" },
+    { message = "^fix", group = "🛠 Improvements" },
+    { message = "^perf", group = "🛠 Improvements" },
+    { message = "^refactor", group = "🛠 Improvements" },
+    { message = "^doc", group = "🛠 Improvements" },
+    { message = "^docs", group = "🛠 Improvements" },
+    { message = "^test", group = "🛠 Improvements" },
+    { message = "^build", group = "🛠 Improvements" },
+    { message = "^ci", group = "🛠 Improvements" },
+    { message = "^style", group = "🛠 Improvements" },
+    { message = "^chore", group = "🛠 Improvements" },
+    { message = ".*", group = "🛠 Improvements" },
 ]
