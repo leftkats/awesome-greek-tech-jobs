@@ -55,17 +55,20 @@ def generate():
 
     content += "---\n\n"
 
-    # 3. The Main Table
-    content += "## Engineering Hubs & Career Portals\n"
-
-    content += "| # | Organization | Focus Sectors | Policy | Talent Portals |\n"
-    content += "| :--- | :--- | :--- | :--- | :--- |\n"
+    # 3. Company directory: full table in a separate file, link from README
+    hubs_filename = "engineering-hubs.md"
+    hubs_lines = [
+        "# Engineering Hubs & Career Portals\n",
+        "\n",
+        "Curated organizations, focus sectors, work policy, and talent links.\n",
+        "\n",
+        "| # | Organization | Focus Sectors | Policy | Talent Portals |\n",
+        "| :--- | :--- | :--- | :--- | :--- |\n",
+    ]
 
     for idx, c in enumerate(all_companies, start=1):
-        # Name and URL
         company_name_md = f"[{c['name']}]({c['url']})" if c.get("url") else c["name"]
 
-        # Policy Badge Logic
         policy = c.get("work_policy", "N/A").strip().lower().replace("-", "")
 
         p_color = {
@@ -77,7 +80,6 @@ def generate():
             f"![](https://img.shields.io/badge/-{policy}-{p_color}?style=flat-square)"
         )
 
-        # Formatting Links
         careers = f"[Careers]({c['careers_url']})" if c.get("careers_url") else "—"
         linkedin_id = c.get("linkedin_company_id", "")
         linkedin = (
@@ -86,12 +88,17 @@ def generate():
             else "—"
         )
 
-        # Sector Tags
         sectors = ", ".join([f"`{s}`" for s in c.get("sectors", [])])
 
-        content += f"| {idx:02} | **{company_name_md}** | {sectors} | {policy_badge} | {careers} • {linkedin} |\n"
+        hubs_lines.append(
+            f"| {idx:02} | **{company_name_md}** | {sectors} | {policy_badge} | {careers} • {linkedin} |\n"
+        )
 
-    content += "\n---\n"
+    with open(hubs_filename, "w", encoding="utf-8") as f:
+        f.writelines(hubs_lines)
+
+    content += "## Engineering Hubs & Career Portals\n\n"
+    content += f"The full directory is in **[{hubs_filename}]({hubs_filename})** (markdown table).\n\n---\n"
 
     # 4. Search Queries (As before)
     if "queries" in queries_data:
