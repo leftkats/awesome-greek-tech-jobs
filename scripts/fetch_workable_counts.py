@@ -18,7 +18,7 @@ YAML_PATH = Path("data/companies.yaml")
 OUTPUT_PATH = Path("data/workable_counts.yaml")
 
 # PLAN 1: Anti-Blocking Measures
-DELAY_SEC = 11  # Slow and steady to avoid IP-based rate limiting
+DELAY_SEC = 9  # Slow and steady to avoid IP-based rate limiting
 TIMEOUT_SEC = 25
 BROWSER_UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
