@@ -296,8 +296,8 @@
                 <button type="button" id="statWorkableHiringBtn"
                     class="stat-workable-hiring whitespace-nowrap text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
                     aria-pressed="false" disabled
-                    title="Show only companies with open Workable roles in Greece">Workable <span id="workableLiveTotal"
-                        class="tabular-nums text-emerald-700 dark:text-emerald-400">…</span> roles (GR)</button>
+                    title="Show only companies with open Workable roles in Greece"><span id="workableLiveTotal"
+                        class="tabular-nums text-emerald-700 dark:text-emerald-400">…</span> open roles via Workable</button>
                 {% endif %}
             </p>
             {% if stats.workable_companies_count %}
@@ -849,7 +849,7 @@
 
                 if (n === 0) {
                     if (badge) {
-                        badge.innerHTML = '<span class="text-[9px] font-bold mono-text uppercase opacity-60">No openings (GR)</span>';
+                        badge.innerHTML = '<span class="text-xs sm:text-[9px] font-bold mono-text uppercase opacity-60">No openings</span>';
                     }
                     return;
                 }
