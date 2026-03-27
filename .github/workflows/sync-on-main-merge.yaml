@@ -7,6 +7,7 @@ on:
   schedule:
     # Daily 05:00 UTC — refresh Workable Greece incountry counts + regenerate index.html
     - cron: "0 5 * * *"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -51,7 +52,7 @@ jobs:
             fi
           fi
 
-          if [ "$EVENT_NAME" = "schedule" ]; then
+          if [ "$EVENT_NAME" = "schedule" ] || [ "$EVENT_NAME" = "workflow_dispatch" ]; then
             uv run python -m scripts.fetch_workable_counts
             uv run python -m scripts.generate_index
 
