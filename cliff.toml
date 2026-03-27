@@ -2,18 +2,33 @@
 # Release notes are generated for GitHub Releases via git-cliff in CI.
 
 [changelog]
-header = "## What's changed\n\n"
+header = ""
+body = """
+{% for group, commits in commits | group_by(attribute="group") %}\
+### {{ group }}
+{% for commit in commits %}\
+- {{ commit.message | split(pat="\n") | first | trim }} ([`{{ commit.id | truncate(length=7, end="") }}`](https://github.com/leftkats/awesome-greek-tech-jobs/commit/{{ commit.id }}))
+{%- endfor %}
+{% endfor %}\
+"""
 trim = true
-# render = ...
 
 [git]
 conventional_commits = true
 filter_unconventional = false
+split_commits = false
+
+commit_preprocessors = [
+    { pattern = '\\(#([0-9]+)\\)', replace = '' },
+]
 
 commit_parsers = [
+    { message = "\\[skip ci\\]", skip = true },
     { message = "^feat", group = "Features" },
     { message = "^fix", group = "Bug Fixes" },
+    { message = "^ci", group = "CI" },
     { message = "^doc", group = "Documentation" },
-    { message = "^chore", group = "Chores" },
+    { message = "^refactor", group = "Refactoring" },
+    { message = "^chore", skip = true },
     { message = ".*", group = "Other" },
 ]
