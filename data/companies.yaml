@@ -2285,3 +2285,108 @@
   careers_url: https://apply.workable.com/toloka-ai/
   linkedin_company_id: mindrift-ai
   work_policy: remote
+- name: AbZorba Games P.C.
+  url: http://www.abzorbagames.com/
+  sectors:
+    - Computer Games
+  careers_url: https://apply.workable.com/abzorbagames/
+  linkedin_company_id: abzorba-games
+  work_policy: remote
+- name: Leadtech Group
+  url: https://leadtech.com/
+  sectors:
+    - Software Development
+  careers_url: https://apply.workable.com/leadtech/
+  linkedin_company_id: leadtech-group
+  work_policy: remote
+- name: Channel Factory
+  url: https://www.channelfactory.com/
+  sectors:
+    - Marketing
+    - Advertising
+  careers_url: https://apply.workable.com/channel-factory/
+  linkedin_company_id: channel-factory
+  work_policy: remote
+- name: RetinAI
+  url: https://www.retinai.com/
+  sectors:
+    - Pharmaceuticals
+    - Clinical Trials
+    - Healthcare
+  careers_url: https://apply.workable.com/retinai/
+  linkedin_company_id: retinai
+  work_policy: remote
+- name: SalesCaptain
+  url: https://salescaptain.io/
+  sectors:
+    - AI
+    - Outbound Sales
+    - GTM Strategy
+  careers_url: https://apply.workable.com/salescaptain/
+  linkedin_company_id: salescaptainio
+  work_policy: remote
+- name: Astrato Analytics
+  url: https://www.astrato.io/
+  sectors:
+    - Business Intelligence
+    - Data Analytics
+    - Cloud Platforms
+    - AI
+  careers_url: https://apply.workable.com/astrato-analytics/
+  linkedin_company_id: astratoanalytics
+  work_policy: remote
+- name: GoMining
+  url: https://gomining.com/
+  sectors:
+    - Bitcoin
+    - Cryptocurrency
+    - Blockchain
+  careers_url: https://apply.workable.com/gomining/
+  linkedin_company_id: gmtio
+  work_policy: remote
+- name: Ververica GmbH
+  url: https://www.ververica.com/
+  sectors:
+    - Data Streaming
+    - Real-Time Data Processing
+    - Software Development
+  careers_url: https://apply.workable.com/ververica/
+  linkedin_company_id: ververica
+  work_policy: renote
+- name: Toloka Annotators
+  url: https://toloka.ai/annotators
+  sectors:
+    - AI
+    - Data Annotation
+    - Machine Learning
+  careers_url: https://apply.workable.com/toloka-annotators/
+  linkedin_company_id: toloka-annotators
+  work_policy: remote
+- name: Huzzle.com
+  url: https://www.huzzle.com/
+  sectors:
+    - AI
+    - Recruitment
+    - Talent Management
+  careers_url: https://apply.workable.com/huzzle/
+  linkedin_company_id: huzzle-com
+  work_policy: remote
+- name: Care Across
+  url: https://gr.careacross.com/
+  sectors:
+    - Digital Health
+    - Cancer Care
+    - Patient Support
+    - Clinical Trial Recruitment
+    - Real-World Data Solutions
+  careers_url: https://apply.workable.com/careacross/
+  linkedin_company_id: care-across
+  work_policy: remote
+- name: Mercier Consultancy Europe
+  url: http://www.mercierconsultancy.com/
+  sectors:
+    - IT Consulting
+    - IT Services
+  careers_url: https://apply.workable.com/mercier-consultancy/
+  linkedin_company_id: mercier-consultancy-europe
+  work_policy: remote
