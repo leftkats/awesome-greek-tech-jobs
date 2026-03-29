@@ -1,9 +1,28 @@
-# awesome-greek-tech-jobs
+<p align="center">
+  <br>
+  <img alt="AWGJ" src="assets/vectorized.svg" width="180" />
+  <br>
+  <br>
+</p>
 
-> The open-source map of tech hiring in Greece
+<p align="center">
+  The open-source map of tech hiring in Greece<br>
+  Community-curated directory with weekly open roles count updates.
+  <br>
+  <br>
+</p>
 
+<p align="center">
+  <a href="https://leftkats.github.io/awesome-greek-tech-jobs/"><img src="https://img.shields.io/badge/Companies-248-2563eb?style=for-the-badge" alt="Companies" /></a>
+  <a href="https://leftkats.github.io/awesome-greek-tech-jobs/?hire=1"><img src="https://img.shields.io/badge/Open%20Roles-1232-f59e0b?style=for-the-badge" alt="Open Roles" /></a>
+  <a href="https://leftkats.github.io/awesome-greek-tech-jobs/?pol=remote"><img src="https://img.shields.io/badge/Remote-50-16a34a?style=for-the-badge" alt="Remote" /></a>
+  <a href="https://leftkats.github.io/awesome-greek-tech-jobs/?pol=hybrid"><img src="https://img.shields.io/badge/Hybrid-120-ca8a04?style=for-the-badge" alt="Hybrid" /></a>
+</p>
 
-![Companies](https://img.shields.io/badge/Companies-248-blue?style=for-the-badge) ![Hub](https://img.shields.io/badge/Hub-Athens-red?style=for-the-badge) ![Remote](https://img.shields.io/badge/Remote-50-green?style=for-the-badge) ![Hybrid](https://img.shields.io/badge/Hybrid-120-yellow?style=for-the-badge) ![Open Roles](https://img.shields.io/badge/Open%20Roles-1232-orange?style=for-the-badge)
+<p align="center">
+  <a href="https://github.com/leftkats/awesome-greek-tech-jobs/blob/main/LICENSE"><img src="https://img.shields.io/github/license/leftkats/awesome-greek-tech-jobs?logo=github&label=License" alt="License" /></a>
+  <img src="https://img.shields.io/github/last-commit/leftkats/awesome-greek-tech-jobs?logo=github&label=Last%20Commit" alt="Last Commit" />
+</p>
 
 [**Explore the Live Directory**](https://leftkats.github.io/awesome-greek-tech-jobs/)
 
