@@ -1,3 +1,20 @@
+(function initAgtjConfigFromDom() {
+    const el = document.getElementById("agtj-config");
+    let itemsPerPage = 50;
+    if (el?.textContent?.trim()) {
+        try {
+            const c = JSON.parse(el.textContent);
+            const n = c?.itemsPerPage;
+            if (typeof n === "number" && Number.isFinite(n) && n > 0) {
+                itemsPerPage = n;
+            }
+        } catch (_) {
+            /* keep default */
+        }
+    }
+    window.AGTJ_CONFIG = { itemsPerPage };
+})();
+
 let currentPage = 1;
 const itemsPerPage = Number(window.AGTJ_CONFIG?.itemsPerPage) || 50;
 let activeSectors = [];
@@ -521,6 +538,18 @@ function initWorkableJobCounts() {
         }
     }
 }
+
+document.getElementById("themeToggleBtn")?.addEventListener("click", () => {
+    document.documentElement.classList.toggle("dark");
+});
+
+document.getElementById("prevBtn")?.addEventListener("click", () => {
+    changePage(-1);
+});
+
+document.getElementById("nextBtn")?.addEventListener("click", () => {
+    changePage(1);
+});
 
 applyStateFromUrl();
 setActiveSectors(activeSectors);

@@ -371,7 +371,7 @@ def run_generate_index() -> None:
         companies=companies_data,
         sectors=sorted_sectors,
         locations=sorted_locations,
-        items_per_page=ITEMS_PER_PAGE,
+        agtj_config_json=json.dumps({"itemsPerPage": ITEMS_PER_PAGE}, ensure_ascii=False),
         get_style=get_policy_style,
         stats=stats,
         workable_snapshot=_workable_snapshot,
