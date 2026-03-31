@@ -191,6 +191,12 @@ cython_debug/
 /sitemap.xml
 /robots.txt
 
+# Jekyll (local builds under jekyll-pages/)
+jekyll-pages/_site/
+jekyll-pages/.jekyll-cache/
+jekyll-pages/vendor/
+jekyll-pages/_url.yml
+
 # Cursor
 #  Cursor is an AI-powered code editor. `.cursorignore` specifies files/directories to
 #  exclude from AI features like autocomplete and code analysis. Recommended for sensitive data

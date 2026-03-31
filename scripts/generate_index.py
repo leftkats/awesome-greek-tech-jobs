@@ -18,7 +18,7 @@ Run
 CI: ``.github/workflows/sync-on-main-merge.yaml`` runs on ``main`` (push, weekly,
 manual): refreshes ``data/workable_counts.yaml`` on schedule, regenerates readme /
 engineering-hubs, runs this script, then **force-pushes** only the static bundle
-(HTML, ``sitemap.xml``, ``robots.txt``, and page assets) to branch ``live`` for
+(HTML and page assets) to branch ``live``; ``sitemap.xml`` / ``robots.txt`` are built by Jekyll for
 GitHub Pages. Paths align with ``scripts.fetch_workable_counts``.
 """
 
@@ -27,7 +27,6 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 
 import yaml
@@ -40,8 +39,6 @@ from scripts.workable_apply_slug import extract_workable_apply_slug
 # --- Configuration (aligned with scripts/fetch_workable_counts.py) ---
 YAML_PATH = "data/companies.yaml"
 OUTPUT_PATH = "index.html"
-SITEMAP_PATH = "sitemap.xml"
-ROBOTS_PATH = "robots.txt"
 ITEMS_PER_PAGE = 50
 WORKABLE_SNAPSHOT_PATH = Path("data/workable_counts.yaml")
 
@@ -382,28 +379,6 @@ def run_generate_index() -> None:
 
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         f.write(final_html)
-
-    lastmod = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    sitemap_xml = (
-        '<?xml version="1.0" encoding="UTF-8"?>\n'
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        "  <url>\n"
-        f"    <loc>{_meta['canonical_url']}</loc>\n"
-        f"    <lastmod>{lastmod}</lastmod>\n"
-        "    <changefreq>daily</changefreq>\n"
-        "    <priority>1.0</priority>\n"
-        "  </url>\n"
-        "</urlset>\n"
-    )
-    with open(SITEMAP_PATH, "w", encoding="utf-8") as f:
-        f.write(sitemap_xml)
-
-    robots_body = (
-        "User-agent: *\nAllow: /\n\n"
-        f"Sitemap: {_meta['site_origin']}/sitemap.xml\n"
-    )
-    with open(ROBOTS_PATH, "w", encoding="utf-8") as f:
-        f.write(robots_body)
 
     print("Website updated with modernized UI template and refreshed styles.")
 

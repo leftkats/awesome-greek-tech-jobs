@@ -46,7 +46,7 @@ If you want to work on an open issue, follow this simple flow:
 4. **Implement and test locally**:
    - `uv sync --frozen`
    - `uv run python -m scripts.generate_readme`
-   - `uv run python -m scripts.generate_index` (writes `index.html`, `sitemap.xml`, and `robots.txt` in the repo root; those outputs are gitignored on `main` and are published to branch **`live`** by CI)
+   - `uv run python -m scripts.generate_index` (writes `index.html` in the repo root; gitignored on `main`). **`sitemap.xml`** and **`robots.txt`** for the live site are produced by **Jekyll** (`jekyll-pages/`, plugin `jekyll-sitemap` + Liquid `robots.txt`) during CI before deploy to branch **`live`**. To run that locally: install Ruby/Bundler, copy `index.html` and `assets/` into `jekyll-pages/` like CI, then `uv run python scripts/jekyll_url_config.py > jekyll-pages/_url.yml` and `cd jekyll-pages && bundle install && bundle exec jekyll build --config _config.yml,_url.yml` (output in `jekyll-pages/_site/`).
    - (if needed) `uv run python -m scripts.fetch_workable_counts`
 5. **Open a PR linked to the issue**:
    - Include `Closes #<issue-number>` (or `Fixes #<issue-number>`) in the PR description so GitHub closes the issue automatically after merge.
@@ -62,7 +62,7 @@ If you want to work on an open issue, follow this simple flow:
 
 ## GitHub Pages
 
-Branch **`live`** holds **only** the static files GitHub Pages serves (HTML, sitemap, robots, and page assets). It is updated automatically on every push to **`main`** (and on the weekly Workable refresh). Set **Settings → Pages → Build and deployment → Branch** to **`live`** and **`/`**. Templates, `scripts/generate_index.py`, and source assets stay on **`main`**.
+Branch **`live`** holds **only** the built static site (HTML, **Jekyll-generated** `sitemap.xml` and `robots.txt`, page assets, and **`.nojekyll`** so GitHub Pages does not run Jekyll a second time on that branch). It is updated automatically on every push to **`main`**. Point **Settings → Pages** at **`live`** / **`/`**. Jekyll source for SEO files lives under **`jekyll-pages/`** on **`main`**.
 
 ## Workflow Automation
 

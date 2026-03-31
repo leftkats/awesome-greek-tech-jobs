@@ -1,6 +1,6 @@
-# Regenerates readme / engineering-hubs on `main`, builds the static site from this
-# branch, then force-pushes **only** the published files (HTML + sitemap + robots +
-# assets) to branch `live` for GitHub Pages.
+# Regenerates readme / engineering-hubs on `main`, builds `index.html` with Python,
+# runs **Jekyll** (`jekyll-pages/`: `jekyll-sitemap` + Liquid `robots.txt`), then
+# force-pushes `_site/` (+ `.nojekyll`) to branch `live` for GitHub Pages.
 #
 # Skips when the triggering push was the bot follow-up (`[skip ci]` in the message).
 # **Settings → Pages → Branch `live`, folder `/`.**
@@ -44,6 +44,13 @@ jobs:
       - name: Install Python and dependencies
         run: uv sync --frozen
 
+      - name: Set up Ruby (Jekyll for sitemap.xml and robots.txt)
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+          working-directory: jekyll-pages
+
       - name: Sync content and deploy site to live
         env:
           EVENT_NAME: ${{ github.event_name }}
@@ -55,15 +62,25 @@ jobs:
             uv run python -m scripts.generate_index
           }
 
-          # Orphan force-push: branch `live` contains only files served by Pages.
+          # Jekyll build → _site/ (sitemap.xml, robots.txt, index.html, assets).
+          # .nojekyll: GitHub Pages serves files as-is (no second Jekyll pass on `live`).
           deploy_live() {
             LIVE_MSG="$1"
-            SITE="$(mktemp -d)"
-            mkdir -p "${SITE}/assets/css" "${SITE}/assets/js"
-            cp index.html sitemap.xml robots.txt "${SITE}/"
-            cp assets/css/index.css "${SITE}/assets/css/"
-            cp assets/js/gtag-init.js assets/js/index.js assets/js/tailwind-config.js "${SITE}/assets/js/"
-            cp assets/og-image.png assets/vectorized.svg "${SITE}/assets/"
+            WORK="$(mktemp -d)"
+            cp -a "${GITHUB_WORKSPACE}/jekyll-pages/." "${WORK}/"
+            uv run python "${GITHUB_WORKSPACE}/scripts/jekyll_url_config.py" > "${WORK}/_url.yml"
+            cp "${GITHUB_WORKSPACE}/index.html" "${WORK}/"
+            mkdir -p "${WORK}/assets/css" "${WORK}/assets/js"
+            cp "${GITHUB_WORKSPACE}/assets/css/index.css" "${WORK}/assets/css/"
+            cp "${GITHUB_WORKSPACE}/assets/js/gtag-init.js" "${GITHUB_WORKSPACE}/assets/js/index.js" "${GITHUB_WORKSPACE}/assets/js/tailwind-config.js" "${WORK}/assets/js/"
+            cp "${GITHUB_WORKSPACE}/assets/og-image.png" "${GITHUB_WORKSPACE}/assets/vectorized.svg" "${WORK}/assets/"
+            (
+              cd "${WORK}"
+              bundle install
+              bundle exec jekyll build --config _config.yml,_url.yml
+            )
+            SITE="${WORK}/_site"
+            touch "${SITE}/.nojekyll"
             (
               cd "${SITE}"
               git init -b live
@@ -74,7 +91,7 @@ jobs:
               git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
               git push --force origin live
             )
-            rm -rf "${SITE}"
+            rm -rf "${WORK}"
           }
 
           if [ "$EVENT_NAME" = "push" ]; then
