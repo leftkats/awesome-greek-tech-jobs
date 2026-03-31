@@ -1,9 +1,9 @@
-# Regenerates readme / engineering-hubs on `main`, builds the static site, and commits
-# HTML + assets to branch `live`. Weekly job also refreshes Workable counts on `main`.
+# Regenerates readme / engineering-hubs on `main`, builds the static site from this
+# branch, then force-pushes **only** the published files (HTML + sitemap + robots +
+# assets) to branch `live` for GitHub Pages.
 #
 # Skips when the triggering push was the bot follow-up (`[skip ci]` in the message).
-# For GitHub Pages, use **Settings → Pages → Deploy from a branch** with branch `live`
-# and folder `/` (not `main`).
+# **Settings → Pages → Branch `live`, folder `/`.**
 
 name: Update Docs and README on Merge
 
@@ -12,7 +12,6 @@ on:
     branches:
       - main
   schedule:
-    # Weekly Monday 05:00 UTC — refresh Workable Greece counts + rebuild site on `live`
     - cron: "0 5 * * 1"
   workflow_dispatch:
 
@@ -31,66 +30,48 @@ jobs:
        !contains(github.event.head_commit.message, '[skip ci]'))
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main (data & doc generators)
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          path: data-repo
-          fetch-depth: 0
-
-      - name: Checkout live (static site sources)
-        uses: actions/checkout@v4
-        with:
-          path: live-site
-          ref: live
           fetch-depth: 0
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v5
 
       - name: Install Python and dependencies
-        working-directory: data-repo
         run: uv sync --frozen
 
-      - name: Copy site builder from live into work tree
-        run: |
-          set -euo pipefail
-          cd data-repo
-          mkdir -p templates scripts assets/css assets/js
-          cp -R ../live-site/templates/. ./templates/
-          cp ../live-site/scripts/generate_index.py ./scripts/
-          cp -R ../live-site/assets/css/. ./assets/css/
-          cp -R ../live-site/assets/js/. ./assets/js/
-          cp ../live-site/assets/og-image.png ./assets/
-
-      - name: Sync content
+      - name: Sync content and deploy site to live
         env:
           EVENT_NAME: ${{ github.event_name }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          cd data-repo
 
           run_gen_index() {
             uv run python -m scripts.generate_index
           }
 
-          publish_live_artifacts() {
+          # Orphan force-push: branch `live` contains only files served by Pages.
+          deploy_live() {
             LIVE_MSG="$1"
-            cp index.html sitemap.xml robots.txt ../live-site/
-            cp -R assets/css/. ../live-site/assets/css/
-            cp -R assets/js/. ../live-site/assets/js/
-            cp assets/og-image.png ../live-site/
-
-            cd ../live-site
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-            git config user.name "github-actions[bot]"
-            git add index.html sitemap.xml robots.txt assets/css assets/js assets/og-image.png
-            if git diff --staged --quiet; then
-              echo "No live-site changes to commit."
-            else
+            SITE="$(mktemp -d)"
+            mkdir -p "${SITE}/assets/css" "${SITE}/assets/js"
+            cp index.html sitemap.xml robots.txt "${SITE}/"
+            cp assets/css/index.css "${SITE}/assets/css/"
+            cp assets/js/gtag-init.js assets/js/index.js assets/js/tailwind-config.js "${SITE}/assets/js/"
+            cp assets/og-image.png assets/vectorized.svg "${SITE}/assets/"
+            (
+              cd "${SITE}"
+              git init -b live
+              git config user.email "github-actions[bot]@users.noreply.github.com"
+              git config user.name "github-actions[bot]"
+              git add -A
               git commit -m "${LIVE_MSG}"
-              git push origin live
-            fi
-            cd ../data-repo
+              git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+              git push --force origin live
+            )
+            rm -rf "${SITE}"
           }
 
           if [ "$EVENT_NAME" = "push" ]; then
@@ -109,7 +90,7 @@ jobs:
               MAIN_CHANGED=1
             fi
 
-            publish_live_artifacts "chore: rebuild static site from main [skip ci]"
+            deploy_live "chore: deploy static site from main [skip ci]"
 
             if [ "$MAIN_CHANGED" -eq 1 ]; then
               git push origin main
@@ -136,7 +117,7 @@ jobs:
               MAIN_CHANGED=1
             fi
 
-            publish_live_artifacts "chore: rebuild static site after Workable refresh [skip ci]"
+            deploy_live "chore: deploy static site after Workable refresh [skip ci]"
 
             if [ "$MAIN_CHANGED" -eq 1 ]; then
               git push origin main

@@ -1,0 +1,83 @@
+.hidden-row {
+    display: none !important;
+}
+
+.policy-filter,
+.sector-filter,
+.location-filter,
+.stat-header-policy,
+.stat-workable-hiring {
+    transition: all 150ms ease;
+}
+
+.policy-filter.active-filter,
+.sector-filter.active-filter,
+.location-filter.active-filter {
+    box-shadow: inset 0 0 0 1px currentColor;
+    opacity: 1;
+}
+
+.policy-filter:not(.active-filter),
+.sector-filter:not(.active-filter),
+.location-filter:not(.active-filter) {
+    opacity: 0.7;
+}
+
+body.has-policy-filters .policy-filter:not(.active-filter),
+body.has-sector-filters .sector-filter:not(.active-filter),
+body.has-location-filters .location-filter:not(.active-filter) {
+    opacity: 0.3;
+}
+
+.company-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.company-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.stat-header-policy,
+.stat-workable-hiring {
+    border: none;
+    background: transparent;
+    padding: 0.1rem 0;
+    cursor: pointer;
+    text-underline-offset: 2px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.stat-header-policy:disabled,
+.stat-workable-hiring:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
+.stat-header-policy:focus-visible,
+.stat-workable-hiring:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+.stat-header-active {
+    text-decoration: underline;
+    opacity: 1;
+}
+
+.company-row-has-openings {
+    border-color: rgb(16 185 129 / 0.4);
+    background: linear-gradient(180deg, rgb(236 253 245 / 0.8), rgb(255 255 255 / 1));
+}
+
+.dark .company-row-has-openings {
+    background: linear-gradient(180deg, rgb(16 185 129 / 0.1), rgb(15 23 42 / 0.9));
+    border-color: rgb(52 211 153 / 0.4);
+}
+
+.company-career-link-has-roles {
+    border-color: rgb(16 185 129 / 0.8);
+}

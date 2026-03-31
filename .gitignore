@@ -186,7 +186,7 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-# Static site output (sources and commits live on branch `live`; CI may generate these locally)
+# Generated static bundle (not committed on `main`; CI deploys it to branch `live`)
 /index.html
 /sitemap.xml
 /robots.txt
