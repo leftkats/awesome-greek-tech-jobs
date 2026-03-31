@@ -1,11 +1,9 @@
-# Regenerates readme / index (and weekly Workable counts) and commits when needed.
+# Regenerates readme / engineering-hubs on `main`, builds the static site, and commits
+# HTML + assets to branch `live`. Weekly job also refreshes Workable counts on `main`.
 #
-# Skips the whole workflow when the triggering push was the bot’s follow-up commit
-# (`[skip ci]` in the message). That avoids a second run right after we push, but it
-# does **not** stop GitHub from cancelling an in-flight *separate* Pages deployment
-# when this job pushes a new commit. For a clean green check on every commit, use
-# **Settings → Pages → Deploy from a branch** (main, /) instead of “GitHub Actions”.
-# See contributing.md (“GitHub Pages and green checks”).
+# Skips when the triggering push was the bot follow-up (`[skip ci]` in the message).
+# For GitHub Pages, use **Settings → Pages → Deploy from a branch** with branch `live`
+# and folder `/` (not `main`).
 
 name: Update Docs and README on Merge
 
@@ -14,7 +12,7 @@ on:
     branches:
       - main
   schedule:
-    # Weekly Monday 05:00 UTC — refresh Workable Greece counts + regenerate index.html
+    # Weekly Monday 05:00 UTC — refresh Workable Greece counts + rebuild site on `live`
     - cron: "0 5 * * 1"
   workflow_dispatch:
 
@@ -28,38 +26,92 @@ concurrency:
 jobs:
   deploy:
     if: >
-      github.repository == 'leftkats/awesome-greek-tech-jobs' &&
+      github.repository == 'leftkats/awesome-greek-it-jobs' &&
       (github.event_name != 'push' ||
        !contains(github.event.head_commit.message, '[skip ci]'))
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout main (data & doc generators)
         uses: actions/checkout@v4
+        with:
+          path: data-repo
+          fetch-depth: 0
+
+      - name: Checkout live (static site sources)
+        uses: actions/checkout@v4
+        with:
+          path: live-site
+          ref: live
+          fetch-depth: 0
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v5
 
       - name: Install Python and dependencies
+        working-directory: data-repo
         run: uv sync --frozen
 
-      - name: Sync Content
+      - name: Copy site builder from live into work tree
+        run: |
+          set -euo pipefail
+          cd data-repo
+          mkdir -p templates scripts assets/css assets/js
+          cp -R ../live-site/templates/. ./templates/
+          cp ../live-site/scripts/generate_index.py ./scripts/
+          cp -R ../live-site/assets/css/. ./assets/css/
+          cp -R ../live-site/assets/js/. ./assets/js/
+          cp ../live-site/assets/og-image.png ./assets/
+
+      - name: Sync content
         env:
           EVENT_NAME: ${{ github.event_name }}
         run: |
           set -euo pipefail
+          cd data-repo
+
+          run_gen_index() {
+            uv run python -m scripts.generate_index
+          }
+
+          publish_live_artifacts() {
+            LIVE_MSG="$1"
+            cp index.html sitemap.xml robots.txt ../live-site/
+            cp -R assets/css/. ../live-site/assets/css/
+            cp -R assets/js/. ../live-site/assets/js/
+            cp assets/og-image.png ../live-site/
+
+            cd ../live-site
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git config user.name "github-actions[bot]"
+            git add index.html sitemap.xml robots.txt assets/css assets/js assets/og-image.png
+            if git diff --staged --quiet; then
+              echo "No live-site changes to commit."
+            else
+              git commit -m "${LIVE_MSG}"
+              git push origin live
+            fi
+            cd ../data-repo
+          }
 
           if [ "$EVENT_NAME" = "push" ]; then
             uv run python -m scripts.generate_readme
-            uv run python -m scripts.generate_index
+            run_gen_index
 
             git config --local user.email "github-actions[bot]@users.noreply.github.com"
             git config --local user.name "github-actions[bot]"
-            git add readme.md engineering-hubs.md index.html sitemap.xml robots.txt
 
+            git add readme.md engineering-hubs.md
+            MAIN_CHANGED=0
             if git diff --staged --quiet; then
-              echo "No changes to commit."
+              echo "No main-branch doc changes to commit."
             else
               git commit -m "chore(📚): auto-update docs with fresh content [skip ci]"
+              MAIN_CHANGED=1
+            fi
+
+            publish_live_artifacts "chore: rebuild static site from main [skip ci]"
+
+            if [ "$MAIN_CHANGED" -eq 1 ]; then
               git push origin main
             fi
           fi
@@ -67,16 +119,26 @@ jobs:
           if [ "$EVENT_NAME" = "schedule" ] || [ "$EVENT_NAME" = "workflow_dispatch" ]; then
             uv run python -m scripts.fetch_workable_counts
             uv run python -m scripts.generate_readme
-            uv run python -m scripts.generate_index
+            run_gen_index
 
             git config --local user.email "github-actions[bot]@users.noreply.github.com"
             git config --local user.name "github-actions[bot]"
-            git add readme.md engineering-hubs.md index.html sitemap.xml robots.txt data/workable_counts.yaml
-
+            git add readme.md engineering-hubs.md data/workable_counts.yaml
+            MAIN_CHANGED=0
             if git diff --staged --quiet; then
-              echo "No changes to commit."
+              echo "No main-branch changes to commit."
             else
-              git commit -m "chore: refresh Workable job counts (weekly schedule) [skip ci]"
+              if [ "$EVENT_NAME" = "schedule" ]; then
+                git commit -m "chore: refresh Workable job counts (weekly schedule) [skip ci]"
+              else
+                git commit -m "chore: refresh Workable job counts (manual) [skip ci]"
+              fi
+              MAIN_CHANGED=1
+            fi
+
+            publish_live_artifacts "chore: rebuild static site after Workable refresh [skip ci]"
+
+            if [ "$MAIN_CHANGED" -eq 1 ]; then
               git push origin main
             fi
           fi

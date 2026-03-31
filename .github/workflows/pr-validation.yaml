@@ -22,6 +22,13 @@ jobs:
       - name: Install Python and dependencies
         run: uv sync --frozen
 
+      - name: Fetch site sources from branch live
+        run: |
+          set -euo pipefail
+          git fetch origin live
+          mkdir -p templates scripts assets/css assets/js
+          git checkout origin/live -- templates scripts/generate_index.py assets/css assets/js assets/og-image.png
+
       - name: Run Scripts
         id: run_scripts
         continue-on-error: true

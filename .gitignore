@@ -186,6 +186,11 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
+# Static site output (sources and commits live on branch `live`; CI may generate these locally)
+/index.html
+/sitemap.xml
+/robots.txt
+
 # Cursor
 #  Cursor is an AI-powered code editor. `.cursorignore` specifies files/directories to
 #  exclude from AI features like autocomplete and code analysis. Recommended for sensitive data

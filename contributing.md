@@ -46,7 +46,10 @@ If you want to work on an open issue, follow this simple flow:
 4. **Implement and test locally**:
    - `uv sync --frozen`
    - `uv run python -m scripts.generate_readme`
-   - `uv run python -m scripts.generate_index`
+   - Static site sources (`templates/`, `scripts/generate_index.py`, page CSS/JS, `assets/og-image.png`) live on branch **`live`**. To build `index.html` locally from `main`:
+     - `git fetch origin live`
+     - `git checkout origin/live -- templates scripts/generate_index.py assets/css assets/js assets/og-image.png`
+     - `uv run python -m scripts.generate_index` (writes `index.html`, `sitemap.xml`, and `robots.txt` in the repo root; on `main` those paths are gitignored)
    - (if needed) `uv run python -m scripts.fetch_workable_counts`
 5. **Open a PR linked to the issue**:
    - Include `Closes #<issue-number>` (or `Fixes #<issue-number>`) in the PR description so GitHub closes the issue automatically after merge.
@@ -59,6 +62,10 @@ If you want to work on an open issue, follow this simple flow:
 * **Working Links**: Ensure all URLs provided are active and correct.
 * **YAML Validation**: Make sure the YAML files are properly formatted and valid.
 * **Descriptive Entries**: Provide clear and concise descriptions for roles and resources.
+
+## GitHub Pages
+
+The published site is built from branch **`live`** (root). After this split, set **Settings → Pages → Build and deployment → Branch** to **`live`** and **`/`** so visitors get the static directory, while **`main`** stays the source for data and README tooling.
 
 ## Workflow Automation
 
