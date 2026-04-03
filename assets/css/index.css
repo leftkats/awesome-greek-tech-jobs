@@ -4,7 +4,7 @@
 
 .policy-filter,
 .sector-filter,
-.location-filter,
+.company-location-tag,
 .stat-header-policy,
 .stat-workable-hiring {
     transition: all 150ms ease;
@@ -12,20 +12,20 @@
 
 .policy-filter.active-filter,
 .sector-filter.active-filter,
-.location-filter.active-filter {
+.company-location-tag.active-filter {
     box-shadow: inset 0 0 0 1px currentColor;
     opacity: 1;
 }
 
 .policy-filter:not(.active-filter),
 .sector-filter:not(.active-filter),
-.location-filter:not(.active-filter) {
+.company-location-tag:not(.active-filter) {
     opacity: 0.7;
 }
 
 body.has-policy-filters .policy-filter:not(.active-filter),
 body.has-sector-filters .sector-filter:not(.active-filter),
-body.has-location-filters .location-filter:not(.active-filter) {
+body.has-location-filters .company-location-tag:not(.active-filter) {
     opacity: 0.3;
 }
 

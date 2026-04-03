@@ -20,6 +20,7 @@ const itemsPerPage = Number(window.AGTJ_CONFIG?.itemsPerPage) || 50;
 let activeSectors = [];
 let activeLocations = [];
 let activePolicies = [];
+let activeIndustries = [];
 let filterWorkableHiringOnly = false;
 let activeSort = "open_desc";
 const ALLOWED_SORTS = new Set(["open_desc", "open_asc"]);
@@ -30,6 +31,10 @@ function normalizeSector(sector) {
 
 function normalizeLocation(location) {
     return (location ?? "").toString().trim().toLowerCase();
+}
+
+function normalizeIndustry(industry) {
+    return (industry ?? "").toString().trim().toLowerCase();
 }
 
 function setActiveSectors(next) {
@@ -60,15 +65,139 @@ function toggleSectorFilter(sector) {
     updatePagination();
 }
 
-function setActiveLocations(next) {
-    const deduped = Array.from(new Set((next ?? []).map(normalizeLocation).filter(Boolean)));
-    activeLocations = deduped;
-    document.body.classList.toggle("has-location-filters", activeLocations.length > 0);
-    updateLocationFilterUI();
+function updateIndustryFilterSummary() {
+    const el = document.getElementById("industryFilterSummary");
+    if (!el) return;
+    if (activeIndustries.length === 0) {
+        el.textContent = "All industries";
+        return;
+    }
+    const labelFor = (norm) => {
+        const cb = Array.from(document.querySelectorAll(".industry-filter-cb")).find(
+            (c) => normalizeIndustry(c.value) === norm,
+        );
+        return cb ? cb.value : null;
+    };
+    const labels = activeIndustries.map(labelFor).filter(Boolean);
+    if (labels.length === 0) {
+        el.textContent = "All industries";
+        return;
+    }
+    if (labels.length === 1) {
+        el.textContent = labels[0];
+        return;
+    }
+    el.textContent = `${labels[0]} +${labels.length - 1} more`;
 }
 
-function updateLocationFilterUI() {
-    document.querySelectorAll(".location-filter").forEach((btn) => {
+function updateLocationFilterSummary() {
+    const el = document.getElementById("locationFilterSummary");
+    if (!el) return;
+    if (activeLocations.length === 0) {
+        el.textContent = "All locations";
+        return;
+    }
+    const labelFor = (norm) => {
+        const cb = Array.from(document.querySelectorAll(".location-filter-cb")).find(
+            (c) => normalizeLocation(c.value) === norm,
+        );
+        return cb ? cb.value : null;
+    };
+    const labels = activeLocations.map(labelFor).filter(Boolean);
+    if (labels.length === 0) {
+        el.textContent = "All locations";
+        return;
+    }
+    if (labels.length === 1) {
+        el.textContent = labels[0];
+        return;
+    }
+    el.textContent = `${labels[0]} +${labels.length - 1} more`;
+}
+
+function syncIndustryFilterWidgetsFromState() {
+    const want = new Set(activeIndustries);
+    document.querySelectorAll(".industry-filter-cb").forEach((cb) => {
+        cb.checked = want.has(normalizeIndustry(cb.value));
+    });
+    updateIndustryFilterSummary();
+}
+
+function syncLocationFilterWidgetsFromState() {
+    const want = new Set(activeLocations);
+    document.querySelectorAll(".location-filter-cb").forEach((cb) => {
+        cb.checked = want.has(normalizeLocation(cb.value));
+    });
+    updateLocationFilterSummary();
+}
+
+function closeAllFilterPanels() {
+    document.getElementById("industryFilterPanel")?.classList.add("hidden");
+    document.getElementById("locationFilterPanel")?.classList.add("hidden");
+    document.getElementById("industryFilterToggle")?.setAttribute("aria-expanded", "false");
+    document.getElementById("locationFilterToggle")?.setAttribute("aria-expanded", "false");
+    document.getElementById("industryFilterChevron")?.classList.remove("rotate-180");
+    document.getElementById("locationFilterChevron")?.classList.remove("rotate-180");
+}
+
+function toggleIndustryFilterPanel(ev) {
+    ev?.stopPropagation();
+    const panel = document.getElementById("industryFilterPanel");
+    const btn = document.getElementById("industryFilterToggle");
+    const chev = document.getElementById("industryFilterChevron");
+    if (!panel || !btn) return;
+    const wasOpen = !panel.classList.contains("hidden");
+    closeAllFilterPanels();
+    if (!wasOpen) {
+        panel.classList.remove("hidden");
+        btn.setAttribute("aria-expanded", "true");
+        chev?.classList.add("rotate-180");
+    }
+}
+
+function toggleLocationFilterPanel(ev) {
+    ev?.stopPropagation();
+    const panel = document.getElementById("locationFilterPanel");
+    const btn = document.getElementById("locationFilterToggle");
+    const chev = document.getElementById("locationFilterChevron");
+    if (!panel || !btn) return;
+    const wasOpen = !panel.classList.contains("hidden");
+    closeAllFilterPanels();
+    if (!wasOpen) {
+        panel.classList.remove("hidden");
+        btn.setAttribute("aria-expanded", "true");
+        chev?.classList.add("rotate-180");
+    }
+}
+
+function setActiveIndustries(next) {
+    const raw = Array.from(new Set((next ?? []).map(normalizeIndustry).filter(Boolean)));
+    const boxes = document.querySelectorAll(".industry-filter-cb");
+    if (boxes.length) {
+        const allowed = new Set(Array.from(boxes).map((cb) => normalizeIndustry(cb.value)));
+        activeIndustries = raw.filter((x) => allowed.has(x));
+    } else {
+        activeIndustries = raw;
+    }
+    syncIndustryFilterWidgetsFromState();
+}
+
+function setActiveLocations(next) {
+    const raw = Array.from(new Set((next ?? []).map(normalizeLocation).filter(Boolean)));
+    const boxes = document.querySelectorAll(".location-filter-cb");
+    let deduped = raw;
+    if (boxes.length) {
+        const allowed = new Set(Array.from(boxes).map((cb) => normalizeLocation(cb.value)));
+        deduped = raw.filter((x) => allowed.has(x));
+    }
+    activeLocations = deduped;
+    document.body.classList.toggle("has-location-filters", activeLocations.length > 0);
+    updateCompanyLocationTagUI();
+    syncLocationFilterWidgetsFromState();
+}
+
+function updateCompanyLocationTagUI() {
+    document.querySelectorAll(".company-location-tag").forEach((btn) => {
         const loc = normalizeLocation(btn.dataset.location);
         const isActive = activeLocations.includes(loc);
         btn.classList.toggle("active-filter", isActive);
@@ -245,6 +374,8 @@ function updatePagination() {
             " " +
             (row.dataset.sectors || "") +
             " " +
+            (row.dataset.industries || "") +
+            " " +
             (row.dataset.policy || "") +
             " " +
             (row.dataset.locations || "")
@@ -256,6 +387,13 @@ function updatePagination() {
             .map(normalizeSector)
             .filter(Boolean);
         const matchesSector = activeSectors.length === 0 || sectorsList.some((s) => activeSectors.includes(s));
+        const industriesList = (row.dataset.industriesList || "")
+            .split("||")
+            .map((s) => s.trim())
+            .filter(Boolean);
+        const matchesIndustry =
+            activeIndustries.length === 0 ||
+            industriesList.some((ind) => activeIndustries.includes(normalizeIndustry(ind)));
         const locationsList = (row.dataset.locationsList || "")
             .split("||")
             .map(normalizeLocation)
@@ -265,7 +403,14 @@ function updatePagination() {
         const rowPolicy = normalizePolicy(row.dataset.policy);
         const matchesPolicy = activePolicies.length === 0 || activePolicies.includes(rowPolicy);
         const matchesWorkableHiring = !filterWorkableHiringOnly || workableOpeningsSortKey(row) > 0;
-        return matchesText && matchesSector && matchesLocation && matchesPolicy && matchesWorkableHiring;
+        return (
+            matchesText &&
+            matchesSector &&
+            matchesIndustry &&
+            matchesLocation &&
+            matchesPolicy &&
+            matchesWorkableHiring
+        );
     });
 
     sortRows(filtered);
@@ -309,6 +454,8 @@ function syncUrlFromState() {
     else params.delete("pol");
     if (activeSectors.length) params.set("sec", activeSectors.join(","));
     else params.delete("sec");
+    if (activeIndustries.length) params.set("ind", activeIndustries.join(","));
+    else params.delete("ind");
     if (activeLocations.length) params.set("loc", activeLocations.join(","));
     else params.delete("loc");
     if (filterWorkableHiringOnly) params.set("hire", "1");
@@ -337,6 +484,10 @@ function applyStateFromUrl() {
         .map((s) => s.trim())
         .filter(Boolean);
     const sort = (params.get("sort") || "").trim();
+    const indParts = (params.get("ind") || "")
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
 
     filterWorkableHiringOnly = params.get("hire") === "1";
     if (ALLOWED_SORTS.has(sort)) {
@@ -345,6 +496,7 @@ function applyStateFromUrl() {
 
     setActivePolicies(pol);
     setActiveSectors(sec);
+    setActiveIndustries(indParts);
     setActiveLocations(loc);
 }
 
@@ -357,16 +509,62 @@ document.querySelectorAll(".sector-filter").forEach((btn) => {
     });
 });
 
-document.querySelectorAll(".location-filter").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        toggleLocationFilter(btn.dataset.location);
-        syncUrlFromState();
-    });
+document.getElementById("companyList")?.addEventListener("click", (e) => {
+    const tag = e.target.closest(".company-location-tag");
+    if (!tag || !tag.dataset.location) return;
+    e.preventDefault();
+    e.stopPropagation();
+    toggleLocationFilter(tag.dataset.location);
+    syncUrlFromState();
 });
 
 document.getElementById("searchInput").addEventListener("input", () => {
+    currentPage = 1;
+    updatePagination();
+    syncUrlFromState();
+});
+
+document.getElementById("industryFilterToggle")?.addEventListener("click", toggleIndustryFilterPanel);
+document.getElementById("locationFilterToggle")?.addEventListener("click", toggleLocationFilterPanel);
+
+document.getElementById("industryFilterPanel")?.addEventListener("change", (e) => {
+    const t = e.target;
+    if (!(t instanceof HTMLInputElement) || !t.classList.contains("industry-filter-cb")) return;
+    const picked = Array.from(document.querySelectorAll(".industry-filter-cb:checked"))
+        .map((cb) => cb.value)
+        .filter(Boolean);
+    setActiveIndustries(picked);
+    currentPage = 1;
+    updatePagination();
+    syncUrlFromState();
+});
+
+document.getElementById("locationFilterPanel")?.addEventListener("change", (e) => {
+    const t = e.target;
+    if (!(t instanceof HTMLInputElement) || !t.classList.contains("location-filter-cb")) return;
+    const picked = Array.from(document.querySelectorAll(".location-filter-cb:checked"))
+        .map((cb) => cb.value)
+        .filter(Boolean);
+    setActiveLocations(picked);
+    currentPage = 1;
+    updatePagination();
+    syncUrlFromState();
+});
+
+document.addEventListener("click", (e) => {
+    if (e.target.closest("#industryFilterWrap") || e.target.closest("#locationFilterWrap")) return;
+    closeAllFilterPanels();
+});
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeAllFilterPanels();
+});
+
+document.getElementById("clearDropdownFiltersBtn")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    closeAllFilterPanels();
+    setActiveIndustries([]);
+    setActiveLocations([]);
     currentPage = 1;
     updatePagination();
     syncUrlFromState();
@@ -552,8 +750,6 @@ document.getElementById("nextBtn")?.addEventListener("click", () => {
 });
 
 applyStateFromUrl();
-setActiveSectors(activeSectors);
-setActiveLocations(activeLocations);
 initWorkableJobCounts();
 syncUrlFromState();
 initPolicyFilters();

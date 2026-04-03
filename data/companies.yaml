@@ -510,13 +510,13 @@
     - Critical Infrastructure Protection
     - Defense
     - Industry 4.0
-    - Pulic Safety
+    - Public Safety
     - Smart Cities
   careers_url: https://www.satways.net/career/
   linkedin_company_id: satways-ltd
   locations:
     - Athens
-    - Irakleion
+    - Heraklion
     - Patras
     - Volos
   work_policy: on-site
@@ -823,10 +823,10 @@
   sectors:
     - Business Software
     - ERP
-    - IT Servicess
+    - IT Services
   careers_url: https://apply.smartcv.co/entersoft-softone
   linkedin_company_id: entersoftone
-  locatins:
+  locations:
     - Athens
     - Thessaloniki
   work_policy: hybrid
@@ -1005,7 +1005,7 @@
   sectors:
     - AI
     - Defense
-    - Space Manufacturingw
+    - Space Manufacturing
   careers_url: https://delian.ai/careers
   linkedin_company_id: delian-ai
   locations:
@@ -1238,9 +1238,6 @@
   linkedin_company_id: aisera
   locations:
     - Athens
-    - Bangalore
-    - Hyderabad
-    - Santa Clara, CA
   work_policy: remote
 - name: Cyber Emphasis
   url: https://cyberemphasis.com/en/
@@ -1298,11 +1295,11 @@
     - Human Resources
   linkedin_company_id: wherewework-gr
   locations:
-    - Thessalonig
+    - Thessaloniki
     - Patras
-    - Piraues
-    - Larisa
-    - Iraklion
+    - Piraeus
+    - Larissa
+    - Heraklion
   work_policy: on-site
 - name: Sticker Mule
   url: https://www.stickermule.com/
@@ -1314,7 +1311,7 @@
 - name: Agile Actors
   url: http://www.agileactors.com/
   sectors:
-    - Consulating
+    - Consulting
     - IT Services
   careers_url: https://www.agileactors.com/careers
   locations:
@@ -1498,7 +1495,7 @@
 - name: Logstail
   url: https://logstail.com/
   sectors:
-    - Cybersecutiry
+    - Cybersecurity
   careers_url: https://logstail.com/blog/jobs/
   locations:
     - Athens
@@ -1766,7 +1763,7 @@
 - name: Exalor
   url: http://www.exalor.io/
   sectors:
-    - Software Develoopment
+    - Software Development
   locations:
     - Athens
   linkedin_company_id: exalor
@@ -1785,7 +1782,7 @@
   url: https://www.shopflix.gr/
   sectors:
     - E-commerce
-    - Marktetplace
+    - Marketplace
   careers_url: https://shopflix.gr/eykairies-karieras
   locations:
     - Athens
@@ -1907,7 +1904,7 @@
 - name: Elpen Pharmaceutical Co. Inc.
   url: http://www.elpen.gr/
   sectors:
-    - Pharaceutical Manufacturing
+    - Pharmaceutical Manufacturing
   careers_url: https://www.elpen.gr/en/article/392/eykairies-karieras
   locations:
     - Athens
@@ -1927,7 +1924,7 @@
   sectors:
     - Logistics
     - Supply Chain
-    - Trasportation
+    - Transportation
   careers_url: https://swiftmarine.global/careers/
   locations:
     - Athens
@@ -2033,8 +2030,6 @@
     - Software Development
   careers_url: https://www.dualentry.com/careers
   linkedin_company_id: dualentry
-  locations:
-    - New York, NY
   work_policy: remote
 - name: Repath Solutions
   url: https://repathsolutions.com/
@@ -2042,8 +2037,6 @@
     - IT Consulting
     - IT Services
   careers_url: https://repathsolutions.com/careers/
-  locations:
-    - West End, England
   work_policy: remote
 - name: MindFriend PRO
   url: https://mindfriendpro.com/
@@ -2068,7 +2061,6 @@
     - Supply Chain
     - Transportation
   locations:
-    - Schindellegi, Schwyz
     - Thessaloniki
   linkedin_company_id: kuehne-nagel
   work_policy: hybrid
@@ -2289,7 +2281,7 @@
 - name: Monterail
   url: https://www.monterail.com
   sectors:
-    - Sofware Development
+    - Software Development
   careers_url: https://apply.workable.com/monterail/
   linkedin_company_id: monterail
   work_policy: remote

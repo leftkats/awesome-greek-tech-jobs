@@ -3,6 +3,10 @@
 Data flow
 ---------
 1. ``data/companies.yaml`` — companies, sectors, locations, careers URLs, policies.
+   Coarse **industries** (≤20, for the dropdown) are derived from ``sectors`` via
+   ``scripts.industry_clusters`` at build time. **Locations** are Greece-focused:
+   known non-Greek place names are dropped (see ``_NON_GREEK_LOCATIONS_CASEFOLD``),
+   and common Greek spelling variants are canonicalised in ``normalize_location``.
 2. This module normalises rows and sets ``workable_slug`` for apply.workable.com URLs
    (see ``scripts.workable_apply_slug``).
 3. ``data/workable_counts.yaml`` — Greece ``incountry`` counts per slug, from
@@ -34,6 +38,7 @@ from collections import Counter
 
 from jinja2 import Environment, FileSystemLoader
 
+from scripts.industry_clusters import industries_for_sectors, sort_industries_for_filter
 from scripts.workable_apply_slug import extract_workable_apply_slug
 
 # --- Configuration (aligned with scripts/fetch_workable_counts.py) ---
@@ -206,6 +211,30 @@ def normalize_sector(value):
     return " ".join(s.split())
 
 
+# Non-Greek / non-in-scope locations (defence in depth; list stays in sync with data policy).
+_NON_GREEK_LOCATIONS_CASEFOLD = frozenset(
+    {
+        "bangalore",
+        "hyderabad",
+        "santa clara, ca",
+        "new york, ny",
+        "west end, england",
+        "schindellegi, schwyz",
+    }
+)
+
+# Greek place name typos / transliterations → canonical label on the site.
+_LOCATION_ALIASES_CASEFOLD: dict[str, str] = {
+    "athina": "Athens",
+    "thessaloníki": "Thessaloniki",
+    "thessalonig": "Thessaloniki",
+    "piraues": "Piraeus",
+    "irakleion": "Heraklion",
+    "iraklion": "Heraklion",
+    "larisa": "Larissa",
+}
+
+
 def normalize_location(value):
     if value is None:
         return None
@@ -213,9 +242,14 @@ def normalize_location(value):
     if not s:
         return None
     s = " ".join(s.split())
-    if s.casefold() in {"athina"}:
+    cf = s.casefold()
+    if cf in _NON_GREEK_LOCATIONS_CASEFOLD:
+        return None
+    if cf in _LOCATION_ALIASES_CASEFOLD:
+        return _LOCATION_ALIASES_CASEFOLD[cf]
+    if cf in {"athens"}:
         return "Athens"
-    if s.casefold() in {"thessaloniki", "thessaloníki"}:
+    if cf in {"thessaloniki"}:
         return "Thessaloniki"
     return s
 
@@ -272,9 +306,11 @@ def run_generate_index() -> None:
 
         all_sectors = set()
         all_locations = set()
+        all_industries: set[str] = set()
         policy_counts = Counter()
         sector_counts = Counter()
         location_counts = Counter()
+        industry_counts = Counter()
 
         for c in companies_data:
             if not c.get("work_policy"):
@@ -308,6 +344,11 @@ def run_generate_index() -> None:
             deduped.sort(key=lambda x: x.casefold())
             c["sectors"] = deduped
 
+            c["industries"] = industries_for_sectors(deduped)
+            for ind in c["industries"]:
+                all_industries.add(ind)
+                industry_counts[ind] += 1
+
             raw_locations = c.get("locations", []) or []
             loc_normalized = []
             for loc in raw_locations:
@@ -324,6 +365,8 @@ def run_generate_index() -> None:
                 loc_deduped.append(loc)
             loc_deduped.sort(key=lambda x: x.casefold())
             c["locations"] = loc_deduped
+            # Card / row data: only this company’s offices (never the global directory list).
+            c["office_locations"] = loc_deduped
 
             for s in c.get("sectors", []):
                 all_sectors.add(s)
@@ -336,12 +379,14 @@ def run_generate_index() -> None:
 
         sorted_sectors = sorted(list(all_sectors))
         sorted_locations = sorted(list(all_locations))
+        industries_for_dropdown = sort_industries_for_filter(all_industries)
 
         stats = {
             "total_companies": len(companies_data),
             "policy_counts": dict(policy_counts),
             "top_sectors": sector_counts.most_common(10),
             "top_locations": location_counts.most_common(10),
+            "top_industries": industry_counts.most_common(12),
             "workable_companies_count": sum(
                 1 for c in companies_data if c.get("workable_slug")
             ),
@@ -368,6 +413,7 @@ def run_generate_index() -> None:
         companies=companies_data,
         sectors=sorted_sectors,
         locations=sorted_locations,
+        industries_for_dropdown=industries_for_dropdown,
         agtj_config_json=json.dumps({"itemsPerPage": ITEMS_PER_PAGE}, ensure_ascii=False),
         get_style=get_policy_style,
         stats=stats,
