@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <a href="https://leftkats.github.io/awesome-greek-tech-jobs/"><img src="https://img.shields.io/badge/Companies-250-2563eb?style=for-the-badge" alt="Companies" /></a>
+  <a href="https://leftkats.github.io/awesome-greek-tech-jobs/"><img src="https://img.shields.io/badge/Companies-251-2563eb?style=for-the-badge" alt="Companies" /></a>
   <a href="https://leftkats.github.io/awesome-greek-tech-jobs/?hire=1"><img src="https://img.shields.io/badge/Open%20Roles-1253-f59e0b?style=for-the-badge" alt="Open Roles" /></a>
   <a href="https://leftkats.github.io/awesome-greek-tech-jobs/?pol=remote"><img src="https://img.shields.io/badge/Remote-50-16a34a?style=for-the-badge" alt="Remote" /></a>
   <a href="https://leftkats.github.io/awesome-greek-tech-jobs/?pol=hybrid"><img src="https://img.shields.io/badge/Hybrid-122-ca8a04?style=for-the-badge" alt="Hybrid" /></a>
@@ -32,7 +32,7 @@
 A vibrant, community-maintained map of employers hiring for technology roles in Greece — sectors, work policies, career portals, and weekly Workable hiring snapshots so you can explore with confidence.
 
 
-Currently tracking **250** companies, with **Athens** as the leading hub (169 offices). **50** teams are fully remote, **122** hybrid, and **32** on-site. The most common sectors are **IT Services** (51), **AI** (34), **Software Development** (31), **Consulting** (24), **IT Consulting** (21).
+Currently tracking **251** companies, with **Athens** as the leading hub (170 offices). **50** teams are fully remote, **122** hybrid, and **33** on-site. The most common sectors are **IT Services** (51), **AI** (34), **Software Development** (31), **Consulting** (24), **IT Consulting** (21).
 
 
 ---
