@@ -1,0 +1,45 @@
+name: Add or update podcast
+description: Suggest a Greek tech or startup podcast for _data/podcasts.yaml (or fix links)
+title: "[Podcast] "
+labels:
+  - documentation
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Podcasts are listed from **`_data/podcasts.yaml`**. After merge, maintainers run **`just generate`** so **`greek-tech-podcasts.md`** and **`podcasts.html`** update.
+
+        Prefer opening a **pull request** that adds the YAML entry directly; use this issue if you only want to suggest a show.
+
+  - type: input
+    id: show_name
+    attributes:
+      label: Show name
+      description: As it should appear in the directory (title heading).
+    validations:
+      required: true
+
+  - type: textarea
+    id: links
+    attributes:
+      label: Official links
+      description: |
+        At least one of: site, YouTube, Spotify, Apple Podcasts, etc. Paste full URLs (one per line or bullet list).
+      placeholder: |
+        https://example.com/
+        https://open.spotify.com/show/...
+    validations:
+      required: true
+
+  - type: textarea
+    id: blurb
+    attributes:
+      label: Short description (optional)
+      description: One or two sentences on what the show covers (Greek / English OK).
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else?
+      description: e.g. why it fits this list, or corrected links for an existing entry.

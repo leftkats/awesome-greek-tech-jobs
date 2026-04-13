@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag("consent", "default", {
+            analytics_storage: "denied",
+            ad_storage: "denied",
+            ad_user_data: "denied",
+            ad_personalization: "denied",
+            wait_for_update: 500,
+        });
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R41TD0DEQB"></script>
+    <script>
+        gtag("js", new Date());
+        gtag("config", "G-R41TD0DEQB");
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{% block document_title %}{{ document_title }}{% endblock %}</title>
+    <meta name="description" content="{{ og_description }}" />
+    <meta name="keywords" content="{{ seo_keywords }}" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="canonical" href="{{ canonical_url }}" />
+    <link rel="icon" href="assets/vectorized.svg" type="image/svg+xml" />
+    <link rel="alternate" hreflang="en" href="{{ canonical_url }}" />
+    <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ canonical_url }}" />
+    <meta property="og:title" content="{% block og_title %}{{ document_title }}{% endblock %}" />
+    <meta property="og:description" content="{{ og_description }}" />
+    <meta property="og:image" content="{{ og_image_url }}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="{{ og_image_alt }}" />
+    <meta property="og:site_name" content="{{ og_site_name }}" />
+    <meta property="og:locale" content="en_GB" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{% block twitter_title %}{{ document_title }}{% endblock %}" />
+    <meta name="twitter:description" content="{{ og_description }}" />
+    <meta name="twitter:image" content="{{ og_image_url }}" />
+
+    <script type="application/ld+json">{{ schema_json_ld | safe }}</script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@300..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config" src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/index.css" />
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body class="bg-surface dark:bg-surface-dark text-slate-900 dark:text-slate-100 min-h-screen antialiased">
+    <a href="#main-content"
+        class="absolute left-0 top-0 z-[100] -translate-y-full focus:translate-y-0 bg-cyan-600 text-white text-sm font-medium px-4 py-2.5 rounded-br-xl shadow-lg outline-none ring-2 ring-offset-2 ring-cyan-400 ring-offset-slate-900">Skip
+        to content</a>
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="mx-auto max-w-6xl">
+            <div class="h-60 bg-gradient-to-b from-cyan-100/70 to-transparent dark:from-cyan-500/10"></div>
+        </div>
+    </div>
+
+    <div class="relative z-10">
+        <div
+            class="bg-slate-900 text-slate-100 agtj-site-px py-2 text-[11px] sm:text-xs tracking-wide leading-snug text-balance">
+            Open-source hub for software engineering careers in Greece — employers, job links, resources, and podcasts.
+            Static build; data may lag behind live company sites.
+        </div>
+
+        {% include "_nav.html" %}
+
+        <div id="main-content">
+            {% block main %}{% endblock %}
+        </div>
+
+        <footer class="max-w-6xl mx-auto px-4 pb-10 space-y-4 mt-8">
+            <div
+                class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/70 shadow-soft dark:shadow-soft-dark p-5 sm:p-6">
+                <h3 class="text-sm font-semibold tracking-tight">Disclaimer</h3>
+                <p class="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                    This project is for community and educational purposes only. Data is aggregated from public sources
+                    (company websites, LinkedIn, and Workable public API). Job counts are cached snapshots and are not
+                    a real-time official database.
+                </p>
+                <p class="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                    Non-affiliation: this project is independent and not affiliated with, sponsored by, or endorsed by
+                    any listed company. Always verify openings and policies on official company websites.
+                </p>
+                <p class="mt-3 text-xs text-slate-500 dark:text-slate-400">
+                    <button type="button" id="agtj-cookie-choices-btn"
+                        class="underline underline-offset-2 decoration-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900 rounded-sm">
+                        Cookie choices
+                    </button>
+                    — change analytics consent any time.
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <div id="agtj-consent-banner" class="agtj-consent-banner fixed bottom-0 left-0 right-0 z-[95] pointer-events-none"
+        hidden role="region" aria-label="Analytics and cookie consent" aria-labelledby="agtj-consent-title"
+        aria-describedby="agtj-consent-desc">
+        <div
+            class="pointer-events-auto w-full border-t border-slate-200/90 dark:border-slate-700/90 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md shadow-[0_-8px_32px_-8px_rgb(15_23_42_/_0.12)] dark:shadow-[0_-8px_32px_-8px_rgb(0_0_0_/_0.45)]">
+            <div
+                class="max-w-6xl mx-auto px-4 py-4 sm:px-6 sm:py-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+                <div class="flex gap-3 min-w-0 sm:flex-1">
+                    <span class="material-symbols-outlined text-cyan-600 dark:text-cyan-400 shrink-0 mt-0.5"
+                        aria-hidden="true">privacy_tip</span>
+                    <div class="min-w-0 space-y-2">
+                        <h2 id="agtj-consent-title"
+                            class="text-sm font-semibold text-slate-900 dark:text-white tracking-tight">
+                            Analytics cookies
+                        </h2>
+                        <p id="agtj-consent-desc"
+                            class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            We use Google Analytics to see how this site is used. That may involve cookies. The site
+                            works without them — choose what you prefer. See
+                            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer"
+                                class="text-cyan-600 dark:text-cyan-400 underline underline-offset-2 hover:no-underline">Google’s
+                                privacy policy</a>.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 sm:gap-3 shrink-0">
+                    <button type="button" id="agtj-consent-reject"
+                        class="min-h-[2.75rem] rounded-xl border border-slate-300 dark:border-slate-600 px-4 py-2.5 text-xs font-mono uppercase tracking-wide text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900">
+                        Decline
+                    </button>
+                    <button type="button" id="agtj-consent-accept"
+                        class="min-h-[2.75rem] rounded-xl bg-cyan-600 hover:bg-cyan-500 dark:bg-cyan-600 dark:hover:bg-cyan-500 text-white px-4 py-2.5 text-xs font-mono uppercase tracking-wide focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900">
+                        Accept analytics
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block body_scripts %}
+    <script src="assets/js/analytics-consent.js"></script>
+    <script src="assets/js/site-chrome.js"></script>
+    {% endblock %}
+</body>
+
+</html>

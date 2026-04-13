@@ -729,10 +729,6 @@ function initWorkableJobCounts() {
     }
 }
 
-document.getElementById("themeToggleBtn")?.addEventListener("click", () => {
-    document.documentElement.classList.toggle("dark");
-});
-
 document.getElementById("prevBtn")?.addEventListener("click", () => {
     changePage(-1);
 });

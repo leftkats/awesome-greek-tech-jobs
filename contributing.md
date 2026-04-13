@@ -8,6 +8,8 @@ This repository organizes its data under the `_data` directory. Below is a descr
 
 - **`_data/companies/`**: One YAML file per company (`.yaml`). Each file is a single mapping with the company name, sectors, careers page URL, LinkedIn company ID, and other fields. For the LinkedIn ID, open the company’s LinkedIn page and copy the segment after `/company/` (for example `https://www.linkedin.com/company/**company-id**/`).
 - **`_data/queries.yaml`**: Predefined search queries and resources, grouped into sections. Each query has a name, URL, and optional description; sections appear as headings in **[search-queries-and-resources.md](search-queries-and-resources.md)** (generated when you run `just generate`). **Tips & Notes** on that page are copied from **`readme.yaml`** (`footer.notes`), not from this file.
+- **`_data/podcasts.yaml`**: Curated Greek tech and startup podcasts. Each entry has a `title`, markdown `description`, and a `links` list (`label`, `url`, optional `anchor` for the link text). Running **`just readme`** or **`just generate`** writes **[greek-tech-podcasts.md](greek-tech-podcasts.md)** and feeds **`podcasts.html`**. Add new shows here (see the comments at the top of the YAML file).
+- **`remote-cafe-resources.md`**: Curated remote café and laptop-friendly workspace links (maintained in this file; **not** overwritten by `just readme`).
 
 ## Generated Markdown (do not edit by hand)
 
@@ -16,13 +18,14 @@ These files are **overwritten** by **`src/awesome_greek_software_engineering/gen
 - **`readme.md`**
 - **`engineering-hubs.md`**
 - **`search-queries-and-resources.md`**
+- **`greek-tech-podcasts.md`**
 - **`development.md`**
 
-To change their wording or structure, edit **`readme.yaml`** (see **`generated_markdown`** for shared prose, plus `development`, `disclaimer`, `footer`, etc.) and **`_data/queries.yaml`** / company YAML as needed, then regenerate. Hand-edits to the generated `*.md` files will be lost on the next run.
+To change their wording or structure, edit **`readme.yaml`** (see **`generated_markdown`** for shared prose, plus `development`, `disclaimer`, `footer`, etc.), **`_data/queries.yaml`**, **`_data/podcasts.yaml`**, and company YAML as needed, then regenerate. Hand-edits to the generated `*.md` files will be lost on the next run.
 
 ## Reporting wrong or outdated company data
 
-You do not need to open a pull request if you only want to flag an error: use **[GitHub Issues](https://github.com/leftkats/awesome-greek-software-engineering/issues/new/choose)** and pick the template that matches (correction, add company, remove company, site/docs, or general). Include links to official careers or company pages when possible so maintainers can verify quickly.
+You do not need to open a pull request if you only want to flag an error: use **[GitHub Issues](https://github.com/leftkats/awesome-greek-software-engineering/issues/new/choose)** and pick the template that matches (correction, add company, remove company, add or update podcast, site/docs, or general). Include links to official careers or company pages when possible so maintainers can verify quickly.
 
 ## How to Contribute via Pull Request
 
@@ -46,6 +49,7 @@ You do not need to open a pull request if you only want to flag an error: use **
       - name: "Startup Pirate: Learn what matters in Greek tech and startups"
         url: https://startuppirate.gr/
       ```
+    - For **`_data/podcasts.yaml`**: Append a new list item under `podcasts` with `title`, `description` (markdown), and `links` (each link needs `label` and `url`; optional `anchor` sets the clickable text). Then run **`just readme`** (or **`just generate`**) so **`greek-tech-podcasts.md`** and **`podcasts.html`** stay in sync.
 4. **Commit Changes**: Use a clear commit message like `feat: add [Company Name] to _data/companies`.
 5. **Create Pull Request**: Go back to the original repository and click "New Pull Request".
 6. **Automated Review & Merge**: If your Pull Request passes the validation checks and follows the required format, our automated workflow will merge via a squash commit.

@@ -1,0 +1,54 @@
+# Greek tech & startup podcasts — source data for greek-tech-podcasts.md and podcasts.html.
+# Contributors: add a new entry under `podcasts` with `title`, `description` (markdown), and `links`.
+#
+# Each link is shown as a row in a two-column table. Use `anchor` for the clickable text (optional; defaults to `label`).
+#
+# Example:
+#   - title: My Show
+#     description: |
+#       [**My Show**](https://example.com/) is about …
+#     links:
+#       - label: Site
+#         url: https://example.com/
+#         anchor: example.com
+#       - label: Spotify
+#         url: https://open.spotify.com/show/...
+#         anchor: Listen on Spotify
+
+intro: |
+  Hand-picked **video and audio shows** from Greece that often cover **technology, startups, product, and engineering**—useful listening next to the employer directory and job-search links in **[search-queries-and-resources.md](search-queries-and-resources.md)**.
+
+disclaimer: |
+  **Disclaimer:** This list is community-maintained. Shows and links may change; verify on the official channels above.
+
+podcasts:
+  - title: "Μικρή Κουβέντα (Mikri Kouventa)"
+    description: |
+      [**Μικρή Κουβέντα**](https://mikrikouventa.fm/) (*Mikri Kouventa*) is a **video podcast** in Greek about technology, entrepreneurship, and current affairs. The project also publishes **Small Talk**, an English-language series with similar themes.
+    links:
+      - label: Site
+        url: https://mikrikouventa.fm/
+        anchor: mikrikouventa.fm
+      - label: YouTube
+        url: https://www.youtube.com/@mikrikouventa
+        anchor: "@mikrikouventa"
+      - label: Apple Podcasts
+        url: https://podcasts.apple.com/gr/podcast/%CE%BC%CE%B9%CE%BA%CF%81%CE%AE-%CE%BA%CE%BF%CF%85%CE%B2%CE%AD%CE%BD%CF%84%CE%B1/id1490436652
+        anchor: "Μικρή Κουβέντα (Greece)"
+      - label: Spotify
+        url: https://open.spotify.com/show/2jYxcClL09OtszEqIYyjPD
+        anchor: Show
+
+  - title: Hustle Hours
+    description: |
+      [**Hustle Hours**](https://www.hustlehours.com/) started as a podcast on youth entrepreneurship and grew into a **community for founders**: interviews, Startup School-style videos, and **events** connecting builders in Greece (and further afield).
+    links:
+      - label: Site
+        url: https://www.hustlehours.com/
+        anchor: hustlehours.com
+      - label: YouTube
+        url: https://www.youtube.com/@HustleHoursPodcast
+        anchor: "@HustleHoursPodcast"
+      - label: Spotify
+        url: https://open.spotify.com/show/05k6BivafotwATAW0Icggc
+        anchor: Hustle Hours on Spotify

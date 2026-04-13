@@ -2,7 +2,7 @@
 
 ← [readme.md](readme.md)
 
-Use [uv](https://github.com/astral-sh/uv) for Python and [just](https://github.com/casey/just) for short commands. Each block below is a fenced shell snippet you can copy into your terminal.
+Use [uv](https://github.com/astral-sh/uv) for Python and [just](https://github.com/casey/just) for short commands. Each block below is a fenced shell snippet you can copy into your terminal. `just index` writes `index.html`, `employers.html`, `job-search.html`, `resources.html`, and `podcasts.html` (plus shared `assets/`) for the static site.
 
 ## Install or refresh dependencies
 
@@ -33,7 +33,7 @@ just check
 
 ## Jekyll (optional): build the live site bundle like CI
 
-Requires Ruby/Bundler. Copy `index.html` and `assets/` into `jekyll-pages/` first (as in CI), then run:
+Requires Ruby/Bundler. Copy `index.html`, `employers.html`, `job-search.html`, `resources.html`, `podcasts.html`, and `assets/` into `jekyll-pages/` first (as in CI), then run:
 
 ```sh
 uv run python -m awesome_greek_software_engineering.jekyll_url_config > jekyll-pages/_url.yml

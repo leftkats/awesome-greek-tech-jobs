@@ -1,13 +1,15 @@
-"""Generate ``readme.md``, ``search-queries-and-resources.md``, ``development.md``, and ``engineering-hubs.md`` from YAML.
+"""Generate ``readme.md``, ``search-queries-and-resources.md``, ``greek-tech-podcasts.md``,
+``development.md``, and ``engineering-hubs.md`` from YAML.
 
 **Do not edit generated ``*.md`` files by hand.** Change ``readme.yaml``, ``_data/queries.yaml``,
-company YAML under ``_data/companies/``, then run ``just readme`` (or ``just generate``).
+``_data/podcasts.yaml``, company YAML under ``_data/companies/``, then run ``just readme`` (or ``just generate``).
 """
 
 from __future__ import annotations
 
 from collections import Counter
 from html import escape
+from pathlib import Path
 
 import yaml
 
@@ -18,12 +20,17 @@ from awesome_greek_software_engineering.load_companies import (
 )
 
 SEARCH_QUERIES_MD = "search-queries-and-resources.md"
+GREEK_TECH_PODCASTS_MD = "greek-tech-podcasts.md"
+PODCASTS_YAML = Path("_data/podcasts.yaml")
+REMOTE_CAFE_RESOURCES_MD = "remote-cafe-resources.md"
 DEVELOPMENT_MD = "development.md"
 
 # Fallbacks when ``readme.yaml`` → ``generated_markdown`` omits a key.
 _DEFAULT_SEARCH_QUERIES_INTRO = (
     "Hand-picked links for Greek (and broader remote) job hunting. "
-    "Each entry includes a short note on what you’ll find there."
+    "Each entry includes a short note on what you’ll find there. "
+    f"For **laptop-friendly cafés and remote workspaces**, see "
+    f"**[{REMOTE_CAFE_RESOURCES_MD}]({REMOTE_CAFE_RESOURCES_MD})**."
 )
 _DEFAULT_EH_TITLE = "Engineering Hubs & Career Portals"
 _DEFAULT_EH_INTRO = (
@@ -36,11 +43,16 @@ _DEFAULT_EH_DISCLAIMER = (
     "(pick the template that fits)."
 )
 _DEFAULT_README_OVERVIEW_LINKS = (
-    "The sortable employer table is in "
-    "**[engineering-hubs.md](engineering-hubs.md)** — sectors, work policy, "
-    "and talent portals. "
-    "Job search links, curated lists, and tips & notes live in "
-    f"**[{SEARCH_QUERIES_MD}]({SEARCH_QUERIES_MD})**."
+    "**What’s in this repository**\n\n"
+    f"- **[engineering-hubs.md](engineering-hubs.md)** — the sortable employer "
+    "table: sectors, work policy, and talent portals.\n"
+    f"- **[{SEARCH_QUERIES_MD}]({SEARCH_QUERIES_MD})** — job search links, "
+    "curated lists, and tips & notes.\n"
+    f"- **[{GREEK_TECH_PODCASTS_MD}]({GREEK_TECH_PODCASTS_MD})** — Greek tech "
+    "& startup podcasts (video and audio).\n"
+    f"- **[{REMOTE_CAFE_RESOURCES_MD}]({REMOTE_CAFE_RESOURCES_MD})** — remote "
+    "café & laptop-friendly workspace guides (e.g. "
+    "[Remote Work Café](https://remotework.cafe/))."
 )
 _DEFAULT_README_DEV_BLURB = (
     "Setup, regeneration commands, and CI checks are documented in "
@@ -145,6 +157,61 @@ def build_search_queries_markdown(
         body.pop()
     body.append("")
     return "\n".join(body)
+
+
+def build_greek_tech_podcasts_markdown(podcasts_data: dict | None) -> str:
+    """Markdown for ``greek-tech-podcasts.md`` from ``_data/podcasts.yaml``."""
+    data = podcasts_data or {}
+    intro = (data.get("intro") or "").strip()
+    disclaimer = (data.get("disclaimer") or "").strip()
+    items = data.get("podcasts") or []
+
+    body: list[str] = [
+        "# Greek tech & startup podcasts",
+        "",
+        "← [readme.md](readme.md)",
+        "",
+    ]
+    if intro:
+        body.append(intro)
+        body.append("")
+        body.append("---")
+        body.append("")
+
+    for pod in items:
+        if not isinstance(pod, dict):
+            continue
+        title = (pod.get("title") or "").strip()
+        desc = (pod.get("description") or "").strip()
+        links = pod.get("links") or []
+        if not title:
+            continue
+        body.append(f"## {title}")
+        body.append("")
+        if desc:
+            body.append(desc.rstrip())
+            body.append("")
+        if links and isinstance(links, list):
+            body.append("| | |")
+            body.append("| :--- | :--- |")
+            for link in links:
+                if not isinstance(link, dict):
+                    continue
+                label = (link.get("label") or "").strip()
+                url = (link.get("url") or "").strip()
+                anchor = (link.get("anchor") or label).strip()
+                if not label or not url:
+                    continue
+                body.append(f"| **{label}** | [{anchor}]({url}) |")
+            body.append("")
+        body.append("---")
+        body.append("")
+
+    if disclaimer:
+        body.append(disclaimer)
+        body.append("")
+
+    return "\n".join(body).rstrip() + "\n"
 
 
 def build_development_markdown(readme_data: dict) -> str:
@@ -446,6 +513,15 @@ def generate() -> None:
     with open(SEARCH_QUERIES_MD, "w", encoding="utf-8") as f:
         f.write(build_search_queries_markdown(queries_data, readme_data))
 
+    podcasts_data: dict = {}
+    if PODCASTS_YAML.is_file():
+        with PODCASTS_YAML.open("r", encoding="utf-8") as f:
+            loaded = yaml.safe_load(f)
+            if isinstance(loaded, dict):
+                podcasts_data = loaded
+    with open(GREEK_TECH_PODCASTS_MD, "w", encoding="utf-8") as f:
+        f.write(build_greek_tech_podcasts_markdown(podcasts_data))
+
     if dev_md_body:
         with open(DEVELOPMENT_MD, "w", encoding="utf-8") as f:
             f.write(dev_md_body)
@@ -528,6 +604,6 @@ def generate() -> None:
 if __name__ == "__main__":
     generate()
     print(
-        "readme.md, search-queries-and-resources.md, development.md, "
-        "and engineering-hubs.md generated successfully!"
+        "readme.md, search-queries-and-resources.md, greek-tech-podcasts.md, "
+        "development.md, and engineering-hubs.md generated successfully!"
     )

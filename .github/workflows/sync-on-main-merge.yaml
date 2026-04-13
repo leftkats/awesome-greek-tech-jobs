@@ -75,10 +75,12 @@ jobs:
             WORK="$(mktemp -d)"
             cp -a "${GITHUB_WORKSPACE}/jekyll-pages/." "${WORK}/"
             uv run python -m awesome_greek_software_engineering.jekyll_url_config > "${WORK}/_url.yml"
-            cp "${GITHUB_WORKSPACE}/index.html" "${WORK}/"
+            for f in index.html employers.html job-search.html resources.html podcasts.html; do
+              cp "${GITHUB_WORKSPACE}/${f}" "${WORK}/"
+            done
             mkdir -p "${WORK}/assets/css" "${WORK}/assets/js"
             cp "${GITHUB_WORKSPACE}/assets/css/index.css" "${WORK}/assets/css/"
-            cp "${GITHUB_WORKSPACE}/assets/js/analytics-consent.js" "${GITHUB_WORKSPACE}/assets/js/index.js" "${GITHUB_WORKSPACE}/assets/js/tailwind-config.js" "${WORK}/assets/js/"
+            cp "${GITHUB_WORKSPACE}/assets/js/analytics-consent.js" "${GITHUB_WORKSPACE}/assets/js/index.js" "${GITHUB_WORKSPACE}/assets/js/site-chrome.js" "${GITHUB_WORKSPACE}/assets/js/tailwind-config.js" "${WORK}/assets/js/"
             cp "${GITHUB_WORKSPACE}/assets/og-image.png" "${GITHUB_WORKSPACE}/assets/vectorized.svg" "${WORK}/assets/"
             (
               cd "${WORK}"

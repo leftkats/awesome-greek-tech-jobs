@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  The open-source pulse on who hires in software engineering across Greece<br>
+  The open-source pulse on IT and software jobs across Greece<br>
   <a href="https://leftkats.github.io/awesome-greek-software-engineering/"><strong>Open the interactive directory</strong></a><br>
   <br>
   <br>
@@ -26,13 +26,18 @@
 
 ## Overview
 
-A vibrant, community-maintained map of employers hiring for technology roles in Greece — sectors, work policies, career portals, and weekly Workable hiring snapshots so you can explore with confidence.
+**Awesome Greek Software Engineering** is a community-maintained collection for people exploring software and technology careers in Greece. Among other things, this repository holds a **sortable employer directory** (with weekly **Workable** open-role snapshots where applicable), **curated job-search links** and tips, pointers to **Greek tech podcasts**, and a short list of **remote café / laptop-friendly workspace** resources—linked from the overview below.
 
 
 Currently tracking **252** companies, with **Athens** as the leading hub (171 offices). **50** teams are fully remote, **123** hybrid, and **33** on-site. The most common sectors are **IT Services** (51), **AI** (34), **Software Development** (31), **Consulting** (25), **IT Consulting** (21).
 
 
-The sortable employer table is in **[engineering-hubs.md](engineering-hubs.md)** — sectors, work policy, and talent portals. Job search links, curated lists, and tips & notes live in **[search-queries-and-resources.md](search-queries-and-resources.md)**.
+**What’s in this repository**
+
+- **[engineering-hubs.md](engineering-hubs.md)** — the sortable employer table: sectors, work policy, and talent portals.
+- **[search-queries-and-resources.md](search-queries-and-resources.md)** — job search links, curated lists, and tips & notes.
+- **[greek-tech-podcasts.md](greek-tech-podcasts.md)** — Greek tech & startup podcasts (video and audio).
+- **[remote-cafe-resources.md](remote-cafe-resources.md)** — remote café & laptop-friendly workspace guides (e.g. [Remote Work Café](https://remotework.cafe/)).
 
 
 ---

@@ -16,6 +16,7 @@ body:
       options:
         - Live site (GitHub Pages / index.html)
         - Readme or generated markdown
+        - Podcasts (`_data/podcasts.yaml` / greek-tech-podcasts.md / podcasts.html)
         - Python scripts / `just` recipes
         - GitHub Actions / CI
         - Other

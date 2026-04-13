@@ -1,9 +1,12 @@
 title: "Awesome Greek Software Engineering"
-tagline: "The open-source pulse on who hires in software engineering across Greece"
+tagline: "The open-source pulse on IT and software jobs across Greece"
 description: >
-  A vibrant, community-maintained map of employers hiring for technology
-  roles in Greece — sectors, work policies, career portals, and weekly
-  Workable hiring snapshots so you can explore with confidence.
+  **Awesome Greek Software Engineering** is a community-maintained collection for
+  people exploring software and technology careers in Greece. Among other things,
+  this repository holds a **sortable employer directory** (with weekly
+  **Workable** open-role snapshots where applicable), **curated job-search links**
+  and tips, pointers to **Greek tech podcasts**, and a short list of **remote
+  café / laptop-friendly workspace** resources—linked from the overview below.
 
 live_url: "https://leftkats.github.io/awesome-greek-software-engineering/"
 # Shown as the centered link under the badges (readme header).
@@ -18,6 +21,7 @@ generated_markdown:
     intro: >
       Hand-picked links for Greek (and broader remote) job hunting.
       Each entry includes a short note on what you’ll find there.
+      For **laptop-friendly cafés and remote workspaces**, see **[remote-cafe-resources.md](remote-cafe-resources.md)**.
   engineering_hubs:
     title: "Engineering Hubs & Career Portals"
     intro: >
@@ -27,9 +31,13 @@ generated_markdown:
       incomplete, outdated, or incorrect. If you notice an error or want an
       update, please [open a GitHub issue]({issue_chooser_url}) (pick the template that fits).
   readme:
-    overview_links_paragraph: >
-      The sortable employer table is in **[engineering-hubs.md](engineering-hubs.md)** — sectors, work policy, and talent portals.
-      Job search links, curated lists, and tips & notes live in **[search-queries-and-resources.md](search-queries-and-resources.md)**.
+    overview_links_paragraph: |
+      **What’s in this repository**
+
+      - **[engineering-hubs.md](engineering-hubs.md)** — the sortable employer table: sectors, work policy, and talent portals.
+      - **[search-queries-and-resources.md](search-queries-and-resources.md)** — job search links, curated lists, and tips & notes.
+      - **[greek-tech-podcasts.md](greek-tech-podcasts.md)** — Greek tech & startup podcasts (video and audio).
+      - **[remote-cafe-resources.md](remote-cafe-resources.md)** — remote café & laptop-friendly workspace guides (e.g. [Remote Work Café](https://remotework.cafe/)).
     development_section_blurb: >
       Setup, regeneration commands, and CI checks are documented in **[development.md](development.md)** (copy-paste shell blocks).
 
@@ -89,6 +97,8 @@ development:
     Use [uv](https://github.com/astral-sh/uv) for Python and
     [just](https://github.com/casey/just) for short commands. Each block below is a
     fenced shell snippet you can copy into your terminal.
+    `just index` writes `index.html`, `employers.html`, `job-search.html`, `resources.html`, and `podcasts.html`
+    (plus shared `assets/`) for the static site.
   blocks:
     - title: "Install or refresh dependencies"
       commands:
@@ -106,8 +116,8 @@ development:
         - just check
     - title: "Jekyll (optional): build the live site bundle like CI"
       note_before: >
-        Requires Ruby/Bundler. Copy `index.html` and `assets/` into `jekyll-pages/`
-        first (as in CI), then run:
+        Requires Ruby/Bundler. Copy `index.html`, `employers.html`, `job-search.html`, `resources.html`,
+        `podcasts.html`, and `assets/` into `jekyll-pages/` first (as in CI), then run:
       commands:
         - uv run python -m awesome_greek_software_engineering.jekyll_url_config > jekyll-pages/_url.yml
         - cd jekyll-pages && bundle install && bundle exec jekyll build --config _config.yml,_url.yml

@@ -12,7 +12,7 @@ Data flow
 3. ``_data/workable_counts.yaml`` — Greece ``incountry`` counts per slug, from
    ``python -m awesome_greek_software_engineering.fetch_workable_counts`` (server-side; avoids browser CORS).
    Embedded in the page for badges, header totals, sort, and hiring-only filter.
-4. ``templates/index_template.html`` → ``index.html``.
+4. ``src/awesome_greek_software_engineering/templates/index_template.html`` → ``index.html`` (hub only); ``…/employers_template.html`` → ``employers.html`` (directory).
 
 Run
 ---
@@ -33,6 +33,7 @@ import json
 import sys
 from pathlib import Path
 
+import markdown
 import yaml
 from collections import Counter
 
@@ -42,15 +43,28 @@ from awesome_greek_software_engineering.industry_clusters import (
     industries_for_sectors,
     sort_industries_for_filter,
 )
-from awesome_greek_software_engineering.load_companies import WORKABLE_COUNTS_YAML, load_companies
+from awesome_greek_software_engineering.load_companies import (
+    QUERIES_YAML,
+    WORKABLE_COUNTS_YAML,
+    load_companies,
+)
 from awesome_greek_software_engineering.workable_apply_slug import extract_workable_apply_slug
 
+_PKG_ROOT = Path(__file__).resolve().parent
+TEMPLATES_DIR = _PKG_ROOT / "templates"
+
 # --- Configuration (aligned with fetch_workable_counts.py) ---
-OUTPUT_PATH = "index.html"
+OUTPUT_INDEX = "index.html"
+OUTPUT_EMPLOYERS = "employers.html"
+OUTPUT_JOB_SEARCH = "job-search.html"
+OUTPUT_RESOURCES = "resources.html"
+OUTPUT_PODCASTS = "podcasts.html"
 ITEMS_PER_PAGE = 50
 WORKABLE_SNAPSHOT_PATH = WORKABLE_COUNTS_YAML
+GREEK_PODCASTS_MD = Path("greek-tech-podcasts.md")
+REMOTE_CAFE_MD = Path("remote-cafe-resources.md")
 
-env = Environment(loader=FileSystemLoader("templates"))
+env = Environment(loader=FileSystemLoader(str(TEMPLATES_DIR)))
 
 _README_YAML = Path("readme.yaml")
 
@@ -79,7 +93,7 @@ def load_site_meta() -> dict:
                 origin = live.strip().rstrip("/")
             long_desc = rd.get("description")
             if isinstance(long_desc, str) and long_desc.strip():
-                desc = " ".join(long_desc.split())
+                desc = " ".join(long_desc.split()).replace("**", "")
             rs = rd.get("repo")
             if isinstance(rs, str) and rs.strip():
                 repo_slug = rs.strip()
@@ -109,19 +123,19 @@ def load_site_meta() -> dict:
     }
 
 
-def build_schema_json_ld(
+def build_schema_home_hub(
     *,
     canonical_url: str,
     origin: str,
     name: str,
     description: str,
     document_title: str,
-    total_companies: int,
     github_repo_url: str,
 ) -> str:
-    """JSON-LD graph: WebSite, Organization, WebPage, CollectionPage."""
+    """JSON-LD for the home hub: WebSite, Organization, WebPage (no employer list)."""
     website_id = f"{origin}/#website"
     org_id = f"{origin}/#organization"
+    employers_search = f"{origin}/employers.html?q={{search_term_string}}"
     graph: list[dict] = [
         {
             "@type": "WebSite",
@@ -135,7 +149,7 @@ def build_schema_json_ld(
                 "@type": "SearchAction",
                 "target": {
                     "@type": "EntryPoint",
-                    "urlTemplate": f"{origin}/?q={{search_term_string}}",
+                    "urlTemplate": employers_search,
                 },
                 "query-input": "required name=search_term_string",
             },
@@ -159,16 +173,169 @@ def build_schema_json_ld(
                 "name": "Technology and software hiring in Greece",
             },
         },
+    ]
+    return json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False)
+
+
+def build_schema_employers_directory(
+    *,
+    home_canonical_url: str,
+    employers_canonical_url: str,
+    origin: str,
+    name: str,
+    description: str,
+    document_title: str,
+    total_companies: int,
+    github_repo_url: str,
+) -> str:
+    """JSON-LD for the employers directory page including CollectionPage."""
+    website_id = f"{origin}/#website"
+    org_id = f"{origin}/#organization"
+    employers_search = f"{origin}/employers.html?q={{search_term_string}}"
+    graph: list[dict] = [
+        {
+            "@type": "WebSite",
+            "@id": website_id,
+            "url": home_canonical_url,
+            "name": name,
+            "description": description,
+            "inLanguage": "en-GB",
+            "publisher": {"@id": org_id},
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                    "@type": "EntryPoint",
+                    "urlTemplate": employers_search,
+                },
+                "query-input": "required name=search_term_string",
+            },
+        },
+        {
+            "@type": "Organization",
+            "@id": org_id,
+            "name": name,
+            "url": home_canonical_url,
+            "sameAs": [github_repo_url],
+        },
+        {
+            "@type": "WebPage",
+            "@id": employers_canonical_url,
+            "url": employers_canonical_url,
+            "name": document_title,
+            "description": description,
+            "isPartOf": {"@id": website_id},
+            "about": {
+                "@type": "Thing",
+                "name": "Technology and software hiring in Greece",
+            },
+        },
         {
             "@type": "CollectionPage",
-            "@id": f"{origin}/#directory",
+            "@id": f"{employers_canonical_url}#directory",
             "name": "Technology employers hiring in Greece",
-            "isPartOf": {"@id": canonical_url},
+            "isPartOf": {"@id": employers_canonical_url},
             "numberOfItems": total_companies,
         },
     ]
-    payload = {"@context": "https://schema.org", "@graph": graph}
-    return json.dumps(payload, ensure_ascii=False)
+    return json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False)
+
+
+def build_schema_subpage(
+    *,
+    canonical_url: str,
+    document_title: str,
+    description: str,
+) -> str:
+    """Minimal JSON-LD for static resource subpages."""
+    graph: list[dict] = [
+        {
+            "@type": "WebPage",
+            "@id": canonical_url,
+            "url": canonical_url,
+            "name": document_title,
+            "description": description,
+        }
+    ]
+    return json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False)
+
+
+def load_readme_hero() -> tuple[str, str]:
+    """Tagline + short intro for the home hub (from ``readme.yaml``)."""
+    default_tag = "The open-source pulse on IT and software jobs across Greece"
+    default_intro = (
+        "Browse employers, job boards, curated lists, remote café guides, and "
+        "podcasts—aligned with the GitHub repository."
+    )
+    if not _README_YAML.is_file():
+        return default_tag, default_intro
+    try:
+        with _README_YAML.open(encoding="utf-8") as f:
+            rd = yaml.safe_load(f) or {}
+    except (yaml.YAMLError, OSError):
+        return default_tag, default_intro
+    tag = rd.get("tagline")
+    tagline = tag.strip() if isinstance(tag, str) and tag.strip() else default_tag
+    desc = rd.get("description")
+    if not isinstance(desc, str) or not desc.strip():
+        return tagline, default_intro
+    intro = " ".join(desc.split()).strip().replace("**", "")
+    if len(intro) > 320:
+        intro = intro[:317].rstrip() + "…"
+    return tagline, intro
+
+
+def load_queries_split() -> tuple[list[dict], list[dict]]:
+    """Job-board sections and awesome-list query rows from ``_data/queries.yaml``."""
+    if not QUERIES_YAML.is_file():
+        return [], []
+    try:
+        with QUERIES_YAML.open(encoding="utf-8") as f:
+            data = yaml.safe_load(f) or {}
+    except (yaml.YAMLError, OSError):
+        return [], []
+    sections = data.get("sections") or []
+    job_sections: list[dict] = []
+    awesome_queries: list[dict] = []
+    for sec in sections:
+        if not isinstance(sec, dict):
+            continue
+        title = (sec.get("title") or "").strip()
+        if title == "Job boards, portals & search":
+            job_sections.append(sec)
+        elif title == "Curated awesome lists (GitHub)":
+            q = sec.get("queries") or []
+            if isinstance(q, list):
+                awesome_queries = [x for x in q if isinstance(x, dict)]
+    return job_sections, awesome_queries
+
+
+def markdown_file_to_html(path: Path) -> str:
+    raw = path.read_text(encoding="utf-8")
+    html = markdown.markdown(
+        raw,
+        extensions=["tables", "fenced_code", "nl2br"],
+    )
+    return html.replace('href="readme.md"', 'href="index.html"')
+
+
+def meta_page(
+    base: dict[str, str],
+    *,
+    relpath: str,
+    document_title: str,
+    og_description: str | None = None,
+) -> dict[str, str]:
+    """Clone site meta with a subpage canonical URL and title."""
+    out = dict(base)
+    origin = base["site_origin"].rstrip("/")
+    out["canonical_url"] = f"{origin}/{relpath}"
+    out["document_title"] = document_title
+    if og_description is not None:
+        d = og_description.strip()
+        if len(d) > 200:
+            d = d[:197].rstrip() + "…"
+        out["og_description"] = d
+    return out
 
 
 # --- Helper Functions ---
@@ -301,7 +468,7 @@ def load_workable_snapshot():
 
 
 def run_generate_index() -> None:
-    """Load YAML, snapshot, render template, write ``index.html``."""
+    """Load YAML, snapshot, render ``index.html`` and static resource subpages."""
     try:
         companies_data = load_companies()
 
@@ -401,42 +568,181 @@ def run_generate_index() -> None:
         print(f"Error loading companies: {e}", file=sys.stderr)
         raise SystemExit(1)
 
+    tagline, intro_blurb = load_readme_hero()
+    job_sections, awesome_queries = load_queries_split()
+
     template = env.get_template("index_template.html")
+    employers_template = env.get_template("employers_template.html")
 
     _workable_snapshot = load_workable_snapshot()
     _meta = load_site_meta()
-    _schema = build_schema_json_ld(
+    _home_schema = build_schema_home_hub(
         canonical_url=_meta["canonical_url"],
         origin=_meta["site_origin"],
         name=_meta["og_site_name"],
         description=_meta["og_description"],
         document_title=_meta["document_title"],
-        total_companies=stats["total_companies"],
         github_repo_url=_meta["github_repo_url"],
     )
     final_html = template.render(
-        companies=companies_data,
-        sectors=sorted_sectors,
-        locations=sorted_locations,
-        industries_for_dropdown=industries_for_dropdown,
-        agtj_config_json=json.dumps({"itemsPerPage": ITEMS_PER_PAGE}, ensure_ascii=False),
-        get_style=get_policy_style,
-        stats=stats,
-        workable_snapshot=_workable_snapshot,
-        workable_snapshot_json=json.dumps(_workable_snapshot, ensure_ascii=False),
-        schema_json_ld=_schema,
+        schema_json_ld=_home_schema,
+        site_tagline=tagline,
+        site_intro_blurb=intro_blurb,
+        current_page="home",
         **_meta,
     )
 
-    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
-        f.write(final_html)
+    Path(OUTPUT_INDEX).write_text(final_html, encoding="utf-8")
 
-    print("Website updated with modernized UI template and refreshed styles.")
+    site_name = _meta["og_site_name"]
+
+    employers_desc = (
+        "Browse technology employers in Greece—sectors, work policies, careers links, "
+        "and Workable job counts. Filter by location, industry, and remote policy."
+    )
+    emp_meta = meta_page(
+        _meta,
+        relpath=OUTPUT_EMPLOYERS,
+        document_title=f"{site_name} | Employers",
+        og_description=employers_desc,
+    )
+    emp_schema = build_schema_employers_directory(
+        home_canonical_url=_meta["canonical_url"],
+        employers_canonical_url=emp_meta["canonical_url"],
+        origin=_meta["site_origin"],
+        name=_meta["og_site_name"],
+        description=emp_meta["og_description"],
+        document_title=emp_meta["document_title"],
+        total_companies=stats["total_companies"],
+        github_repo_url=_meta["github_repo_url"],
+    )
+    Path(OUTPUT_EMPLOYERS).write_text(
+        employers_template.render(
+            companies=companies_data,
+            sectors=sorted_sectors,
+            locations=sorted_locations,
+            industries_for_dropdown=industries_for_dropdown,
+            agtj_config_json=json.dumps({"itemsPerPage": ITEMS_PER_PAGE}, ensure_ascii=False),
+            get_style=get_policy_style,
+            stats=stats,
+            workable_snapshot=_workable_snapshot,
+            workable_snapshot_json=json.dumps(_workable_snapshot, ensure_ascii=False),
+            schema_json_ld=emp_schema,
+            current_page="employers",
+            **emp_meta,
+        ),
+        encoding="utf-8",
+    )
+
+    # --- Static subpages (same visual language as the repo readme) ---
+    job_desc = (
+        "Curated job boards and search links for software and technology careers "
+        "in Greece (and broader remote roles)—from the same YAML as the repository."
+    )
+    job_meta = meta_page(
+        _meta,
+        relpath=OUTPUT_JOB_SEARCH,
+        document_title=f"{site_name} | Job search",
+        og_description=job_desc,
+    )
+    job_schema = build_schema_subpage(
+        canonical_url=job_meta["canonical_url"],
+        document_title=job_meta["document_title"],
+        description=job_meta["og_description"],
+    )
+    Path(OUTPUT_JOB_SEARCH).write_text(
+        env.get_template("page_query_list.html").render(
+            query_sections=job_sections,
+            page_kicker="Job search · Curated links",
+            page_title="Job search & portals",
+            page_subtitle=job_desc,
+            current_page="job-search",
+            schema_json_ld=job_schema,
+            **job_meta,
+        ),
+        encoding="utf-8",
+    )
+
+    res_desc = (
+        "Curated GitHub awesome lists plus remote café and laptop-friendly workspace "
+        "guides—aligned with the repository markdown."
+    )
+    res_meta = meta_page(
+        _meta,
+        relpath=OUTPUT_RESOURCES,
+        document_title=f"{site_name} | Resources",
+        og_description=res_desc,
+    )
+    res_schema = build_schema_subpage(
+        canonical_url=res_meta["canonical_url"],
+        document_title=res_meta["document_title"],
+        description=res_meta["og_description"],
+    )
+    remote_html = ""
+    if REMOTE_CAFE_MD.is_file():
+        try:
+            remote_html = markdown_file_to_html(REMOTE_CAFE_MD)
+        except OSError:
+            remote_html = ""
+    Path(OUTPUT_RESOURCES).write_text(
+        env.get_template("page_resources.html").render(
+            awesome_queries=awesome_queries,
+            remote_workspace_html=remote_html,
+            page_kicker="Resources · Lists & spaces",
+            page_title="Resources & workspaces",
+            page_subtitle=res_desc,
+            current_page="resources",
+            schema_json_ld=res_schema,
+            **res_meta,
+        ),
+        encoding="utf-8",
+    )
+
+    pod_desc = (
+        "Greek tech and startup podcasts—video and audio—from the podcasts list in "
+        "the repository (YAML under _data/; greek-tech-podcasts.md is generated when "
+        "you run just readme)."
+    )
+    pod_meta = meta_page(
+        _meta,
+        relpath=OUTPUT_PODCASTS,
+        document_title=f"{site_name} | Podcasts",
+        og_description=pod_desc,
+    )
+    pod_schema = build_schema_subpage(
+        canonical_url=pod_meta["canonical_url"],
+        document_title=pod_meta["document_title"],
+        description=pod_meta["og_description"],
+    )
+    pod_body = ""
+    if GREEK_PODCASTS_MD.is_file():
+        try:
+            pod_body = markdown_file_to_html(GREEK_PODCASTS_MD)
+        except OSError:
+            pod_body = ""
+    Path(OUTPUT_PODCASTS).write_text(
+        env.get_template("page_markdown.html").render(
+            page_body_html=pod_body,
+            current_page="podcasts",
+            schema_json_ld=pod_schema,
+            **pod_meta,
+        ),
+        encoding="utf-8",
+    )
+
+    print(
+        f"Generated {OUTPUT_INDEX}, {OUTPUT_EMPLOYERS}, {OUTPUT_JOB_SEARCH}, "
+        f"{OUTPUT_RESOURCES}, {OUTPUT_PODCASTS}."
+    )
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Generate index.html from _data/companies/*.yaml and templates.",
+        description=(
+            "Generate index.html (hub), employers.html (directory), job-search.html, "
+            "resources.html, and podcasts.html from _data/companies/*.yaml, "
+            "_data/queries.yaml, and markdown resources."
+        ),
     )
     parser.add_argument(
         "--fetch-workable",

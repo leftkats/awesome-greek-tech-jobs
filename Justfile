@@ -19,7 +19,7 @@ sync *ARGS:
 fetch:
 	uv run python -m awesome_greek_software_engineering.fetch_workable_counts
 
-# Regenerate readme.md, engineering-hubs.md, search-queries-and-resources.md, and development.md from YAML.
+# Regenerate readme.md, engineering-hubs.md, search-queries-and-resources.md, greek-tech-podcasts.md, and development.md from YAML.
 readme:
 	uv run python -m awesome_greek_software_engineering.generate_readme
 

@@ -1,3 +1,16 @@
+/* Horizontal padding that never clips under iPhone notches / rounded corners */
+.agtj-site-px {
+    padding-left: max(0.75rem, env(safe-area-inset-left, 0px));
+    padding-right: max(0.75rem, env(safe-area-inset-right, 0px));
+}
+
+@media (min-width: 640px) {
+    .agtj-site-px {
+        padding-left: max(1rem, env(safe-area-inset-left, 0px));
+        padding-right: max(1rem, env(safe-area-inset-right, 0px));
+    }
+}
+
 .hidden-row {
     display: none !important;
 }
@@ -123,4 +136,102 @@ body.has-location-filters .company-location-tag:not(.active-filter) {
 
 .company-career-link-has-roles {
     border-color: rgb(16 185 129 / 0.8);
+}
+
+/* Markdown bodies on static subpages (podcasts, resources) */
+.page-md-content {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: rgb(51 65 85);
+}
+
+.dark .page-md-content {
+    color: rgb(203 213 225);
+}
+
+.page-md-content h1 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: rgb(15 23 42);
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.dark .page-md-content h1 {
+    color: rgb(248 250 252);
+}
+
+.page-md-content h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid rgb(226 232 240);
+    color: rgb(15 23 42);
+}
+
+.dark .page-md-content h2 {
+    border-color: rgb(51 65 85);
+    color: rgb(248 250 252);
+}
+
+.page-md-content h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.page-md-content p {
+    margin: 0.75rem 0;
+}
+
+.page-md-content a {
+    color: rgb(8 145 178);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.page-md-content a:hover {
+    color: rgb(14 116 144);
+}
+
+.dark .page-md-content a {
+    color: rgb(34 211 238);
+}
+
+.page-md-content hr {
+    margin: 1.5rem 0;
+    border: 0;
+    border-top: 1px solid rgb(226 232 240);
+}
+
+.dark .page-md-content hr {
+    border-top-color: rgb(51 65 85);
+}
+
+.page-md-content table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    margin: 1rem 0;
+}
+
+.page-md-content th,
+.page-md-content td {
+    border: 1px solid rgb(226 232 240);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+}
+
+.dark .page-md-content th,
+.dark .page-md-content td {
+    border-color: rgb(51 65 85);
+}
+
+.page-md-content ul {
+    margin: 0.5rem 0 0.75rem 1.1rem;
+    list-style: disc;
 }

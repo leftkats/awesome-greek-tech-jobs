@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block main %}
+<section class="max-w-6xl mx-auto px-4 pt-8 pb-12" aria-label="Article">
+    <div
+        class="rounded-2xl border border-slate-200/90 dark:border-slate-700/90 bg-white/95 dark:bg-slate-900/75 shadow-soft dark:shadow-soft-dark p-5 sm:p-8 page-md-content">
+        {{ page_body_html | safe }}
+    </div>
+</section>
+{% endblock %}
