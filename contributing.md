@@ -7,7 +7,7 @@ Thank you for wanting to improve this list! We love community contributions. To 
 This repository organizes its data under the `_data` directory. Below is a description of the files you can contribute to:
 
 - **`_data/companies/`**: One YAML file per company (`.yaml`). Each file is a single mapping with the company name, sectors, careers page URL, LinkedIn company ID, and other fields. For the LinkedIn ID, open the company’s LinkedIn page and copy the segment after `/company/` (for example `https://www.linkedin.com/company/**company-id**/`).
-- **`_data/queries.yaml`**: Predefined search queries and resources, grouped into sections. Each query has a name, URL, and optional description; sections appear as headings under “Useful Search Queries & Resources” in `readme.md`.
+- **`_data/queries.yaml`**: Predefined search queries and resources, grouped into sections. Each query has a name, URL, and optional description; sections appear as headings in **[search-queries-and-resources.md](search-queries-and-resources.md)** (generated when you run `just generate`). **Tips & Notes** on that page are copied from **`readme.yaml`** (`footer.notes`), not from this file.
 
 ## How to Contribute via Pull Request
 
@@ -43,11 +43,8 @@ If you want to work on an open issue, follow this simple flow:
 2. **Comment on the issue**: Leave a short message like "I can work on this" to avoid duplicate work.
 3. **Create a branch**: Use a clear branch name, for example `fix/workable-count-summary` or `docs/uv-quickstart`.
 4. **Implement and test locally** (install [uv](https://github.com/astral-sh/uv) and [just](https://github.com/casey/just)):
-   - `just setup` or `just sync` — install dependencies (use `just sync --frozen` to match CI lockfile)
-   - `just generate` — regenerate `readme.md`, `engineering-hubs.md`, and `index.html` (writes `index.html` in the repo root; gitignored on `main`). **`sitemap.xml`** and **`robots.txt`** for the live site are produced by **Jekyll** (`jekyll-pages/`, plugin `jekyll-sitemap` + Liquid `robots.txt`) during CI before deploy to branch **`live`**. To run that locally: install Ruby/Bundler, copy `index.html` and `assets/` into `jekyll-pages/` like CI, then `uv run python scripts/jekyll_url_config.py > jekyll-pages/_url.yml` and `cd jekyll-pages && bundle install && bundle exec jekyll build --config _config.yml,_url.yml` (output in `jekyll-pages/_site/`).
-   - (if needed) `just fetch` — refresh Workable counts (`_data/workable_counts.yaml`)
-
-   Equivalent `uv` commands still work, for example `uv sync --frozen`, `uv run python -m scripts.generate_readme`, and `uv run python -m scripts.generate_index`.
+   - Use **[development.md](development.md)** for copy-paste shell blocks: installing dependencies, `just generate`, `just all`, `just check`, and the optional Jekyll build that mirrors CI. Regeneration writes `index.html` in the repo root (gitignored on `main`). **`sitemap.xml`** and **`robots.txt`** for the live site come from **Jekyll** during CI before deploy to **`live`**; a local Jekyll build outputs to `jekyll-pages/_site/`.
+   - Equivalent `uv` commands still work, for example `uv sync --frozen`, `uv run python -m scripts.generate_readme`, and `uv run python -m scripts.generate_index`.
 5. **Open a PR linked to the issue**:
    - Include `Closes #<issue-number>` (or `Fixes #<issue-number>`) in the PR description so GitHub closes the issue automatically after merge.
    - Add a short summary of what changed and how you tested it.
