@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "greek-software-ecosystem"
 version = "0.0.0"
-description = "Generator tooling for the Awesome Greek Software Engineering directory"
+description = "Generator tooling for the Greek Software Ecosystem directory"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [

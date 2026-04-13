@@ -76,7 +76,7 @@ _README_YAML = Path("_data/readme.yaml")
 def load_site_meta() -> dict:
     """SEO, Open Graph / Twitter, canonical URL (aligned with ``_data/readme.yaml``)."""
     origin = "https://leftkats.github.io/greek-software-ecosystem"
-    title = "Awesome Greek Software Engineering"
+    title = "Greek Software Ecosystem"
     desc = (
         "A vibrant map of employers hiring for technology roles in Greece — "
         "sectors, work policies, careers, and weekly Workable snapshots."

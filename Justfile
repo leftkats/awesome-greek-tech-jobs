@@ -1,4 +1,4 @@
-# Developer command interface for Awesome Greek Software Engineering (uv underneath).
+# Developer command interface for Greek Software Ecosystem (uv underneath).
 # List targets: `just` or `just --list`. Install just: https://github.com/casey/just
 
 set shell := ["bash", "-eu", "-o", "pipefail", "-c"]

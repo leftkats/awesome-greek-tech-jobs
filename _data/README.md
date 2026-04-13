@@ -1,6 +1,6 @@
 # `_data`
 
-This directory holds **structured source data** for the Awesome Greek Software Engineering project. The static site, generated Markdown, and badges are built from these YAML files (plus the repo root `readme.yaml`).
+This directory holds **structured source data** for the Greek Software Ecosystem project. The static site, generated Markdown, and badges are built from these YAML files (plus the repo root `readme.yaml`).
 
 | Path | Purpose |
 | :--- | :--- |

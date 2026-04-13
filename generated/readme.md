@@ -20,7 +20,7 @@
 
 ## Overview
 
-**Awesome Greek Software Engineering** is a community-maintained collection for people exploring software and technology careers in Greece. Among other things, this repository holds a **sortable employer directory** (with weekly **Workable** open-role snapshots where applicable), **curated job-search links** and tips, pointers to **Greek tech podcasts**, and a short list of **remote café / laptop-friendly workspace** resources—linked from the overview below.
+**Greek Software Ecosystem** is a community-maintained collection for people exploring software and technology careers in Greece. Among other things, this repository holds a **sortable employer directory** (with weekly **Workable** open-role snapshots where applicable), **curated job-search links** and tips, pointers to **Greek tech podcasts**, and a short list of **remote café / laptop-friendly workspace** resources—linked from the overview below.
 
 
 Currently tracking **252** companies, with **Athens** as the leading hub (171 offices). **50** teams are fully remote, **123** hybrid, and **33** on-site. The most common sectors are **IT Services** (51), **AI** (34), **Software Development** (31), **Consulting** (25), **IT Consulting** (21).

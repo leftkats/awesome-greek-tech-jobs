@@ -1,4 +1,4 @@
-# Contributing to Awesome Greek Software Engineering
+# Contributing to Greek Software Ecosystem
 
 Thank you for wanting to improve this list! We love community contributions. To keep the repository organized, please follow these simple steps to add or update content.
 
@@ -90,4 +90,4 @@ This repository uses GitHub Actions to validate contributions:
 - **Link Checker**: Verifies that all URLs are reachable.
 - **Alphabetical Order Check**: Confirms that entries are sorted alphabetically.
 
-Thank you for contributing to Awesome Greek Software Engineering!
+Thank you for contributing to Greek Software Ecosystem!
