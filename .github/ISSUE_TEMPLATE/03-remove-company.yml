@@ -1,0 +1,32 @@
+name: Remove a company
+description: Request removal of an employer from the list (e.g. closed, no longer tech, duplicate)
+title: "[Remove company] "
+labels:
+  - remove-company
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We remove entries when they are clearly wrong for this list or the organization no longer fits the scope.
+        Brief justification helps maintainers decide quickly.
+
+  - type: input
+    id: company_name
+    attributes:
+      label: Company name (as listed)
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: Why should it be removed?
+      description: e.g. duplicate entry, company shut down, no longer hiring in Greece, not a tech employer.
+    validations:
+      required: true
+
+  - type: input
+    id: evidence
+    attributes:
+      label: Link to supporting info (optional)
+      description: News article, official notice, or other public source.

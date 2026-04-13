@@ -1,0 +1,75 @@
+name: Add a company
+description: Suggest a tech employer in Greece that is missing from the list
+title: "[Add company] "
+labels:
+  - add-company
+body:
+  - type: markdown
+    attributes:
+      value: |
+        New entries must be **tech-focused** (software, data, IT services, etc.) and include working public links.
+        See `contributing.md` for the YAML format.
+
+  - type: input
+    id: company_name
+    attributes:
+      label: Company name
+      placeholder: Official name as used on the website
+    validations:
+      required: true
+
+  - type: input
+    id: website
+    attributes:
+      label: Company website
+      placeholder: https://
+    validations:
+      required: true
+
+  - type: input
+    id: careers
+    attributes:
+      label: Careers / jobs page URL
+      placeholder: https://
+    validations:
+      required: true
+
+  - type: textarea
+    id: sectors
+    attributes:
+      label: Focus sectors (comma-separated)
+      description: Short labels like Software Development, AI, Consulting — see existing entries for examples.
+      placeholder: e.g. Software Development, Cloud
+    validations:
+      required: true
+
+  - type: dropdown
+    id: policy
+    attributes:
+      label: Work policy (best guess)
+      options:
+        - remote
+        - hybrid
+        - onsite
+        - n/a
+    validations:
+      required: true
+
+  - type: input
+    id: linkedin_id
+    attributes:
+      label: LinkedIn company slug (optional)
+      description: The segment after `/company/` in the company’s LinkedIn URL.
+      placeholder: e.g. acme-corp
+
+  - type: textarea
+    id: locations
+    attributes:
+      label: Office locations in Greece (optional)
+      placeholder: e.g. Athens, Thessaloniki
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else we should know?
+      description: Optional context or links.

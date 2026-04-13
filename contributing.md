@@ -9,6 +9,21 @@ This repository organizes its data under the `_data` directory. Below is a descr
 - **`_data/companies/`**: One YAML file per company (`.yaml`). Each file is a single mapping with the company name, sectors, careers page URL, LinkedIn company ID, and other fields. For the LinkedIn ID, open the company’s LinkedIn page and copy the segment after `/company/` (for example `https://www.linkedin.com/company/**company-id**/`).
 - **`_data/queries.yaml`**: Predefined search queries and resources, grouped into sections. Each query has a name, URL, and optional description; sections appear as headings in **[search-queries-and-resources.md](search-queries-and-resources.md)** (generated when you run `just generate`). **Tips & Notes** on that page are copied from **`readme.yaml`** (`footer.notes`), not from this file.
 
+## Generated Markdown (do not edit by hand)
+
+These files are **overwritten** by **`scripts/generate_readme.py`** when you run **`just readme`** or **`just generate`**:
+
+- **`readme.md`**
+- **`engineering-hubs.md`**
+- **`search-queries-and-resources.md`**
+- **`development.md`**
+
+To change their wording or structure, edit **`readme.yaml`** (see **`generated_markdown`** for shared prose, plus `development`, `disclaimer`, `footer`, etc.) and **`_data/queries.yaml`** / company YAML as needed, then regenerate. Hand-edits to the generated `*.md` files will be lost on the next run.
+
+## Reporting wrong or outdated company data
+
+You do not need to open a pull request if you only want to flag an error: use **[GitHub Issues](https://github.com/leftkats/awesome-greek-tech-jobs/issues/new/choose)** and pick the template that matches (correction, add company, remove company, site/docs, or general). Include links to official careers or company pages when possible so maintainers can verify quickly.
+
 ## How to Contribute via Pull Request
 
 1. **Fork the Repository**: Click the 'Fork' button at the top right of the main page.

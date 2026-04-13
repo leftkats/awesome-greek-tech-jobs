@@ -1,0 +1,37 @@
+name: Website, readme, or tooling
+description: Bugs or improvements for the GitHub Pages site, generated markdown, scripts, or CI
+title: "[Site/docs] "
+labels:
+  - documentation
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For problems with the **live directory**, **readme**, **development.md**, search-queries page, or build tooling.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Live site (GitHub Pages / index.html)
+        - Readme or generated markdown
+        - Python scripts / `just` recipes
+        - GitHub Actions / CI
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened or what would you like?
+      description: Steps to reproduce for bugs; clear idea for enhancements.
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment (optional)
+      description: Browser, OS, or `just` / Python versions if relevant.

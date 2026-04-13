@@ -1,0 +1,17 @@
+name: General / other
+description: Everything that does not fit the other templates
+title: "[General] "
+labels:
+  - question
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For broad questions, meta discussion, or anything else. If your request is about **company data**, please use one of the company-specific templates when possible — it helps triage faster.
+
+  - type: textarea
+    id: topic
+    attributes:
+      label: What would you like to discuss?
+    validations:
+      required: true

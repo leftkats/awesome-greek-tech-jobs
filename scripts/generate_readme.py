@@ -1,4 +1,8 @@
-"""Generate ``readme.md``, ``search-queries-and-resources.md``, ``development.md``, and ``engineering-hubs.md`` from YAML."""
+"""Generate ``readme.md``, ``search-queries-and-resources.md``, ``development.md``, and ``engineering-hubs.md`` from YAML.
+
+**Do not edit generated ``*.md`` files by hand.** Change ``readme.yaml``, ``_data/queries.yaml``,
+company YAML under ``_data/companies/``, then run ``just readme`` (or ``just generate``).
+"""
 
 from __future__ import annotations
 
@@ -15,6 +19,34 @@ from scripts.load_companies import (
 
 SEARCH_QUERIES_MD = "search-queries-and-resources.md"
 DEVELOPMENT_MD = "development.md"
+
+# Fallbacks when ``readme.yaml`` → ``generated_markdown`` omits a key.
+_DEFAULT_SEARCH_QUERIES_INTRO = (
+    "Hand-picked links for Greek (and broader remote) job hunting. "
+    "Each entry includes a short note on what you’ll find there."
+)
+_DEFAULT_EH_TITLE = "Engineering Hubs & Career Portals"
+_DEFAULT_EH_INTRO = (
+    "Curated organizations, focus sectors, work policy, and talent links."
+)
+_DEFAULT_EH_DISCLAIMER = (
+    "**Disclaimer:** This list is community-maintained. Information may be "
+    "incomplete, outdated, or incorrect. If you notice an error or want an "
+    "update, please [open a GitHub issue]({issue_chooser_url}) "
+    "(pick the template that fits)."
+)
+_DEFAULT_README_OVERVIEW_LINKS = (
+    "The sortable employer table is in "
+    "**[engineering-hubs.md](engineering-hubs.md)** — sectors, work policy, "
+    "and talent portals. "
+    "Job search links, curated lists, and tips & notes live in "
+    f"**[{SEARCH_QUERIES_MD}]({SEARCH_QUERIES_MD})**."
+)
+_DEFAULT_README_DEV_BLURB = (
+    "Setup, regeneration commands, and CI checks are documented in "
+    f"**[{DEVELOPMENT_MD}]({DEVELOPMENT_MD})** "
+    "(copy-paste shell blocks)."
+)
 
 
 def _iter_tips_note_bullets(notes: list) -> list[tuple[str, str]]:
@@ -55,13 +87,15 @@ def build_search_queries_markdown(
     queries_data: dict | None, readme_data: dict | None = None
 ) -> str:
     """Markdown for ``search-queries-and-resources.md`` (queries + optional tips)."""
+    gm = (readme_data or {}).get("generated_markdown") or {}
+    sq_meta = gm.get("search_queries") or {}
+    intro_text = (sq_meta.get("intro") or _DEFAULT_SEARCH_QUERIES_INTRO).strip()
     body: list[str] = [
         "# Search queries & resources",
         "",
         "← [readme.md](readme.md)",
         "",
-        "Hand-picked links for Greek (and broader remote) job hunting. "
-        "Each entry includes a short note on what you’ll find there.",
+        intro_text,
         "",
     ]
     sections = (queries_data or {}).get("sections")
@@ -264,6 +298,14 @@ def generate() -> None:
     tagline = readme_data.get("tagline", "")
     lines.append('<p align="center">')
     lines.append(f"  {tagline}<br>")
+    if live_url:
+        cta = (readme_data.get("live_directory_cta") or "").strip()
+        if not cta:
+            cta = "Open the interactive directory"
+        lines.append(
+            f'  <a href="{escape(live_url, quote=True)}">'
+            f"<strong>{escape(cta)}</strong></a><br>"
+        )
     if intro_line_2:
         lines.append(f"  {intro_line_2}<br>")
     lines.append("  <br>")
@@ -321,18 +363,6 @@ def generate() -> None:
         lines.append("</p>")
         lines.append("")
 
-    if live_url:
-        cta = (readme_data.get("live_directory_cta") or "").strip()
-        if not cta:
-            cta = "Open the interactive directory"
-        lines.append('<p align="center">')
-        lines.append(
-            f'  <a href="{escape(live_url, quote=True)}">'
-            f"<strong>{escape(cta)}</strong></a>"
-        )
-        lines.append("</p>")
-        lines.append("")
-
     lines.append("## Overview\n")
     lines.append(f"{readme_data['description'].strip()}\n")
     lines.append("")
@@ -354,13 +384,11 @@ def generate() -> None:
         f"{sec_str}\n"
     )
     lines.append("")
-    lines.append(
-        "The sortable employer table is in "
-        "**[engineering-hubs.md](engineering-hubs.md)** — sectors, work policy, "
-        "and talent portals. "
-        "Job search links, curated lists, and tips & notes live in "
-        f"**[{SEARCH_QUERIES_MD}]({SEARCH_QUERIES_MD})**.\n"
-    )
+    gm_readme = (readme_data.get("generated_markdown") or {}).get("readme") or {}
+    overview_links = (
+        gm_readme.get("overview_links_paragraph") or _DEFAULT_README_OVERVIEW_LINKS
+    ).strip()
+    lines.append(overview_links + "\n")
     lines.append("")
 
     footer = readme_data.get("footer", {})
@@ -378,11 +406,13 @@ def generate() -> None:
     if dev_md_body:
         lines.append("---\n")
         lines.append("## Development\n")
-        lines.append(
-            "Setup, regeneration commands, and CI checks are documented in "
-            f"**[{DEVELOPMENT_MD}]({DEVELOPMENT_MD})** "
-            "(copy-paste shell blocks).\n"
-        )
+        dev_blurb = (
+            (readme_data.get("generated_markdown") or {})
+            .get("readme", {})
+            .get("development_section_blurb")
+            or _DEFAULT_README_DEV_BLURB
+        ).strip()
+        lines.append(dev_blurb + "\n")
         lines.append("")
 
     lines.append("---\n")
@@ -401,11 +431,18 @@ def generate() -> None:
             f.write(dev_md_body)
 
     # ── Build engineering-hubs.md ───────────────────────────
+    issue_chooser = f"https://github.com/{repo}/issues/new/choose"
+    gm_eh = (readme_data.get("generated_markdown") or {}).get("engineering_hubs") or {}
+    eh_title = (gm_eh.get("title") or _DEFAULT_EH_TITLE).strip()
+    eh_intro = (gm_eh.get("intro") or _DEFAULT_EH_INTRO).strip()
+    eh_disc_tmpl = (gm_eh.get("disclaimer") or _DEFAULT_EH_DISCLAIMER).strip()
+    eh_disclaimer = eh_disc_tmpl.replace("{issue_chooser_url}", issue_chooser)
     hubs: list[str] = [
-        "# Engineering Hubs & Career Portals\n",
+        f"# {eh_title}\n",
         "\n",
-        "Curated organizations, focus sectors, "
-        "work policy, and talent links.\n",
+        f"{eh_intro}\n",
+        "\n",
+        f"{eh_disclaimer}\n",
         "\n",
         "| # | Organization | Focus Sectors "
         "| Policy | Talent Portals |\n",
@@ -470,6 +507,6 @@ def generate() -> None:
 if __name__ == "__main__":
     generate()
     print(
-        "readme.md, search-queries-and-resources.md, and development.md "
-        "generated successfully!"
+        "readme.md, search-queries-and-resources.md, development.md, "
+        "and engineering-hubs.md generated successfully!"
     )

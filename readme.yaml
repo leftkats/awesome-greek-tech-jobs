@@ -10,6 +10,28 @@ live_url: "https://leftkats.github.io/awesome-greek-tech-jobs/"
 live_directory_cta: "Open the interactive directory"
 repo: "leftkats/awesome-greek-tech-jobs"
 
+# Prose for Markdown files produced by scripts/generate_readme.py (do not edit those .md files by hand).
+# Use {issue_chooser_url} in engineering_hubs.disclaimer — it is replaced when generating engineering-hubs.md.
+generated_markdown:
+  search_queries:
+    intro: >
+      Hand-picked links for Greek (and broader remote) job hunting.
+      Each entry includes a short note on what you’ll find there.
+  engineering_hubs:
+    title: "Engineering Hubs & Career Portals"
+    intro: >
+      Curated organizations, focus sectors, work policy, and talent links.
+    disclaimer: >
+      **Disclaimer:** This list is community-maintained. Information may be
+      incomplete, outdated, or incorrect. If you notice an error or want an
+      update, please [open a GitHub issue]({issue_chooser_url}) (pick the template that fits).
+  readme:
+    overview_links_paragraph: >
+      The sortable employer table is in **[engineering-hubs.md](engineering-hubs.md)** — sectors, work policy, and talent portals.
+      Job search links, curated lists, and tips & notes live in **[search-queries-and-resources.md](search-queries-and-resources.md)**.
+    development_section_blurb: >
+      Setup, regeneration commands, and CI checks are documented in **[development.md](development.md)** (copy-paste shell blocks).
+
 branding:
   logo:
     alt: "AWGJ"

@@ -2,6 +2,8 @@
 
 Curated organizations, focus sectors, work policy, and talent links.
 
+**Disclaimer:** This list is community-maintained. Information may be incomplete, outdated, or incorrect. If you notice an error or want an update, please [open a GitHub issue](https://github.com/leftkats/awesome-greek-tech-jobs/issues/new/choose) (pick the template that fits).
+
 | # | Organization | Focus Sectors | Policy | Talent Portals |
 | :--- | :--- | :--- | :--- | :--- |
 | 01 | **[Aambience Services](https://aambience.gr/)** | `IT Consulting`, `IT Services` | ![](https://img.shields.io/badge/-hybrid-blue?style=flat-square) | [Careers](https://aambience.gr/en/theseis-ergasias/) · [LinkedIn](https://www.linkedin.com/company/aambience-services) |

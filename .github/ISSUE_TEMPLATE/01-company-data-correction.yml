@@ -1,0 +1,41 @@
+name: Company data correction
+description: Wrong or outdated information about a company already in the list
+title: "[Company data] "
+labels:
+  - company-data
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this when something in the employer table is incorrect (links, sectors, policy, etc.).
+        Updates are made via pull requests to `_data/companies/` — the more detail you give, the faster we can fix it.
+
+  - type: input
+    id: company_name
+    attributes:
+      label: Company name (as listed)
+      description: Match the name in `engineering-hubs.md` if possible.
+      placeholder: e.g. Example SA
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong or outdated?
+      description: Describe the issue clearly (e.g. broken careers URL, wrong work policy, renamed company).
+    validations:
+      required: true
+
+  - type: textarea
+    id: sources
+    attributes:
+      label: Correct information / sources (optional)
+      description: Links to official careers page, LinkedIn company URL, or other public pages we can cite.
+
+  - type: checkboxes
+    id: willing_pr
+    attributes:
+      label: Contribution
+      options:
+        - label: I am willing to open a pull request with the YAML fix

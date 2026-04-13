@@ -7,6 +7,7 @@
 
 <p align="center">
   The open-source pulse on who hires in technology across Greece<br>
+  <a href="https://leftkats.github.io/awesome-greek-tech-jobs/"><strong>Open the interactive directory</strong></a><br>
   <br>
   <br>
 </p>
@@ -21,10 +22,6 @@
 <p align="center">
   <a href="https://github.com/leftkats/awesome-greek-tech-jobs/blob/main/LICENSE"><img src="https://img.shields.io/github/license/leftkats/awesome-greek-tech-jobs?logo=github&label=License" alt="License" /></a>
   <img src="https://img.shields.io/github/last-commit/leftkats/awesome-greek-tech-jobs?logo=github&label=Last%20Commit" alt="Last Commit" />
-</p>
-
-<p align="center">
-  <a href="https://leftkats.github.io/awesome-greek-tech-jobs/"><strong>Open the interactive directory</strong></a>
 </p>
 
 ## Overview
