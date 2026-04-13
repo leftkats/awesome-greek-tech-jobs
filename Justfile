@@ -19,7 +19,7 @@ sync *ARGS:
 fetch:
 	uv run python -m scripts.fetch_workable_counts
 
-# Regenerate readme.md and engineering-hubs.md from YAML.
+# Regenerate readme.md, engineering-hubs.md, search-queries-and-resources.md, and development.md from YAML.
 readme:
 	uv run python -m scripts.generate_readme
 
@@ -27,7 +27,7 @@ readme:
 index:
 	uv run python -m scripts.generate_index
 
-# Regenerate readme + engineering-hubs + index (no Workable fetch).
+# Regenerate readme + engineering-hubs + search-queries + development + index (no Workable fetch).
 generate: readme index
 
 # Refresh Workable snapshot, then regenerate readme, hubs, and index.

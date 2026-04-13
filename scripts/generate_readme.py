@@ -1,8 +1,9 @@
-"""Generate ``readme.md`` and ``engineering-hubs.md`` from YAML sources."""
+"""Generate ``readme.md``, ``search-queries-and-resources.md``, ``development.md``, and ``engineering-hubs.md`` from YAML."""
 
 from __future__ import annotations
 
 from collections import Counter
+from html import escape
 
 import yaml
 
@@ -11,6 +12,143 @@ from scripts.load_companies import (
     WORKABLE_COUNTS_YAML,
     load_companies,
 )
+
+SEARCH_QUERIES_MD = "search-queries-and-resources.md"
+DEVELOPMENT_MD = "development.md"
+
+
+def _iter_tips_note_bullets(notes: list) -> list[tuple[str, str]]:
+    """(display title, body) pairs matching readme Tips & Notes rules."""
+    pairs: list[tuple[str, str]] = []
+    for n in notes:
+        title = n["title"]
+        if title.strip().lower() == "job counts":
+            title = "Job Counts (Experimental)"
+        body = n["content"].strip()
+        pairs.append((title, body))
+    return pairs
+
+
+def _tips_notes_resource_lines(notes: list) -> list[str]:
+    """Line fragments for ``search-queries-and-resources.md`` (``\\n``.join style)."""
+    lines: list[str] = ["## Tips & Notes", ""]
+    for title, body in _iter_tips_note_bullets(notes):
+        lines.append(f"- **{title}:** {body}")
+    lines.append("")
+    return lines
+
+
+def _append_query_bullets_to(out: list[str], query_items: list) -> None:
+    for q in query_items:
+        name = (q.get("name") or "").strip()
+        url = (q.get("url") or "").strip()
+        desc = (q.get("description") or "").strip()
+        if not name or not url:
+            continue
+        if desc:
+            out.append(f"- [{name}]({url}) — {desc}")
+        else:
+            out.append(f"- [{name}]({url})")
+
+
+def build_search_queries_markdown(
+    queries_data: dict | None, readme_data: dict | None = None
+) -> str:
+    """Markdown for ``search-queries-and-resources.md`` (queries + optional tips)."""
+    body: list[str] = [
+        "# Search queries & resources",
+        "",
+        "← [readme.md](readme.md)",
+        "",
+        "Hand-picked links for Greek (and broader remote) job hunting. "
+        "Each entry includes a short note on what you’ll find there.",
+        "",
+    ]
+    sections = (queries_data or {}).get("sections")
+    legacy_queries = (queries_data or {}).get("queries")
+    if sections:
+        for sec in sections:
+            if not isinstance(sec, dict):
+                continue
+            title = (sec.get("title") or "").strip()
+            items = sec.get("queries") or []
+            if not items:
+                continue
+            if title:
+                body.append(f"## {title}")
+                body.append("")
+            _append_query_bullets_to(body, items)
+            body.append("")
+    elif legacy_queries:
+        _append_query_bullets_to(body, legacy_queries)
+        body.append("")
+
+    notes = ((readme_data or {}).get("footer") or {}).get("notes") or []
+    if notes:
+        body.extend(_tips_notes_resource_lines(notes))
+
+    while body and body[-1] == "":
+        body.pop()
+    body.append("")
+    return "\n".join(body)
+
+
+def build_development_markdown(readme_data: dict) -> str:
+    """Markdown for ``development.md`` (commands in fenced ``sh`` blocks)."""
+    dev = readme_data.get("development")
+    if not isinstance(dev, dict):
+        return ""
+
+    lines: list[str] = [
+        "# Development",
+        "",
+        "← [readme.md](readme.md)",
+        "",
+    ]
+    intro = (dev.get("intro") or "").strip()
+    if intro:
+        lines.append(intro)
+        lines.append("")
+
+    for blk in dev.get("blocks") or []:
+        if not isinstance(blk, dict):
+            continue
+        title = (blk.get("title") or "").strip()
+        commands = blk.get("commands")
+        if not title or not commands:
+            continue
+        if isinstance(commands, str):
+            cmd_text = commands.rstrip()
+        else:
+            cmd_text = "\n".join(
+                str(c).rstrip() for c in commands if str(c).strip()
+            )
+        if not cmd_text:
+            continue
+        lines.append(f"## {title}")
+        lines.append("")
+        note_before = (blk.get("note_before") or "").strip()
+        if note_before:
+            lines.append(note_before)
+            lines.append("")
+        lines.append("```sh")
+        lines.append(cmd_text)
+        lines.append("```")
+        lines.append("")
+        note = (blk.get("note") or "").strip()
+        if note:
+            lines.append(note)
+            lines.append("")
+
+    footer = (dev.get("footer") or "").strip()
+    if footer:
+        lines.append(footer)
+        lines.append("")
+
+    while lines and lines[-1] == "":
+        lines.pop()
+    lines.append("")
+    return "\n".join(lines)
 
 
 def generate() -> None:
@@ -21,6 +159,8 @@ def generate() -> None:
 
     with QUERIES_YAML.open("r", encoding="utf-8") as f:
         queries_data = yaml.safe_load(f)
+
+    dev_md_body = build_development_markdown(readme_data)
 
     workable_counts_path = WORKABLE_COUNTS_YAML
     open_roles = 0
@@ -84,10 +224,17 @@ def generate() -> None:
     logo_light = logo_cfg.get("src_light", "assets/awgj.svg")
     logo_dark = logo_cfg.get("src_dark", logo_light)
     logo_width = int(logo_cfg.get("width", 180))
-    intro_line_2 = branding.get(
-        "intro_line_2",
-        "Community-curated directory with weekly open roles count updates.",
+    _default_intro_line_2 = (
+        "Community-curated directory with weekly open roles count updates."
     )
+    if "intro_line_2" in branding:
+        raw_intro_2 = branding["intro_line_2"]
+        if raw_intro_2 is None:
+            intro_line_2 = ""
+        else:
+            intro_line_2 = str(raw_intro_2).strip()
+    else:
+        intro_line_2 = _default_intro_line_2
     badges_cfg = readme_data.get("badges", {}) or {}
     stats_cfg = badges_cfg.get("stats", {}) or {}
     stats_style = stats_cfg.get("style", "for-the-badge")
@@ -117,7 +264,8 @@ def generate() -> None:
     tagline = readme_data.get("tagline", "")
     lines.append('<p align="center">')
     lines.append(f"  {tagline}<br>")
-    lines.append(f"  {intro_line_2}")
+    if intro_line_2:
+        lines.append(f"  {intro_line_2}<br>")
     lines.append("  <br>")
     lines.append("  <br>")
     lines.append("</p>")
@@ -174,7 +322,15 @@ def generate() -> None:
         lines.append("")
 
     if live_url:
-        lines.append(f"[**Explore the Live Directory**]({live_url})\n")
+        cta = (readme_data.get("live_directory_cta") or "").strip()
+        if not cta:
+            cta = "Open the interactive directory"
+        lines.append('<p align="center">')
+        lines.append(
+            f'  <a href="{escape(live_url, quote=True)}">'
+            f"<strong>{escape(cta)}</strong></a>"
+        )
+        lines.append("</p>")
         lines.append("")
 
     lines.append("## Overview\n")
@@ -198,67 +354,16 @@ def generate() -> None:
         f"{sec_str}\n"
     )
     lines.append("")
-
-    lines.append("---\n")
-    lines.append("## Company Directory\n")
     lines.append(
-        "The full table lives in "
-        "**[engineering-hubs.md](engineering-hubs.md)** "
-        "— sortable by sector, policy, and talent portals.\n"
+        "The sortable employer table is in "
+        "**[engineering-hubs.md](engineering-hubs.md)** — sectors, work policy, "
+        "and talent portals. "
+        "Job search links, curated lists, and tips & notes live in "
+        f"**[{SEARCH_QUERIES_MD}]({SEARCH_QUERIES_MD})**.\n"
     )
     lines.append("")
 
-    def _append_query_bullets(query_items: list) -> None:
-        for q in query_items:
-            name = (q.get("name") or "").strip()
-            url = (q.get("url") or "").strip()
-            desc = (q.get("description") or "").strip()
-            if not name or not url:
-                continue
-            if desc:
-                lines.append(f"- [{name}]({url}) — {desc}")
-            else:
-                lines.append(f"- [{name}]({url})")
-
-    if queries_data:
-        sections = queries_data.get("sections")
-        legacy_queries = queries_data.get("queries")
-        if sections or legacy_queries:
-            lines.append("---\n")
-            lines.append("## Useful Search Queries & Resources\n")
-            lines.append(
-                "Hand-picked links for Greek (and broader remote) job hunting. "
-                "Each entry includes a short note on what you’ll find there.\n"
-            )
-            if sections:
-                for sec in sections:
-                    if not isinstance(sec, dict):
-                        continue
-                    title = (sec.get("title") or "").strip()
-                    items = sec.get("queries") or []
-                    if not items:
-                        continue
-                    if title:
-                        lines.append(f"### {title}\n")
-                    _append_query_bullets(items)
-                    lines.append("")
-            elif legacy_queries:
-                _append_query_bullets(legacy_queries)
-                lines.append("")
-
     footer = readme_data.get("footer", {})
-    notes = footer.get("notes", [])
-    if notes:
-        lines.append("---\n")
-        lines.append("## Tips & Notes\n")
-        for n in notes:
-            title = n["title"]
-            if title.strip().lower() == "job counts":
-                title = "Job Counts (Experimental)"
-            body = n["content"].strip()
-            lines.append(f"- **{title}:** {body}")
-        lines.append("")
-
     lines.append("---\n")
     lines.append("## Contributors\n")
     lines.append(
@@ -270,11 +375,14 @@ def generate() -> None:
         lines.append(f"{footer['description']}\n")
     lines.append("")
 
-    dev_md = readme_data.get("development")
-    if dev_md:
+    if dev_md_body:
         lines.append("---\n")
         lines.append("## Development\n")
-        lines.append(f"{str(dev_md).strip()}\n")
+        lines.append(
+            "Setup, regeneration commands, and CI checks are documented in "
+            f"**[{DEVELOPMENT_MD}]({DEVELOPMENT_MD})** "
+            "(copy-paste shell blocks).\n"
+        )
         lines.append("")
 
     lines.append("---\n")
@@ -284,6 +392,13 @@ def generate() -> None:
 
     with open("readme.md", "w", encoding="utf-8") as f:
         f.write("\n".join(lines) + "\n")
+
+    with open(SEARCH_QUERIES_MD, "w", encoding="utf-8") as f:
+        f.write(build_search_queries_markdown(queries_data, readme_data))
+
+    if dev_md_body:
+        with open(DEVELOPMENT_MD, "w", encoding="utf-8") as f:
+            f.write(dev_md_body)
 
     # ── Build engineering-hubs.md ───────────────────────────
     hubs: list[str] = [
@@ -354,4 +469,7 @@ def generate() -> None:
 
 if __name__ == "__main__":
     generate()
-    print("readme.md generated successfully!")
+    print(
+        "readme.md, search-queries-and-resources.md, and development.md "
+        "generated successfully!"
+    )

@@ -6,6 +6,8 @@ description: >
   Workable hiring snapshots so you can explore with confidence.
 
 live_url: "https://leftkats.github.io/awesome-greek-tech-jobs/"
+# Shown as the centered link under the badges (readme header).
+live_directory_cta: "Open the interactive directory"
 repo: "leftkats/awesome-greek-tech-jobs"
 
 branding:
@@ -14,7 +16,8 @@ branding:
     src_light: "assets/vectorized.svg"
     src_dark: "assets/vectorized.svg"
     width: 180
-  intro_line_2: "Search, filter, and explore — weekly Workable counts included."
+  # Second line under the tagline; set to null to hide.
+  intro_line_2: null
 
 badges:
   stats:
@@ -57,17 +60,46 @@ disclaimer: >
   * **Liability:** As per the [MIT License](LICENSE), this information
     is provided "as is" without warranty of any kind.
 
-development: |
-  Use [uv](https://github.com/astral-sh/uv) for Python and [just](https://github.com/casey/just) for short commands:
-
-  - `just setup` or `just sync` — install dependencies (`just sync --frozen` in CI)
-  - `just generate` — regenerate `readme.md`, `engineering-hubs.md`, and `index.html`
-  - `just all` — fetch Workable counts, then regenerate everything
-
-  See [contributing.md](contributing.md) for the full workflow. You can still run `uv run python -m scripts.…` directly.
+# Drives generated [development.md](development.md) (copy-paste command blocks).
+development:
+  intro: >
+    Use [uv](https://github.com/astral-sh/uv) for Python and
+    [just](https://github.com/casey/just) for short commands. Each block below is a
+    fenced shell snippet you can copy into your terminal.
+  blocks:
+    - title: "Install or refresh dependencies"
+      commands:
+        - just setup
+        - just sync
+      note: "In CI, use `just sync --frozen`."
+    - title: "Regenerate readme, hubs, search-queries, and index (no Workable fetch)"
+      commands:
+        - just generate
+    - title: "Fetch Workable counts, then regenerate everything"
+      commands:
+        - just all
+    - title: "Same checks as pull request validation"
+      commands:
+        - just check
+    - title: "Jekyll (optional): build the live site bundle like CI"
+      note_before: >
+        Requires Ruby/Bundler. Copy `index.html` and `assets/` into `jekyll-pages/`
+        first (as in CI), then run:
+      commands:
+        - uv run python scripts/jekyll_url_config.py > jekyll-pages/_url.yml
+        - cd jekyll-pages && bundle install && bundle exec jekyll build --config _config.yml,_url.yml
+    - title: "Run script modules directly (equivalent to just recipes)"
+      commands:
+        - uv run python -m scripts.generate_readme
+        - uv run python -m scripts.generate_index
+        - uv run python -m scripts.fetch_workable_counts
+  footer: >
+    See [contributing.md](contributing.md) for the full workflow and repository
+    conventions.
 
 footer:
   description: "Built with ❤️ by the community. PRs welcome!"
+  # Tips & Notes appear in search-queries-and-resources.md only (not the main readme).
   notes:
     - title: "Remote vs. Hybrid"
       content: "Many Athens-based companies are moving to 1-2 days in office."
