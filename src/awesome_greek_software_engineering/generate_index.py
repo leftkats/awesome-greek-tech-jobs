@@ -12,7 +12,8 @@ Data flow
 3. ``_data/workable_counts.yaml`` — Greece ``incountry`` counts per slug, from
    ``python -m awesome_greek_software_engineering.fetch_workable_counts`` (server-side; avoids browser CORS).
    Embedded in the page for badges, header totals, sort, and hiring-only filter.
-4. ``src/awesome_greek_software_engineering/templates/index_template.html`` → ``index.html`` (hub only); ``…/employers_template.html`` → ``employers.html`` (directory).
+4. ``templates/index_template.html`` → ``index.html`` (hub); ``page_job_search_combined.html`` →
+   ``job-search.html`` (employer directory + job-board links); ``employers.html`` is a short redirect.
 
 Run
 ---
@@ -48,9 +49,11 @@ from awesome_greek_software_engineering.load_companies import (
     load_companies,
 )
 from agse_site.markdown_html import markdown_file_to_html, markdown_to_html
+from agse_site.sitemap_robots import write_robots_txt, write_sitemap_xml
 from awesome_greek_software_engineering.workable_apply_slug import extract_workable_apply_slug
 
 _PKG_ROOT = Path(__file__).resolve().parent
+_REPO_ROOT = Path(__file__).resolve().parents[2]
 TEMPLATES_DIR = _PKG_ROOT / "templates"
 
 # --- Configuration (aligned with fetch_workable_counts.py) ---
@@ -66,11 +69,11 @@ REMOTE_CAFE_MD = Path("remote-cafe-resources.md")
 
 env = Environment(loader=FileSystemLoader(str(TEMPLATES_DIR)))
 
-_README_YAML = Path("readme.yaml")
+_README_YAML = Path("_data/readme.yaml")
 
 
 def load_site_meta() -> dict:
-    """SEO, Open Graph / Twitter, canonical URL (aligned with readme.yaml)."""
+    """SEO, Open Graph / Twitter, canonical URL (aligned with ``_data/readme.yaml``)."""
     origin = "https://leftkats.github.io/awesome-greek-software-engineering"
     title = "Awesome Greek Software Engineering"
     desc = (
@@ -135,7 +138,7 @@ def build_schema_home_hub(
     """JSON-LD for the home hub: WebSite, Organization, WebPage (no employer list)."""
     website_id = f"{origin}/#website"
     org_id = f"{origin}/#organization"
-    employers_search = f"{origin}/employers.html?q={{search_term_string}}"
+    employers_search = f"{origin}/job-search.html?q={{search_term_string}}"
     graph: list[dict] = [
         {
             "@type": "WebSite",
@@ -191,7 +194,7 @@ def build_schema_employers_directory(
     """JSON-LD for the employers directory page including CollectionPage."""
     website_id = f"{origin}/#website"
     org_id = f"{origin}/#organization"
-    employers_search = f"{origin}/employers.html?q={{search_term_string}}"
+    employers_search = f"{origin}/job-search.html?q={{search_term_string}}"
     graph: list[dict] = [
         {
             "@type": "WebSite",
@@ -231,7 +234,7 @@ def build_schema_employers_directory(
         },
         {
             "@type": "CollectionPage",
-            "@id": f"{employers_canonical_url}#directory",
+            "@id": f"{employers_canonical_url}#employers",
             "name": "Technology employers hiring in Greece",
             "isPartOf": {"@id": employers_canonical_url},
             "numberOfItems": total_companies,
@@ -260,7 +263,7 @@ def build_schema_subpage(
 
 
 def load_readme_hero() -> tuple[str, str]:
-    """Tagline + short intro for the home hub (from ``readme.yaml``)."""
+    """Tagline + short intro for the home hub (from ``_data/readme.yaml``)."""
     default_tag = "The open-source pulse on IT and software jobs across Greece"
     default_intro = (
         "Browse employers, job boards, curated lists, remote café guides, and "
@@ -643,7 +646,6 @@ def run_generate_index() -> None:
     job_sections, awesome_queries = load_queries_split()
 
     template = env.get_template("index_template.html")
-    employers_template = env.get_template("employers_template.html")
 
     _workable_snapshot = load_workable_snapshot()
     _meta = load_site_meta()
@@ -667,28 +669,30 @@ def run_generate_index() -> None:
 
     site_name = _meta["og_site_name"]
 
-    employers_desc = (
-        "Browse technology employers in Greece—sectors, work policies, careers links, "
-        "and Workable job counts. Filter by location, industry, and remote policy."
+    job_combined_desc = (
+        "Technology employers in Greece—search and filter by industry, location, sector, "
+        "and work policy, with weekly Workable role counts where available. Further down, "
+        "curated job boards and portals from the repository YAML. "
     )
-    emp_meta = meta_page(
+    job_meta = meta_page(
         _meta,
-        relpath=OUTPUT_EMPLOYERS,
-        document_title=f"{site_name} | Employers",
-        og_description=employers_desc,
+        relpath=OUTPUT_JOB_SEARCH,
+        document_title=f"{site_name} | Job search",
+        og_description=job_combined_desc,
     )
-    emp_schema = build_schema_employers_directory(
+    job_schema_combined = build_schema_employers_directory(
         home_canonical_url=_meta["canonical_url"],
-        employers_canonical_url=emp_meta["canonical_url"],
+        employers_canonical_url=job_meta["canonical_url"],
         origin=_meta["site_origin"],
         name=_meta["og_site_name"],
-        description=emp_meta["og_description"],
-        document_title=emp_meta["document_title"],
+        description=job_meta["og_description"],
+        document_title=job_meta["document_title"],
         total_companies=stats["total_companies"],
         github_repo_url=_meta["github_repo_url"],
     )
-    Path(OUTPUT_EMPLOYERS).write_text(
-        employers_template.render(
+    Path(OUTPUT_JOB_SEARCH).write_text(
+        env.get_template("page_job_search_combined.html").render(
+            query_sections=job_sections,
             companies=companies_data,
             sectors=sorted_sectors,
             locations=sorted_locations,
@@ -698,38 +702,18 @@ def run_generate_index() -> None:
             stats=stats,
             workable_snapshot=_workable_snapshot,
             workable_snapshot_json=json.dumps(_workable_snapshot, ensure_ascii=False),
-            schema_json_ld=emp_schema,
-            current_page="employers",
-            **emp_meta,
+            schema_json_ld=job_schema_combined,
+            current_page="job-search",
+            page_kicker="Job search · Directory & links",
+            page_title="Job search",
+            page_subtitle=job_combined_desc,
+            **job_meta,
         ),
         encoding="utf-8",
     )
-
-    # --- Static subpages (same visual language as the repo readme) ---
-    job_desc = (
-        "Curated job boards and search links for software and technology careers "
-        "in Greece (and broader remote roles)—from the same YAML as the repository."
-    )
-    job_meta = meta_page(
-        _meta,
-        relpath=OUTPUT_JOB_SEARCH,
-        document_title=f"{site_name} | Job search",
-        og_description=job_desc,
-    )
-    job_schema = build_schema_subpage(
-        canonical_url=job_meta["canonical_url"],
-        document_title=job_meta["document_title"],
-        description=job_meta["og_description"],
-    )
-    Path(OUTPUT_JOB_SEARCH).write_text(
-        env.get_template("page_query_list.html").render(
-            query_sections=job_sections,
-            page_kicker="Job search · Curated links",
-            page_title="Job search & portals",
-            page_subtitle=job_desc,
-            current_page="job-search",
-            schema_json_ld=job_schema,
-            **job_meta,
+    Path(OUTPUT_EMPLOYERS).write_text(
+        env.get_template("employers_redirect.html").render(
+            canonical_job_search_url=job_meta["canonical_url"],
         ),
         encoding="utf-8",
     )
@@ -803,17 +787,21 @@ def run_generate_index() -> None:
         encoding="utf-8",
     )
 
+    write_sitemap_xml(_REPO_ROOT, _meta["site_origin"])
+    write_robots_txt(_REPO_ROOT, _meta["site_origin"])
+
     print(
-        f"Generated {OUTPUT_INDEX}, {OUTPUT_EMPLOYERS}, {OUTPUT_JOB_SEARCH}, "
-        f"{OUTPUT_RESOURCES}, {OUTPUT_PODCASTS}."
+        f"Generated {OUTPUT_INDEX}, {OUTPUT_EMPLOYERS} (redirect), {OUTPUT_JOB_SEARCH}, "
+        f"{OUTPUT_RESOURCES}, {OUTPUT_PODCASTS}, sitemap.xml, robots.txt."
     )
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description=(
-            "Generate index.html (hub), employers.html (directory), job-search.html, "
-            "resources.html, and podcasts.html from _data/companies/*.yaml, "
+            "Generate index.html (hub), job-search.html (directory + links), "
+            "employers.html (redirect), resources.html, podcasts.html, sitemap.xml, "
+            "and robots.txt from _data/companies/*.yaml, "
             "_data/queries.yaml, _data/podcasts.yaml, and markdown resources."
         ),
     )

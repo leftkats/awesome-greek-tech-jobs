@@ -12,7 +12,7 @@ _MARKDOWN_EXTENSIONS = ["tables", "fenced_code", "nl2br"]
 # Local repo markdown → static HTML (site navigation; keep in sync with pages).
 _MD_FILENAME_TO_PAGE: dict[str, str] = {
     "readme.md": "index.html",
-    "engineering-hubs.md": "employers.html",
+    "engineering-hubs.md": "job-search.html#employers",
     "search-queries-and-resources.md": "job-search.html",
     "greek-tech-podcasts.md": "podcasts.html",
     "remote-cafe-resources.md": "resources.html",
