@@ -1,15 +1,22 @@
 {# Primary site navigation. Expects: current_page #}
-{# Mobile: row1 = title + theme; row2 = nav pills. md+: single row [brand | nav | tools]. #}
+{# Mobile: row1 = hub + site title + theme; row2 = horizontal-scroll nav pills. md+: single row. #}
 <nav aria-label="Primary"
-    class="sticky top-0 z-30 backdrop-blur bg-white/85 dark:bg-slate-950/80 border-b border-slate-200 dark:border-slate-800">
+    class="sticky top-0 z-30 shadow-sm shadow-slate-900/5 dark:shadow-black/40 backdrop-blur-md bg-white/90 dark:bg-slate-950/90 border-b border-slate-200/90 dark:border-slate-800">
     <div
-        class="max-w-6xl mx-auto agtj-site-px py-2.5 sm:py-3 flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-3 lg:gap-4">
-        <div class="flex items-center justify-between gap-2 min-w-0 md:contents">
+        class="max-w-6xl mx-auto agtj-site-px py-2.5 sm:py-3 flex flex-col gap-2.5 sm:gap-3 md:flex-row md:items-center md:justify-between md:gap-3 lg:gap-4">
+        <div class="flex items-center gap-2 sm:gap-3 min-w-0 md:contents">
             <a href="index.html"
-                class="inline-flex h-11 min-w-[2.75rem] shrink-0 items-center justify-center rounded-xl md:order-1 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950"
+                class="group flex min-w-0 flex-1 items-center gap-2 rounded-xl pr-1 md:inline-flex md:order-1 md:max-w-none md:flex-initial md:pr-0 hover:bg-slate-100/80 dark:hover:bg-slate-800/80 md:hover:bg-transparent md:dark:hover:bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950"
                 aria-label="Home — Greek Software Ecosystem">
-                <span class="material-symbols-outlined text-xl text-cyan-600 dark:text-cyan-400"
-                    aria-hidden="true">hub</span>
+                <span
+                    class="inline-flex h-11 min-w-[2.75rem] shrink-0 items-center justify-center rounded-xl group-hover:bg-slate-100 dark:group-hover:bg-slate-800 md:group-hover:bg-transparent md:dark:group-hover:bg-transparent">
+                    <span class="material-symbols-outlined text-xl text-cyan-600 dark:text-cyan-400"
+                        aria-hidden="true">hub</span>
+                </span>
+                <span
+                    class="md:hidden min-w-0 flex-1 truncate text-left text-sm font-semibold tracking-tight text-slate-900 dark:text-white group-hover:text-cyan-800 dark:group-hover:text-cyan-200">
+                    Greek Software Ecosystem
+                </span>
             </a>
             <div class="flex items-center justify-end flex-shrink-0 md:order-3">
                 <button type="button" id="themeToggleBtn"
@@ -20,18 +27,18 @@
             </div>
         </div>
         <div
-            class="flex flex-wrap items-center justify-center gap-x-1 gap-y-2 md:order-2 md:flex-1 md:min-w-0 md:justify-center lg:gap-x-2 text-[11px] sm:text-xs font-mono uppercase tracking-wide">
+            class="agtj-nav-pills-scroll flex flex-nowrap md:flex-wrap items-stretch md:items-center gap-2 md:gap-x-2 lg:gap-x-2 overflow-x-auto md:overflow-visible md:order-2 md:flex-1 md:min-w-0 justify-start md:justify-center pb-0.5 md:pb-0 -mx-0.5 px-0.5 md:mx-0 md:px-0 text-xs sm:text-xs font-medium md:font-mono uppercase tracking-wide md:tracking-wide rounded-xl md:rounded-none bg-slate-100/90 dark:bg-slate-900/60 md:bg-transparent ring-1 ring-slate-200/80 dark:ring-slate-700/80 md:ring-0 p-1.5 md:p-0">
             <a href="index.html"
-                class="nav-pill min-h-[2.75rem] inline-flex items-center rounded-lg px-2.5 py-1.5 {% if current_page == 'home' %}bg-cyan-100/80 dark:bg-cyan-950/50 text-cyan-900 dark:text-cyan-200 ring-1 ring-cyan-300/50 dark:ring-cyan-700/50{% else %}text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800{% endif %}"
+                class="nav-pill shrink-0 min-h-[2.75rem] inline-flex items-center rounded-lg px-3 py-2 md:px-2.5 md:py-1.5 {% if current_page == 'home' %}bg-white dark:bg-slate-800 text-cyan-900 dark:text-cyan-200 shadow-sm ring-1 ring-cyan-300/60 dark:ring-cyan-600/50 md:bg-cyan-100/80 md:dark:bg-cyan-950/50 md:shadow-none{% else %}text-slate-700 dark:text-slate-200 hover:bg-white/80 dark:hover:bg-slate-800/80 md:text-slate-600 md:dark:text-slate-300 md:hover:bg-slate-100 md:dark:hover:bg-slate-800{% endif %}"
                 {% if current_page=='home' %}aria-current="page" {% endif %}>Home</a>
             <a href="job-search.html"
-                class="nav-pill min-h-[2.75rem] inline-flex items-center rounded-lg px-2.5 py-1.5 {% if current_page == 'job-search' %}bg-cyan-100/80 dark:bg-cyan-950/50 text-cyan-900 dark:text-cyan-200 ring-1 ring-cyan-300/50 dark:ring-cyan-700/50{% else %}text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800{% endif %}"
+                class="nav-pill shrink-0 min-h-[2.75rem] inline-flex items-center rounded-lg px-3 py-2 md:px-2.5 md:py-1.5 {% if current_page == 'job-search' %}bg-white dark:bg-slate-800 text-cyan-900 dark:text-cyan-200 shadow-sm ring-1 ring-cyan-300/60 dark:ring-cyan-600/50 md:bg-cyan-100/80 md:dark:bg-cyan-950/50 md:shadow-none{% else %}text-slate-700 dark:text-slate-200 hover:bg-white/80 dark:hover:bg-slate-800/80 md:text-slate-600 md:dark:text-slate-300 md:hover:bg-slate-100 md:dark:hover:bg-slate-800{% endif %}"
                 {% if current_page=='job-search' %}aria-current="page" {% endif %}>Job search</a>
             <a href="resources.html"
-                class="nav-pill min-h-[2.75rem] inline-flex items-center rounded-lg px-2.5 py-1.5 {% if current_page == 'resources' %}bg-cyan-100/80 dark:bg-cyan-950/50 text-cyan-900 dark:text-cyan-200 ring-1 ring-cyan-300/50 dark:ring-cyan-700/50{% else %}text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800{% endif %}"
+                class="nav-pill shrink-0 min-h-[2.75rem] inline-flex items-center rounded-lg px-3 py-2 md:px-2.5 md:py-1.5 {% if current_page == 'resources' %}bg-white dark:bg-slate-800 text-cyan-900 dark:text-cyan-200 shadow-sm ring-1 ring-cyan-300/60 dark:ring-cyan-600/50 md:bg-cyan-100/80 md:dark:bg-cyan-950/50 md:shadow-none{% else %}text-slate-700 dark:text-slate-200 hover:bg-white/80 dark:hover:bg-slate-800/80 md:text-slate-600 md:dark:text-slate-300 md:hover:bg-slate-100 md:dark:hover:bg-slate-800{% endif %}"
                 {% if current_page=='resources' %}aria-current="page" {% endif %}>Resources</a>
             <a href="podcasts.html"
-                class="nav-pill min-h-[2.75rem] inline-flex items-center rounded-lg px-2.5 py-1.5 {% if current_page == 'podcasts' %}bg-cyan-100/80 dark:bg-cyan-950/50 text-cyan-900 dark:text-cyan-200 ring-1 ring-cyan-300/50 dark:ring-cyan-700/50{% else %}text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800{% endif %}"
+                class="nav-pill shrink-0 min-h-[2.75rem] inline-flex items-center rounded-lg px-3 py-2 md:px-2.5 md:py-1.5 {% if current_page == 'podcasts' %}bg-white dark:bg-slate-800 text-cyan-900 dark:text-cyan-200 shadow-sm ring-1 ring-cyan-300/60 dark:ring-cyan-600/50 md:bg-cyan-100/80 md:dark:bg-cyan-950/50 md:shadow-none{% else %}text-slate-700 dark:text-slate-200 hover:bg-white/80 dark:hover:bg-slate-800/80 md:text-slate-600 md:dark:text-slate-300 md:hover:bg-slate-100 md:dark:hover:bg-slate-800{% endif %}"
                 {% if current_page=='podcasts' %}aria-current="page" {% endif %}>Podcasts</a>
         </div>
     </div>

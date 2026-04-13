@@ -11,6 +11,18 @@
     }
 }
 
+/* Mobile primary nav: single row of pills, swipe without a bulky scrollbar */
+.agtj-nav-pills-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+}
+
+.agtj-nav-pills-scroll::-webkit-scrollbar {
+    display: none;
+    height: 0;
+}
+
 .hidden-row {
     display: none !important;
 }
