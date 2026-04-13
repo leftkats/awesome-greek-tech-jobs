@@ -1,11 +1,4 @@
 <p align="center">
-  <br>
-  <img alt="AGSE" src="assets/vectorized.svg" width="180" />
-  <br>
-  <br>
-</p>
-
-<p align="center">
   The open-source pulse on IT and software jobs across Greece<br>
   <a href="https://leftkats.github.io/awesome-greek-software-engineering/"><strong>Open the interactive directory</strong></a><br>
   <br>
@@ -38,6 +31,7 @@ Currently tracking **252** companies, with **Athens** as the leading hub (171 of
 - **[engineering-hubs.md](engineering-hubs.md)** — the sortable employer table: sectors, work policy, and talent portals.
 - **[search-queries-and-resources.md](search-queries-and-resources.md)** — job search links, curated lists, and tips & notes.
 - **[greek-tech-podcasts.md](greek-tech-podcasts.md)** — Greek tech & startup podcasts (video and audio).
+- **[open-source-projects.md](open-source-projects.md)** — open source Greek tech projects on GitHub you can contribute to.
 - **[remote-cafe-resources.md](../remote-cafe-resources.md)** — remote café & laptop-friendly workspace guides (e.g. [Remote Work Café](https://remotework.cafe/)).
 
 

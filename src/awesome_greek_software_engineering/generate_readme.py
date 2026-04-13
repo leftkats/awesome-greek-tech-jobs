@@ -1,9 +1,10 @@
 """Generate ``generated/readme.md``, ``generated/search-queries-and-resources.md``,
-``generated/greek-tech-podcasts.md``, ``generated/development.md``, and
+``generated/greek-tech-podcasts.md``, ``generated/open-source-projects.md``, ``generated/development.md``, and
 ``generated/engineering-hubs.md`` from YAML.
 
 **Do not edit generated ``*.md`` files by hand.** Change ``_data/readme.yaml``, ``_data/queries.yaml``,
-``_data/podcasts.yaml``, company YAML under ``_data/companies/``, then run ``just readme`` (or ``just generate``).
+``_data/podcasts.yaml``, ``_data/open_source_projects.yaml``, company YAML under ``_data/companies/``,
+then run ``just readme`` (or ``just generate``).
 """
 
 from __future__ import annotations
@@ -26,9 +27,11 @@ ROOT_README = Path("README.md")
 
 SEARCH_QUERIES_MD = "search-queries-and-resources.md"
 GREEK_TECH_PODCASTS_MD = "greek-tech-podcasts.md"
+OPEN_SOURCE_PROJECTS_MD = "open-source-projects.md"
 ENGINEERING_HUBS_MD = "engineering-hubs.md"
 README_MD = "readme.md"
 PODCASTS_YAML = Path("_data/podcasts.yaml")
+OPEN_SOURCE_PROJECTS_YAML = Path("_data/open_source_projects.yaml")
 REMOTE_CAFE_RESOURCES_MD = "remote-cafe-resources.md"
 DEVELOPMENT_MD = "development.md"
 
@@ -57,6 +60,8 @@ _DEFAULT_README_OVERVIEW_LINKS = (
     "curated lists, and tips & notes.\n"
     f"- **[{GREEK_TECH_PODCASTS_MD}]({GREEK_TECH_PODCASTS_MD})** — Greek tech "
     "& startup podcasts (video and audio).\n"
+    f"- **[{OPEN_SOURCE_PROJECTS_MD}]({OPEN_SOURCE_PROJECTS_MD})** — open source "
+    "Greek tech projects on GitHub you can contribute to.\n"
     f"- **[{REMOTE_CAFE_RESOURCES_MD}](../{REMOTE_CAFE_RESOURCES_MD})** — remote "
     "café & laptop-friendly workspace guides (e.g. "
     "[Remote Work Café](https://remotework.cafe/))."
@@ -221,6 +226,70 @@ def build_greek_tech_podcasts_markdown(podcasts_data: dict | None) -> str:
     return "\n".join(body).rstrip() + "\n"
 
 
+def build_open_source_projects_markdown(data: dict | None) -> str:
+    """Markdown for ``generated/open-source-projects.md`` from ``_data/open_source_projects.yaml``."""
+    data = data or {}
+    intro = (data.get("intro") or "").strip()
+    disclaimer = (data.get("disclaimer") or "").strip()
+    projects = data.get("projects") or []
+
+    lines: list[str] = [
+        "# Greek open source on GitHub",
+        "",
+        "← [readme.md](readme.md)",
+        "",
+    ]
+    if intro:
+        lines.append(intro.rstrip())
+        lines.append("")
+        lines.append("---")
+        lines.append("")
+
+    valid: list[dict] = []
+    for p in projects:
+        if not isinstance(p, dict):
+            continue
+        title = (p.get("title") or "").strip()
+        url = (p.get("url") or "").strip()
+        if not title or not url:
+            continue
+        valid.append(p)
+
+    for idx, p in enumerate(valid):
+        title = (p.get("title") or "").strip()
+        url = (p.get("url") or "").strip()
+        desc = (p.get("description") or "").strip()
+        lines.append(f"## {title}")
+        lines.append("")
+        lines.append(f"**Repository:** [{url}]({url})")
+        lines.append("")
+        if desc:
+            lines.append(desc.rstrip())
+            lines.append("")
+        if idx < len(valid) - 1:
+            lines.append("---")
+            lines.append("")
+
+    if not valid:
+        lines.append(
+            "*No projects listed yet—add entries under `projects` in "
+            "`_data/open_source_projects.yaml` and run `just readme`.*"
+        )
+        lines.append("")
+
+    if disclaimer:
+        if valid:
+            lines.append("---")
+            lines.append("")
+        lines.append(disclaimer.rstrip())
+        lines.append("")
+
+    while lines and lines[-1] == "":
+        lines.pop()
+    lines.append("")
+    return "\n".join(lines)
+
+
 def build_development_markdown(readme_data: dict) -> str:
     """Markdown for ``development.md`` (commands in fenced ``sh`` blocks)."""
     dev = readme_data.get("development")
@@ -371,11 +440,6 @@ def generate() -> None:
     )
     live_url = readme_data.get("live_url", "")
     branding = readme_data.get("branding", {}) or {}
-    logo_cfg = branding.get("logo", {}) or {}
-    logo_alt = logo_cfg.get("alt", "AGSE")
-    logo_light = logo_cfg.get("src_light", "assets/awgj.svg")
-    logo_dark = logo_cfg.get("src_dark", logo_light)
-    logo_width = int(logo_cfg.get("width", 180))
     _default_intro_line_2 = (
         "Community-curated directory with weekly open roles count updates."
     )
@@ -403,16 +467,6 @@ def generate() -> None:
 
     # ── Build README ────────────────────────────────────────
     lines: list[str] = []
-
-    lines.append('<p align="center">')
-    lines.append("  <br>")
-    lines.append(
-        f"  <img alt=\"{logo_alt}\" src=\"{logo_light}\" width=\"{logo_width}\" />"
-    )
-    lines.append("  <br>")
-    lines.append("  <br>")
-    lines.append("</p>")
-    lines.append("")
 
     tagline = readme_data.get("tagline", "")
     lines.append('<p align="center">')
@@ -569,6 +623,17 @@ def generate() -> None:
     ) as f:
         f.write(build_greek_tech_podcasts_markdown(podcasts_data))
 
+    osp_data: dict = {}
+    if OPEN_SOURCE_PROJECTS_YAML.is_file():
+        with OPEN_SOURCE_PROJECTS_YAML.open("r", encoding="utf-8") as f:
+            loaded = yaml.safe_load(f)
+            if isinstance(loaded, dict):
+                osp_data = loaded
+    with (GENERATED_MD_DIR / OPEN_SOURCE_PROJECTS_MD).open(
+        "w", encoding="utf-8"
+    ) as f:
+        f.write(build_open_source_projects_markdown(osp_data))
+
     if dev_md_body:
         with (GENERATED_MD_DIR / DEVELOPMENT_MD).open(
             "w", encoding="utf-8"
@@ -656,6 +721,6 @@ if __name__ == "__main__":
     generate()
     print(
         "README.md stub, generated/readme.md, generated/search-queries-and-resources.md, "
-        "generated/greek-tech-podcasts.md, generated/development.md, and "
-        "generated/engineering-hubs.md written successfully!"
+        "generated/greek-tech-podcasts.md, generated/open-source-projects.md, "
+        "generated/development.md, and generated/engineering-hubs.md written successfully!"
     )

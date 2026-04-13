@@ -1,0 +1,42 @@
+# Source for generated/remote-cafe-resources.md (run `just readme` or `just generate`).
+#
+# Entry kinds:
+#   - directory — one website or article that lists or maps many laptop-friendly cafés
+#   - cafe      — a single venue or its official page
+#
+# Each entry needs: kind, title, url
+# Optional: description (markdown), details (mapping → two-column table), note (markdown after the table)
+#
+# Examples:
+#
+#   - kind: directory
+#     title: Remote Work Café
+#     url: https://remotework.cafe/
+#     description: |
+#       Paragraph with markdown…
+#     details:
+#       Site: https://remotework.cafe/
+#     note: Extra tips in markdown…
+#
+#   - kind: cafe
+#     title: My Favourite Athens Laptop Spot
+#     url: https://example.com/venue
+#     location: Athens
+#     description: Short note about Wi‑Fi, noise, and power outlets.
+
+intro: |
+  Curated links to **find coffee shops and spaces** where you can work on a laptop—Wi‑Fi, quiet areas, and practical filters. Complements the job-search links in **[search-queries-and-resources.md](../search-queries-and-resources.md)**.
+
+disclaimer: |
+  **Disclaimer:** This list is community-maintained. Venues, hours, and policies change—confirm on the site or with the café before visiting.
+
+entries:
+  - kind: directory
+    title: Remote Work Café
+    url: https://remotework.cafe/
+    description: |
+      [**Remote Work Café**](https://remotework.cafe/) is a community-powered guide to **work-friendly cafés** around the world: explore by location or **near you**, filter by what matters (quiet, meal options, strong Wi‑Fi, natural light, outdoor seating, accessibility), and read short reviews from other remote workers.
+    details:
+      Site: https://remotework.cafe/
+    note: |
+      Greek and regional examples appear among global listings (e.g. **Thessaloniki**, **Cyclades**); use the site’s search and filters to match your trip or neighbourhood.

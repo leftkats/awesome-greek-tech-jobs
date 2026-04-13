@@ -9,6 +9,7 @@ This repository organizes its data under the `_data` directory. Below is a descr
 - **`_data/companies/`**: One YAML file per company (`.yaml`). Each file is a single mapping with the company name, sectors, careers page URL, LinkedIn company ID, and other fields. For the LinkedIn ID, open the company’s LinkedIn page and copy the segment after `/company/` (for example `https://www.linkedin.com/company/**company-id**/`).
 - **`_data/queries.yaml`**: Predefined search queries and resources, grouped into sections. Each query has a name, URL, and optional description; sections appear as headings in **[generated/search-queries-and-resources.md](generated/search-queries-and-resources.md)** (generated when you run `just generate`). **Tips & Notes** on that page are copied from **`_data/readme.yaml`** (`footer.notes`), not from this file.
 - **`_data/podcasts.yaml`**: Curated Greek tech and startup podcasts. Each entry has a `title`, markdown `description`, and a `links` list (`label`, `url`, optional `anchor` for the link text). Running **`just readme`** or **`just generate`** writes **[generated/greek-tech-podcasts.md](generated/greek-tech-podcasts.md)** and feeds **`podcasts.html`**. Add new shows here (see the comments at the top of the YAML file).
+- **`_data/open_source_projects.yaml`**: Open source Greek tech projects on GitHub (`title`, `url`, `description`). Running **`just readme`** writes **[generated/open-source-projects.md](generated/open-source-projects.md)** and links it from the generated readme overview.
 - **`remote-cafe-resources.md`**: Curated remote café and laptop-friendly workspace links (maintained in this file; **not** overwritten by `just readme`).
 
 ## Generated Markdown (do not edit by hand)
@@ -19,9 +20,10 @@ These files are **overwritten** under **`generated/`** by **`src/awesome_greek_s
 - **`generated/engineering-hubs.md`**
 - **`generated/search-queries-and-resources.md`**
 - **`generated/greek-tech-podcasts.md`**
+- **`generated/open-source-projects.md`**
 - **`generated/development.md`**
 
-To change their wording or structure, edit **`_data/readme.yaml`** (see **`generated_markdown`** for shared prose, plus `development`, `disclaimer`, `footer`, etc.), **`_data/queries.yaml`**, **`_data/podcasts.yaml`**, and company YAML as needed, then regenerate. Hand-edits to the generated `*.md` files will be lost on the next run.
+To change their wording or structure, edit **`_data/readme.yaml`** (see **`generated_markdown`** for shared prose, plus `development`, `disclaimer`, `footer`, etc.), **`_data/queries.yaml`**, **`_data/podcasts.yaml`**, **`_data/open_source_projects.yaml`**, and company YAML as needed, then regenerate. Hand-edits to the generated `*.md` files will be lost on the next run.
 
 ## Reporting wrong or outdated company data
 

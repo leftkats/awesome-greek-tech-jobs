@@ -110,7 +110,7 @@ jobs:
             git config --local user.email "github-actions[bot]@users.noreply.github.com"
             git config --local user.name "github-actions[bot]"
 
-            git add README.md generated/*.md _data/readme.yaml
+            git add README.md generated/*.md _data/readme.yaml _data/open_source_projects.yaml
             MAIN_CHANGED=0
             if git diff --staged --quiet; then
               echo "No main-branch doc changes to commit."
@@ -133,7 +133,7 @@ jobs:
 
             git config --local user.email "github-actions[bot]@users.noreply.github.com"
             git config --local user.name "github-actions[bot]"
-            git add README.md generated/*.md _data/readme.yaml _data/workable_counts.yaml
+            git add README.md generated/*.md _data/readme.yaml _data/open_source_projects.yaml _data/workable_counts.yaml
             MAIN_CHANGED=0
             if git diff --staged --quiet; then
               echo "No main-branch changes to commit."
