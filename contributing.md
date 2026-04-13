@@ -8,7 +8,7 @@ This repository organizes its data under the `data` directory. Below is a descri
 
 - **`data/companies.yaml`**: Contains a list of companies hiring for tech roles. Each entry includes the company name, sector, careers page URL, and LinkedIn ID. For the LinkedIn ID find the company's LinkedIn page and copy the company ID.
 https://www.linkedin.com/company/**company-id**/.
-- **`data/quries.yaml`**: Contains predi
+- **`data/queries.yaml`**: Predefined search queries and resources, grouped into sections. Each query has a name, URL, and optional description; sections appear as headings under “Useful Search Queries & Resources” in `readme.md`.
 
 ## How to Contribute via Pull Request
 
@@ -27,7 +27,7 @@ https://www.linkedin.com/company/**company-id**/.
           - Athens
         work_policy: remote
       ```
-    - For `quries.yaml`: Add a new predefined search query:
+    - For `queries.yaml`: Add a new predefined search query:
       ```yaml
       - name: "Startup Pirate: Learn what matters in Greek tech and startups"
         url: https://startuppirate.gr/
