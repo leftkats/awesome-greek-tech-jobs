@@ -94,12 +94,6 @@ OSP_HERO_SUBTITLE = (
     "Greek-related GitHub repos sorted by stars (counts at build). "
     "YAML list + committers.top seeds."
 )
-OSP_SOURCE_NOTE_HTML = (
-    "<span class=\"font-mono text-cyan-700 dark:text-cyan-400\">_data/open_source_projects.yaml</span>"
-    " · <span class=\"font-mono text-cyan-700 dark:text-cyan-400\">_data/open_source_github_stats.yaml</span>"
-    " · <span class=\"font-mono\">just readme</span> → "
-    "<span class=\"font-mono\">docs/open-source-projects.md</span>"
-)
 
 # Per-page ``meta name="keywords"`` (unique, topical; home keeps ``load_site_meta`` defaults).
 _SEO_KW_JOB = (
@@ -1237,11 +1231,6 @@ def run_generate_index(
         "Job boards, awesome GitHub lists, open Greek data—all YAML-driven. "
         "Laptop cafés: Workspaces page."
     )
-    res_hero_note = (
-        "<span class=\"font-mono text-cyan-700 dark:text-cyan-400\">_data/queries.yaml</span> · "
-        "<span class=\"font-mono text-cyan-700 dark:text-cyan-400\">_data/open_greek_data.yaml</span> · "
-        "<span class=\"font-mono\">just generate</span>"
-    )
     res_meta = meta_page(
         _meta,
         relpath=OUTPUT_RESOURCES,
@@ -1279,7 +1268,6 @@ def run_generate_index(
             page_kicker="Resources · Lists & data",
             page_title="Resources & curated links",
             page_subtitle=res_desc,
-            res_hero_note_html=res_hero_note,
             resource_rows=resource_rows,
             resource_count=len(resource_rows),
             has_resource_rows=bool(resource_rows),
@@ -1399,7 +1387,6 @@ def run_generate_index(
             page_kicker="Open source · GitHub",
             page_title="Greek open source on GitHub",
             page_subtitle=osp_desc,
-            osp_source_note_html=OSP_SOURCE_NOTE_HTML,
             **osp_page,
             **osp_meta,
         ),

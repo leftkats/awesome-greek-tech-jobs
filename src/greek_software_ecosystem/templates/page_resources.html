@@ -11,9 +11,6 @@
         <h1 id="res-heading" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white mt-1.5">
             {{ page_title }}</h1>
         <p class="mt-2 max-w-3xl text-sm sm:text-base leading-snug text-slate-600 dark:text-slate-300">{{ page_subtitle }}</p>
-        <p class="mt-2 text-[11px] leading-snug text-slate-500 dark:text-slate-500 max-w-3xl">
-            {{ res_hero_note_html | safe }} · <a href="{{ nav.workspaces }}" class="text-cyan-700 dark:text-cyan-400 underline hover:no-underline font-medium">Workspaces</a>
-        </p>
     </div>
 </section>
 
@@ -32,7 +29,7 @@
             </div>
         </div>
         <p id="res-filter-hint" class="text-sm text-slate-600 dark:text-slate-400 sm:pb-2 sm:text-right">
-            <span class="font-semibold text-slate-800 dark:text-slate-200">{{ resource_count }}</span> links · order follows <span class="font-mono text-xs">_data/queries.yaml</span> &amp; <span class="font-mono text-xs">open_greek_data.yaml</span>
+            <span class="font-semibold text-slate-800 dark:text-slate-200">{{ resource_count }}</span> links
         </p>
     </div>
     <div

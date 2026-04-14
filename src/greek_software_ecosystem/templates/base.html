@@ -2,6 +2,42 @@
 <html class="light" lang="en-GB">
 
 <head>
+    <meta name="agtj-theme-cookie-path"
+        content="{% if site_baseurl %}{{ site_baseurl }}/{% else %}/{% endif %}" />
+    <script>
+        (function () {
+            try {
+                var k = "agtj-color-scheme";
+                var v = null;
+                try {
+                    v = localStorage.getItem(k);
+                } catch (e0) { }
+                if (v == null) {
+                    try {
+                        v = sessionStorage.getItem(k);
+                    } catch (e1) { }
+                }
+                if (v == null) {
+                    var m = document.cookie.match(/(?:^|; )agtj-color-scheme=([^;]*)/);
+                    if (m) {
+                        try {
+                            v = decodeURIComponent(m[1].trim());
+                        } catch (e2) {
+                            v = m[1].trim();
+                        }
+                    }
+                }
+                var r = document.documentElement;
+                if (v === "dark") {
+                    r.classList.add("dark");
+                    r.classList.remove("light");
+                } else if (v === "light") {
+                    r.classList.remove("dark");
+                    r.classList.add("light");
+                }
+            } catch (e) { }
+        })();
+    </script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
