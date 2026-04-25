@@ -96,6 +96,17 @@ _DEFAULT_README_COMMUNITY_DISCORD = (
 )
 
 
+def _readme_live_site_href(live_url: str, path: str) -> str:
+    """Join ``live_url`` with a deployed-site path (e.g. ``job-search/?hire=1``).
+
+    Filters and Workable hiring mode are handled on ``job-search/`` (see ``index.js``),
+    not the site root hub page.
+    """
+    root = (live_url or "").strip().rstrip("/")
+    rel = (path or "").lstrip("/")
+    return f"{root}/{rel}"
+
+
 def _readme_markdown_for_repository_root(generated_readme_body: str) -> str:
     """Rewrite relative doc links so they work from the repo root ``README.md``."""
     replacements: tuple[tuple[str, str], ...] = (
@@ -648,17 +659,20 @@ def generate() -> None:
     lines.append("")
 
     lines.append('<p align="center">')
-    companies_href = live_url or f"https://github.com/{repo}"
-    open_roles_href = f"{live_url}?hire=1" if live_url else companies_href
-    remote_href = f"{live_url}?pol=remote" if live_url else companies_href
-    hybrid_href = f"{live_url}?pol=hybrid" if live_url else companies_href
-    if live_url:
-        base = live_url.rstrip("/")
-        podcasts_href = f"{base}/podcasts"
+    live = (live_url or "").strip()
+    gh_docs = f"https://github.com/{repo}/blob/main/docs"
+    if live:
+        companies_href = _readme_live_site_href(live, "job-search/#employers")
+        open_roles_href = _readme_live_site_href(live, "job-search/?hire=1")
+        remote_href = _readme_live_site_href(live, "job-search/?pol=remote")
+        hybrid_href = _readme_live_site_href(live, "job-search/?pol=hybrid")
+        podcasts_href = _readme_live_site_href(live, "podcasts/")
     else:
-        podcasts_href = (
-            f"https://github.com/{repo}/blob/main/docs/{GREEK_TECH_PODCASTS_MD}"
-        )
+        companies_href = f"{gh_docs}/{ENGINEERING_HUBS_MD}"
+        open_roles_href = companies_href
+        remote_href = companies_href
+        hybrid_href = companies_href
+        podcasts_href = f"{gh_docs}/{GREEK_TECH_PODCASTS_MD}"
     lines.append(
         "  "
         f'<a href="{companies_href}">'
@@ -725,7 +739,9 @@ def generate() -> None:
         )
     if show_last_commit:
         meta_badges.append(
-            f'<img src="https://img.shields.io/github/last-commit/{repo}?logo=github&label=Last%20Commit" alt="Last Commit" />'
+            f'<a href="https://github.com/{repo}/commits/main">'
+            f'<img src="https://img.shields.io/github/last-commit/{repo}?logo=github&label=Last%20Commit" '
+            f'alt="Last Commit" /></a>'
         )
     if meta_badges:
         lines.append('<p align="center">')
