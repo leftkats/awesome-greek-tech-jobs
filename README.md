@@ -6,9 +6,9 @@
 </p>
 
 <p align="center">
-  <a href="https://leftkats.github.io/greek-software-ecosystem/job-search/#employers"><img src="https://img.shields.io/badge/Companies-50-2563eb?style=for-the-badge" alt="Companies" /></a>
-  <a href="https://leftkats.github.io/greek-software-ecosystem/job-search/?pol=remote"><img src="https://img.shields.io/badge/Remote-50-16a34a?style=for-the-badge" alt="Remote" /></a>
-  <a href="https://leftkats.github.io/greek-software-ecosystem/podcasts/"><img src="https://img.shields.io/badge/Podcasts-12-9333ea?style=for-the-badge" alt="Podcasts" /></a>
+  <a href="https://leftkats.github.io/greek-software-ecosystem/job-search/#employers"><img src="https://img.shields.io/badge/Companies-59-2563eb?style=for-the-badge" alt="Companies" /></a>
+  <a href="https://leftkats.github.io/greek-software-ecosystem/job-search/?pol=remote"><img src="https://img.shields.io/badge/Remote-59-16a34a?style=for-the-badge" alt="Remote" /></a>
+  <a href="https://leftkats.github.io/greek-software-ecosystem/podcasts/"><img src="https://img.shields.io/badge/Podcasts-14-9333ea?style=for-the-badge" alt="Podcasts" /></a>
   <!-- Set community.discord in _data/readme.yaml -->
   <a href="https://discord.gg/TywcYPMs"><img src="https://img.shields.io/badge/Discord-Community-5865F2?style=for-the-badge&amp;logo=discord&amp;logoColor=white" alt="Join us on Discord" /></a>
 </p>
@@ -23,7 +23,7 @@
 **Greek Software Ecosystem** is a community-maintained collection for people exploring software and technology careers in Greece. This repository contains a list of **remote-first companies** — a **sortable remote jobs directory**, **curated remote job links** and tips, pointers to **Greek tech podcasts**, and a short list of **remote café / laptop-friendly workspace** resources—linked from the overview below.
 
 
-Currently tracking **50** remote-first companies. The most common sectors are **AI** (9), **Software Development** (7), **IT Services** (5), **Consulting** (4), **Data** (3).
+Currently tracking **59** remote-first companies. The most common sectors are **Software Development** (11), **AI** (10), **IT Services** (5), **Consulting** (4), **Data** (3).
 
 
 **Note:** Work policy labels are community-maintained and may be incorrect or outdated. Always verify roles, locations, and policies on each employer's official website using the company and careers URLs in the directory.
@@ -45,6 +45,7 @@ Currently tracking **50** remote-first companies. The most common sectors are **
 [![Contributors](https://contrib.rocks/image?repo=leftkats/greek-software-ecosystem)](https://github.com/leftkats/greek-software-ecosystem/graphs/contributors)
 
 Built with ❤️ by the community. PRs welcome!
+
 
 <p align="center">
   <a href="https://star-history.com/#leftkats/greek-software-ecosystem&amp;Date">
