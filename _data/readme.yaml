@@ -3,12 +3,11 @@ tagline: "The open-source pulse on remote-first IT and software jobs in Greece"
 description: >
   **Greek Software Ecosystem** is a community-maintained collection for people exploring
   software and technology careers in Greece. This repository contains a list of
-  **remote-first companies** — a **sortable employer directory** (with weekly **Workable**
-  open-role snapshots where applicable), **curated job-search links** and tips, pointers to
-  **Greek tech podcasts**, and a short list of **remote café / laptop-friendly workspace**
-  resources—linked from the overview below.
+  **remote-first companies** — a **sortable remote jobs directory**, **curated remote job links**
+  and tips, pointers to **Greek tech podcasts**, and a short list of **remote café /
+  laptop-friendly workspace** resources—linked from the overview below.
 
-# Shown on the README overview, the site home hero, and the job-search page (Markdown; ``generate_index`` renders HTML).
+# Shown on the README overview, the site home hero, and the remote jobs page (Markdown; ``generate_index`` renders HTML).
 work_policy_notice: >
   **Note:** Work policy labels are community-maintained and may be incorrect or outdated.
   Always verify roles, locations, and policies on each employer's official website using the
@@ -16,7 +15,7 @@ work_policy_notice: >
 
 live_url: "https://leftkats.github.io/greek-software-ecosystem/"
 # Shown as the centered link under the badges (readme header).
-live_directory_cta: "Open the interactive directory"
+live_directory_cta: "Browse remote jobs"
 repo: "leftkats/greek-software-ecosystem"
 
 # Prose for Markdown files produced by greek_software_ecosystem.generate_readme
@@ -26,9 +25,10 @@ repo: "leftkats/greek-software-ecosystem"
 generated_markdown:
   search_queries:
     intro: >
-      Hand-picked links for Greek (and broader remote) job hunting.
+      Hand-picked links for **remote tech jobs** in Greece (and broader remote hiring).
       Each entry includes a short note on what you'll find there.
       For **laptop-friendly cafés and remote workspaces**, see **[remote-cafe-resources.md](remote-cafe-resources.md)**.
+      For the **sortable remote-first employer directory**, see **[engineering-hubs.md](engineering-hubs.md)**.
   engineering_hubs:
     title: "Remote-first Employers & Career Portals"
     intro: >
@@ -44,7 +44,7 @@ generated_markdown:
       **What's in this repository**
 
       - **[engineering-hubs.md](engineering-hubs.md)** — the sortable remote-first employer table: sectors, work policy, and talent portals.
-      - **[search-queries-and-resources.md](search-queries-and-resources.md)** — job search links, curated lists, and tips & notes.
+      - **[search-queries-and-resources.md](search-queries-and-resources.md)** — remote job links, curated lists, and tips & notes.
       - **[greek-tech-podcasts.md](greek-tech-podcasts.md)** — Greek tech & startup podcasts (video and audio).
       - **[open-source-projects.md](open-source-projects.md)** — open source Greek tech projects on GitHub you can contribute to.
       - **[remote-cafe-resources.md](remote-cafe-resources.md)** — remote café & laptop-friendly workspace guides (e.g. [Remote Work Café](https://remotework.cafe/)).
@@ -89,9 +89,7 @@ community:
 disclaimer: >
   This project is for **community and educational purposes only**.
   All data is aggregated from publicly available sources (company
-  websites, LinkedIn, Workable's public API).  Job counts shown are
-  **cached snapshots** generated weekly and **do not represent
-  a real-time official database**.
+  websites, LinkedIn, and other public career pages).
 
 
   **Please note:**
@@ -100,12 +98,7 @@ disclaimer: >
     with, sponsored by, or endorsed by any of the companies listed.
     All company names and links are the property of their respective owners.
 
-  * **Public Data Only:** Job counts are retrieved from Workable's
-    unauthenticated, publicly accessible API endpoints.  No private
-    data, scraping behind login walls, or terms-of-service circumvention
-    is involved.
-
-  * **Accuracy:** Information is gathered from public sources.  Company
+  * **Accuracy:** Information is gathered from public sources. Company
     policies and openings change frequently — always verify on the
     official company website. **Work policy** labels may be wrong;
     rely on each employer's own careers pages and URLs.
@@ -121,7 +114,7 @@ development:
     Use [uv](https://github.com/astral-sh/uv) for Python and
     [just](https://github.com/casey/just) for short commands. Each block below is a
     fenced shell snippet you can copy into your terminal.
-    `just index` writes `index.html`, `job-search.html` (employer directory + job-board links), `employers.html`
+    `just index` writes `index.html`, `job-search.html` (remote jobs / employer directory + job-board links), `employers.html`
     (redirect to `job-search.html#employers`), `resources.html`, `podcasts.html`, `sitemap.xml`, and `robots.txt`
     (plus shared `assets/`) for the static site. Those files are gitignored on **`main`** (do not commit them);
     **`sitemap.xml`** / **`robots.txt`** are included only in the CI deploy to branch **`live`**. Branch **`live`**
@@ -138,6 +131,20 @@ development:
     - title: "Fetch Workable counts, then regenerate everything"
       commands:
         - just all
+    - title: "Refresh open source GitHub stars/forks (local or manual CI)"
+      commands:
+        - just open-source-stats-update
+      note: >
+        CI runs this automatically on the 1st of each month
+        (`.github/workflows/open-source-stats-monthly.yaml`); use **Actions → Update open source GitHub stats → Run workflow** to trigger it manually.
+    - title: "Refresh README star history chart (GitHub Actions)"
+      commands:
+        - gh workflow run star-history.yaml
+      note: >
+        SVGs are published to branch `star-history` by [rust-star-history](https://github.com/Flux159/rust-star-history)
+        (`.github/workflows/star-history.yaml`). Requires repository secret `STAR_HISTORY_TOKEN`
+        (fine-grained PAT with read-only Contents + Metadata). Scheduled daily at 05:00 UTC;
+        use **Actions → Star History → Run workflow** (or the command above) to refresh manually.
     - title: "Same checks as pull request validation"
       commands:
         - just check
@@ -170,7 +177,3 @@ footer:
         the latter includes private health coverage.
     - title: "Interview Prep"
       content: "Focus on System Design for Senior roles and LeetCode (Medium) for mid-level."
-    - title: "Job Counts"
-      content: >
-        Workable counts are fetched weekly via CI from the public API and
-        may be inaccurate due to timing, geography filters, or API behavior.

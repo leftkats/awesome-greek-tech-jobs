@@ -56,14 +56,16 @@ README_BACKLINK_MD = "← [README.md](../README.md)"
 
 # Fallbacks when ``_data/readme.yaml`` → ``generated_markdown`` omits a key.
 _DEFAULT_SEARCH_QUERIES_INTRO = (
-    "Hand-picked links for Greek (and broader remote) job hunting. "
+    "Hand-picked links for **remote tech jobs** in Greece (and broader remote hiring). "
     "Each entry includes a short note on what you’ll find there. "
     f"For **laptop-friendly cafés and remote workspaces**, see "
-    f"**[{REMOTE_CAFE_RESOURCES_MD}]({REMOTE_CAFE_RESOURCES_MD})**."
+    f"**[{REMOTE_CAFE_RESOURCES_MD}]({REMOTE_CAFE_RESOURCES_MD})**. "
+    f"For the **sortable remote-first employer directory**, see "
+    f"**[{ENGINEERING_HUBS_MD}]({ENGINEERING_HUBS_MD})**."
 )
-_DEFAULT_EH_TITLE = "Engineering Hubs & Career Portals"
+_DEFAULT_EH_TITLE = "Remote-first Employers & Career Portals"
 _DEFAULT_EH_INTRO = (
-    "Curated organizations, focus sectors, work policy, and talent links."
+    "Curated remote-first organizations, focus sectors, and talent links."
 )
 _DEFAULT_EH_DISCLAIMER = (
     "**Disclaimer:** This list is community-maintained. Information may be "
@@ -73,9 +75,9 @@ _DEFAULT_EH_DISCLAIMER = (
 )
 _DEFAULT_README_OVERVIEW_LINKS = (
     "**What’s in this repository**\n\n"
-    f"- **[{ENGINEERING_HUBS_MD}]({ENGINEERING_HUBS_MD})** — the sortable employer "
+    f"- **[{ENGINEERING_HUBS_MD}]({ENGINEERING_HUBS_MD})** — the sortable remote-first employer "
     "table: sectors, work policy, and talent portals.\n"
-    f"- **[{SEARCH_QUERIES_MD}]({SEARCH_QUERIES_MD})** — job search links, "
+    f"- **[{SEARCH_QUERIES_MD}]({SEARCH_QUERIES_MD})** — remote job links, "
     "curated lists, and tips & notes.\n"
     f"- **[{GREEK_TECH_PODCASTS_MD}]({GREEK_TECH_PODCASTS_MD})** — Greek tech "
     "& startup podcasts (video and audio).\n"
@@ -97,9 +99,9 @@ _DEFAULT_README_COMMUNITY_DISCORD = (
 
 
 def _readme_live_site_href(live_url: str, path: str) -> str:
-    """Join ``live_url`` with a deployed-site path (e.g. ``job-search/?hire=1``).
+    """Join ``live_url`` with a deployed-site path (e.g. ``job-search/?pol=remote``).
 
-    Filters and Workable hiring mode are handled on ``job-search/`` (see ``index.js``),
+    Filters are handled on ``job-search/`` (the Remote jobs page; see ``index.js``),
     not the site root hub page.
     """
     root = (live_url or "").strip().rstrip("/")
@@ -125,6 +127,27 @@ def _readme_markdown_for_repository_root(generated_readme_body: str) -> str:
     for old, new in replacements:
         out = out.replace(old, new)
     return out
+
+
+def _readme_star_history_markdown(repo: str) -> list[str]:
+    """Markdown/HTML for README star history (``rust-star-history`` on branch ``star-history``)."""
+    star_hist_href = f"https://star-history.com/#{repo}&Date"
+    light_src = f"https://raw.githubusercontent.com/{repo}/star-history/star-history.svg"
+    dark_src = (
+        f"https://raw.githubusercontent.com/{repo}/star-history/star-history-dark.svg"
+    )
+    return [
+        '<p align="center">',
+        f'  <a href="{escape(star_hist_href, quote=True)}">',
+        "  <picture>",
+        '    <source media="(prefers-color-scheme: dark)" '
+        f'srcset="{escape(dark_src, quote=True)}">',
+        f'    <img alt="Star history chart" src="{escape(light_src, quote=True)}" />',
+        "  </picture>",
+        "  </a>",
+        "</p>",
+        "",
+    ]
 
 
 def _engineering_hubs_disclaimer_text(readme_data: dict, issue_chooser: str) -> str:
@@ -185,7 +208,7 @@ def build_search_queries_markdown(
     sq_meta = gm.get("search_queries") or {}
     intro_text = (sq_meta.get("intro") or _DEFAULT_SEARCH_QUERIES_INTRO).strip()
     body: list[str] = [
-        "# Search queries & resources",
+        "# Remote jobs — queries & resources",
         "",
         README_BACKLINK_MD,
         "",
@@ -372,6 +395,19 @@ def build_open_source_projects_markdown(data: dict | None) -> str:
         lines.pop()
     lines.append("")
     return "\n".join(lines)
+
+
+def write_open_source_projects_markdown() -> None:
+    """Regenerate ``docs/open-source-projects.md`` only (uses cached GitHub stats YAML)."""
+    osp_data: dict = {}
+    if OPEN_SOURCE_PROJECTS_YAML.is_file():
+        with OPEN_SOURCE_PROJECTS_YAML.open("r", encoding="utf-8") as f:
+            loaded = yaml.safe_load(f)
+            if isinstance(loaded, dict):
+                osp_data = loaded
+    DOCS_MD_DIR.mkdir(parents=True, exist_ok=True)
+    with (DOCS_MD_DIR / OPEN_SOURCE_PROJECTS_MD).open("w", encoding="utf-8") as f:
+        f.write(build_open_source_projects_markdown(osp_data))
 
 
 def _cafe_detail_label(key: str) -> str:
@@ -613,12 +649,12 @@ def generate() -> None:
     live_url = readme_data.get("live_url", "")
     show_workable_job_counts = bool(
         ((readme_data.get("features") or {}).get("workable_job_counts") or {}).get(
-            "enabled", True
+            "enabled", False
         )
     )
     branding = readme_data.get("branding", {}) or {}
     _default_intro_line_2 = (
-        "Community-curated directory with weekly open roles count updates."
+        "Community-curated directory of remote-first employers and remote job resources."
     )
     if "intro_line_2" in branding:
         raw_intro_2 = branding["intro_line_2"]
@@ -806,6 +842,8 @@ def generate() -> None:
         lines.append(f"{footer['description']}\n")
     lines.append("")
 
+    lines.extend(_readme_star_history_markdown(repo))
+
     if discord_href:
         lines.append("---\n")
         lines.append("## Community\n")
@@ -815,17 +853,6 @@ def generate() -> None:
         else:
             comm_body = _DEFAULT_README_COMMUNITY_DISCORD.format(url=discord_href)
         lines.append(comm_body + "\n")
-        lines.append("")
-        star_hist_href = f"https://star-history.com/#{repo}&Date"
-        star_hist_src = f"https://api.star-history.com/svg?repos={repo}&type=Date"
-        lines.append('<p align="center">')
-        lines.append(
-            "  "
-            f'<a href="{escape(star_hist_href, quote=True)}">'
-            f'<img src="{escape(star_hist_src, quote=True)}" '
-            'alt="Star history chart" /></a>'
-        )
-        lines.append("</p>")
         lines.append("")
 
     if dev_md_body:
@@ -863,14 +890,7 @@ def generate() -> None:
     with (DOCS_MD_DIR / GREEK_TECH_PODCASTS_MD).open("w", encoding="utf-8") as f:
         f.write(build_greek_tech_podcasts_markdown(podcasts_data))
 
-    osp_data: dict = {}
-    if OPEN_SOURCE_PROJECTS_YAML.is_file():
-        with OPEN_SOURCE_PROJECTS_YAML.open("r", encoding="utf-8") as f:
-            loaded = yaml.safe_load(f)
-            if isinstance(loaded, dict):
-                osp_data = loaded
-    with (DOCS_MD_DIR / OPEN_SOURCE_PROJECTS_MD).open("w", encoding="utf-8") as f:
-        f.write(build_open_source_projects_markdown(osp_data))
+    write_open_source_projects_markdown()
 
     cafe_resources_data: dict = {}
     if CAFE_RESOURCES_YAML.is_file():
@@ -931,10 +951,23 @@ def generate() -> None:
 
 
 if __name__ == "__main__":
-    generate()
-    print(
-        "README.md (repo root), docs/search-queries-and-resources.md, "
-        "docs/greek-tech-podcasts.md, docs/open-source-projects.md, "
-        "docs/remote-cafe-resources.md, docs/development.md, and "
-        "docs/engineering-hubs.md written successfully!"
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Generate README and docs/*.md from YAML.")
+    parser.add_argument(
+        "--open-source-only",
+        action="store_true",
+        help="Regenerate docs/open-source-projects.md only (after fetch-open-source-stats).",
     )
+    args = parser.parse_args()
+    if args.open_source_only:
+        write_open_source_projects_markdown()
+        print("docs/open-source-projects.md written successfully!")
+    else:
+        generate()
+        print(
+            "README.md (repo root), docs/search-queries-and-resources.md, "
+            "docs/greek-tech-podcasts.md, docs/open-source-projects.md, "
+            "docs/remote-cafe-resources.md, docs/development.md, and "
+            "docs/engineering-hubs.md written successfully!"
+        )

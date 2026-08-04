@@ -206,6 +206,9 @@ jekyll-pages/.jekyll-cache/
 jekyll-pages/vendor/
 jekyll-pages/_url.yml
 
+# rust-star-history CLI cache (optional local chart generation)
+.rust-star-history/
+
 # Cursor
 #  Cursor is an AI-powered code editor. `.cursorignore` specifies files/directories to
 #  exclude from AI features like autocomplete and code analysis. Recommended for sensitive data

@@ -2,7 +2,7 @@
 
 ← [README.md](../README.md)
 
-Curated links to **find coffee shops and spaces** where you can work on a laptop—Wi‑Fi, quiet areas, and practical filters. Complements the job-search links in **[search-queries-and-resources.md](search-queries-and-resources.md)**.
+Curated links to **find coffee shops and spaces** where you can work on a laptop—Wi‑Fi, quiet areas, and practical filters. Complements the **remote job** links on **[Remote jobs & resources](search-queries-and-resources.md)** and the employer directory on **[engineering-hubs.md](engineering-hubs.md)**.
 
 ---
 

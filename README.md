@@ -1,6 +1,6 @@
 <p align="center">
   The open-source pulse on remote-first IT and software jobs in Greece<br><br>
-  <a href="https://leftkats.github.io/greek-software-ecosystem/"><strong>Open the interactive directory</strong></a><br>
+  <a href="https://leftkats.github.io/greek-software-ecosystem/"><strong>Browse remote jobs</strong></a><br>
   <br>
   <br>
 </p>
@@ -20,7 +20,7 @@
 
 ## Overview
 
-**Greek Software Ecosystem** is a community-maintained collection for people exploring software and technology careers in Greece. This repository contains a list of **remote-first companies** — a **sortable employer directory** (with weekly **Workable** open-role snapshots where applicable), **curated job-search links** and tips, pointers to **Greek tech podcasts**, and a short list of **remote café / laptop-friendly workspace** resources—linked from the overview below.
+**Greek Software Ecosystem** is a community-maintained collection for people exploring software and technology careers in Greece. This repository contains a list of **remote-first companies** — a **sortable remote jobs directory**, **curated remote job links** and tips, pointers to **Greek tech podcasts**, and a short list of **remote café / laptop-friendly workspace** resources—linked from the overview below.
 
 
 Currently tracking **50** remote-first companies. The most common sectors are **AI** (9), **Software Development** (7), **IT Services** (5), **Consulting** (4), **Data** (3).
@@ -32,7 +32,7 @@ Currently tracking **50** remote-first companies. The most common sectors are **
 **What's in this repository**
 
 - **[engineering-hubs.md](docs/engineering-hubs.md)** — the sortable remote-first employer table: sectors, work policy, and talent portals.
-- **[search-queries-and-resources.md](docs/search-queries-and-resources.md)** — job search links, curated lists, and tips & notes.
+- **[search-queries-and-resources.md](docs/search-queries-and-resources.md)** — remote job links, curated lists, and tips & notes.
 - **[greek-tech-podcasts.md](docs/greek-tech-podcasts.md)** — Greek tech & startup podcasts (video and audio).
 - **[open-source-projects.md](docs/open-source-projects.md)** — open source Greek tech projects on GitHub you can contribute to.
 - **[remote-cafe-resources.md](docs/remote-cafe-resources.md)** — remote café & laptop-friendly workspace guides (e.g. [Remote Work Café](https://remotework.cafe/)).
@@ -46,6 +46,14 @@ Currently tracking **50** remote-first companies. The most common sectors are **
 
 Built with ❤️ by the community. PRs welcome!
 
+<p align="center">
+  <a href="https://star-history.com/#leftkats/greek-software-ecosystem&amp;Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/leftkats/greek-software-ecosystem/star-history/star-history-dark.svg">
+    <img alt="Star history chart" src="https://raw.githubusercontent.com/leftkats/greek-software-ecosystem/star-history/star-history.svg" />
+  </picture>
+  </a>
+</p>
 
 ---
 
@@ -53,10 +61,6 @@ Built with ❤️ by the community. PRs welcome!
 
 **[Join the project Discord](https://discord.gg/TywcYPMs)** to ask questions about the directory, coordinate contributions, and chat with other people using this list.
 
-
-<p align="center">
-  <a href="https://star-history.com/#leftkats/greek-software-ecosystem&amp;Date"><img src="https://api.star-history.com/svg?repos=leftkats/greek-software-ecosystem&amp;type=Date" alt="Star history chart" /></a>
-</p>
 
 ---
 
@@ -69,19 +73,14 @@ Setup, regeneration commands, and CI checks are documented in **[development.md]
 
 ## Disclaimer
 
-This project is for **community and educational purposes only**. All data is aggregated from publicly available sources (company websites, LinkedIn, Workable's public API).  Job counts shown are **cached snapshots** generated weekly and **do not represent a real-time official database**.
+This project is for **community and educational purposes only**. All data is aggregated from publicly available sources (company websites, LinkedIn, and other public career pages).
 
 **Please note:**
 * **Non-Affiliation:** This project is independent and is not affiliated
   with, sponsored by, or endorsed by any of the companies listed.
   All company names and links are the property of their respective owners.
 
-* **Public Data Only:** Job counts are retrieved from Workable's
-  unauthenticated, publicly accessible API endpoints.  No private
-  data, scraping behind login walls, or terms-of-service circumvention
-  is involved.
-
-* **Accuracy:** Information is gathered from public sources.  Company
+* **Accuracy:** Information is gathered from public sources. Company
   policies and openings change frequently — always verify on the
   official company website. **Work policy** labels may be wrong;
   rely on each employer's own careers pages and URLs.

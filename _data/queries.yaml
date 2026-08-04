@@ -2,11 +2,11 @@
 # and as blocks on resources.html (generate_index).
 # Tips & Notes on that page come from _data/readme.yaml → footer.notes (same source as the readme).
 sections:
-  - title: "Job boards, portals & search"
+  - title: "Remote job boards, portals & search"
     queries:
       - name: "Jobs by Workable: Software Engineer in Greece"
         url: https://jobs.workable.com/search?location=Greece&query=Software+Engineer
-        description: "Workable’s public job search filtered for software engineering roles located in Greece."
+        description: "Workable listings filtered for software engineering roles located in Greece."
       - name: "Data Engineer Jobs near Athens | Jobs By Innovative Greeks"
         url: https://www.igwork.gr/search?location=Athens&query=Data+Engineer
         description: "Innovative Greeks (IGWork) search for data engineering roles with an Athens location focus."
@@ -15,10 +15,10 @@ sections:
         description: "Major Greek careers site — IT and telecoms job category."
       - name: "LinkedIn: Data Engineer in Greece"
         url: https://www.linkedin.com/jobs/search/?keywords=Data%20Engineer&location=Greece
-        description: "LinkedIn job search for data engineers with Greece as the location."
+        description: "LinkedIn listings for data engineers with Greece as the location."
       - name: "LinkedIn: Software Engineer in Greece"
         url: https://www.linkedin.com/jobs/search/?keywords=Software%20Engineer&location=Greece
-        description: "LinkedIn job search for software engineers with Greece as the location."
+        description: "LinkedIn listings for software engineers with Greece as the location."
       - name: "Startup Pirate: Learn what matters in Greek tech and startups"
         url: https://startuppirate.gr/
         description: "Independent publication on Greek startups, funding, and the local tech scene."
@@ -36,7 +36,7 @@ sections:
         description: "Randstad Greece — IT roles with a remote-across-Greece filter."
       - name: "Glassdoor: Data Engineer jobs in Greece"
         url: https://www.glassdoor.com/Job/greece-data-engineer-jobs-SRCH_IL.0,6_IN100_KO7,20.htm
-        description: "Glassdoor job search for data engineers in Greece (reviews and salaries alongside listings)."
+        description: "Glassdoor listings for data engineers in Greece (reviews and salaries alongside listings)."
       - name: "Elevate Greece: Startup job positions"
         url: https://elevategreece.gov.gr/el/theseis-ergasias/
         description: "Official Elevate Greece portal — startup and innovation ecosystem job postings."

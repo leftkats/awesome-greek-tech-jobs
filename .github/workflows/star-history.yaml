@@ -1,0 +1,32 @@
+# Publishes README star-history charts to branch `star-history` via rust-star-history.
+# Requires repository secret STAR_HISTORY_TOKEN (fine-grained PAT: read-only Contents + Metadata).
+#
+# Schedule: 05:00 UTC daily. Manual: Actions → Star History → Run workflow.
+
+name: Star History
+
+on:
+  schedule:
+    - cron: "0 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: star-history-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  star-history:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Flux159/rust-star-history@v1.1.1
+        id: chart
+        continue-on-error: true
+        with:
+          token: ${{ secrets.STAR_HISTORY_TOKEN }}
+      - name: Warn instead of failing
+        if: steps.chart.outcome == 'failure'
+        run: |
+          echo "::warning::Star history chart update failed (likely transient GitHub rate limit); charts were not refreshed this run"

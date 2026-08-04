@@ -23,6 +23,14 @@ fetch:
 fetch-open-source-stats:
 	uv run python -m greek_software_ecosystem.fetch_open_source_github_stats
 
+# Refresh OSS GitHub stats YAML + docs/open-source-projects.md only (no full readme).
+open-source-stats-docs:
+	just fetch-open-source-stats
+	uv run python -m greek_software_ecosystem.generate_readme --open-source-only
+
+# Monthly CI: OSS stats + open-source doc + static HTML (no Workable / full readme).
+open-source-stats-update: open-source-stats-docs index
+
 # Regenerate docs/*.md (plus root README.md stub) from _data/readme.yaml, open_source_projects.yaml, and other YAML data.
 readme:
 	uv run python -m greek_software_ecosystem.generate_readme
