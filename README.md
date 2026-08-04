@@ -50,8 +50,8 @@ Built with ❤️ by the community. PRs welcome!
 <p align="center">
   <a href="https://star-history.com/#leftkats/greek-software-ecosystem&amp;Date">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/leftkats/greek-software-ecosystem/star-history/star-history-dark.svg">
-    <img alt="Star history chart" src="https://raw.githubusercontent.com/leftkats/greek-software-ecosystem/star-history/star-history.svg" />
+    <source media="(prefers-color-scheme: dark)" srcset="assets/star-history-dark.svg">
+    <img alt="Star history chart" src="assets/star-history.svg" />
   </picture>
   </a>
 </p>

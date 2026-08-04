@@ -1,4 +1,4 @@
-# Publishes README star-history charts to branch `star-history` via rust-star-history.
+# Regenerates README star-history charts via rust-star-history and commits them to assets/.
 # Requires repository secret STAR_HISTORY_TOKEN (fine-grained PAT: read-only Contents + Metadata).
 #
 # Schedule: 05:00 UTC daily. Manual: Actions → Star History → Run workflow.
@@ -21,12 +21,36 @@ jobs:
   star-history:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - uses: Flux159/rust-star-history@v1.1.1
         id: chart
         continue-on-error: true
         with:
           token: ${{ secrets.STAR_HISTORY_TOKEN }}
+          push: false
+
+      - name: Publish charts to assets/
+        if: steps.chart.outcome == 'success'
+        run: |
+          mkdir -p assets
+          mv -f star-history.svg star-history-dark.svg assets/
+
+      - name: Commit updated charts
+        if: steps.chart.outcome == 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/star-history.svg assets/star-history-dark.svg
+          if git diff --staged --quiet; then
+            echo "Star history charts unchanged."
+          else
+            git commit -m "chore: update star history charts [skip ci]"
+            git push
+          fi
+
       - name: Warn instead of failing
         if: steps.chart.outcome == 'failure'
         run: |
-          echo "::warning::Star history chart update failed (likely transient GitHub rate limit); charts were not refreshed this run"
+          echo "::warning::Star history chart update failed (check STAR_HISTORY_TOKEN or transient GitHub rate limit); charts were not refreshed this run"

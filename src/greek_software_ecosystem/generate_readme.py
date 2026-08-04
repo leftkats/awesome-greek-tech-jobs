@@ -130,19 +130,15 @@ def _readme_markdown_for_repository_root(generated_readme_body: str) -> str:
 
 
 def _readme_star_history_markdown(repo: str) -> list[str]:
-    """Markdown/HTML for README star history (``rust-star-history`` on branch ``star-history``)."""
+    """Markdown/HTML for README star history (committed ``assets/star-history*.svg``)."""
     star_hist_href = f"https://star-history.com/#{repo}&Date"
-    light_src = f"https://raw.githubusercontent.com/{repo}/star-history/star-history.svg"
-    dark_src = (
-        f"https://raw.githubusercontent.com/{repo}/star-history/star-history-dark.svg"
-    )
     return [
         '<p align="center">',
         f'  <a href="{escape(star_hist_href, quote=True)}">',
         "  <picture>",
         '    <source media="(prefers-color-scheme: dark)" '
-        f'srcset="{escape(dark_src, quote=True)}">',
-        f'    <img alt="Star history chart" src="{escape(light_src, quote=True)}" />',
+        'srcset="assets/star-history-dark.svg">',
+        '    <img alt="Star history chart" src="assets/star-history.svg" />',
         "  </picture>",
         "  </a>",
         "</p>",
