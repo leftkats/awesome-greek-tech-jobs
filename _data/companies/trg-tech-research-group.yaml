@@ -1,7 +1,10 @@
 name: TRG Tech Research Group
-careers_url: https://www.careers.trgint.com/
 url: https://www.trgint.com/
 sectors:
+- IT Services and IT Consulting
 - Intelligence Insights
+careers_url: https://www.careers.trgint.com/
 linkedin_company_id: trg-intelligence-group
+locations:
+- Cyprus
 work_policy: remote
