@@ -129,6 +129,27 @@ def _readme_markdown_for_repository_root(generated_readme_body: str) -> str:
     return out
 
 
+def _readme_star_history_markdown(repo: str) -> list[str]:
+    """Markdown/HTML for README star history (``rust-star-history`` on branch ``star-history``)."""
+    star_hist_href = f"https://star-history.com/#{repo}&Date"
+    light_src = f"https://raw.githubusercontent.com/{repo}/star-history/star-history.svg"
+    dark_src = (
+        f"https://raw.githubusercontent.com/{repo}/star-history/star-history-dark.svg"
+    )
+    return [
+        '<p align="center">',
+        f'  <a href="{escape(star_hist_href, quote=True)}">',
+        "  <picture>",
+        '    <source media="(prefers-color-scheme: dark)" '
+        f'srcset="{escape(dark_src, quote=True)}">',
+        f'    <img alt="Star history chart" src="{escape(light_src, quote=True)}" />',
+        "  </picture>",
+        "  </a>",
+        "</p>",
+        "",
+    ]
+
+
 def _engineering_hubs_disclaimer_text(readme_data: dict, issue_chooser: str) -> str:
     """Non-empty disclaimer paragraph for ``engineering-hubs.md`` (always written on each run)."""
     gm_eh = (readme_data.get("generated_markdown") or {}).get("engineering_hubs") or {}
@@ -821,6 +842,8 @@ def generate() -> None:
         lines.append(f"{footer['description']}\n")
     lines.append("")
 
+    lines.extend(_readme_star_history_markdown(repo))
+
     if discord_href:
         lines.append("---\n")
         lines.append("## Community\n")
@@ -830,17 +853,6 @@ def generate() -> None:
         else:
             comm_body = _DEFAULT_README_COMMUNITY_DISCORD.format(url=discord_href)
         lines.append(comm_body + "\n")
-        lines.append("")
-        star_hist_href = f"https://star-history.com/#{repo}&Date"
-        star_hist_src = f"https://api.star-history.com/svg?repos={repo}&type=Date"
-        lines.append('<p align="center">')
-        lines.append(
-            "  "
-            f'<a href="{escape(star_hist_href, quote=True)}">'
-            f'<img src="{escape(star_hist_src, quote=True)}" '
-            'alt="Star history chart" /></a>'
-        )
-        lines.append("</p>")
         lines.append("")
 
     if dev_md_body:

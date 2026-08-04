@@ -46,6 +46,14 @@ Currently tracking **50** remote-first companies. The most common sectors are **
 
 Built with ❤️ by the community. PRs welcome!
 
+<p align="center">
+  <a href="https://star-history.com/#leftkats/greek-software-ecosystem&amp;Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/leftkats/greek-software-ecosystem/star-history/star-history-dark.svg">
+    <img alt="Star history chart" src="https://raw.githubusercontent.com/leftkats/greek-software-ecosystem/star-history/star-history.svg" />
+  </picture>
+  </a>
+</p>
 
 ---
 
@@ -53,10 +61,6 @@ Built with ❤️ by the community. PRs welcome!
 
 **[Join the project Discord](https://discord.gg/TywcYPMs)** to ask questions about the directory, coordinate contributions, and chat with other people using this list.
 
-
-<p align="center">
-  <a href="https://star-history.com/#leftkats/greek-software-ecosystem&amp;Date"><img src="https://api.star-history.com/svg?repos=leftkats/greek-software-ecosystem&amp;type=Date" alt="Star history chart" /></a>
-</p>
 
 ---
 

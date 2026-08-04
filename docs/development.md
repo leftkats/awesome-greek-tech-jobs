@@ -33,6 +33,14 @@ just open-source-stats-update
 
 CI runs this automatically on the 1st of each month (`.github/workflows/open-source-stats-monthly.yaml`); use **Actions → Update open source GitHub stats → Run workflow** to trigger it manually.
 
+## Refresh README star history chart (GitHub Actions)
+
+```sh
+gh workflow run star-history.yaml
+```
+
+SVGs are published to branch `star-history` by [rust-star-history](https://github.com/Flux159/rust-star-history) (`.github/workflows/star-history.yaml`). Requires repository secret `STAR_HISTORY_TOKEN` (fine-grained PAT with read-only Contents + Metadata). Scheduled daily at 05:00 UTC; use **Actions → Star History → Run workflow** (or the command above) to refresh manually.
+
 ## Same checks as pull request validation
 
 ```sh
