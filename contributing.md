@@ -10,7 +10,7 @@ This repository organizes its data under the `_data` directory. Below is a descr
 - **`_data/queries.yaml`**: Predefined **remote job** search queries and resources, grouped into sections. Each query has a name, URL, and optional description; sections appear as headings in **[docs/search-queries-and-resources.md](docs/search-queries-and-resources.md)** (generated when you run `just generate`). **Tips & Notes** on that page are copied from **`_data/readme.yaml`** (`footer.notes`), not from this file.
 - **`_data/podcasts.yaml`**: Curated Greek tech and startup podcasts. Each entry has a `title`, markdown `description`, and optional URL fields such as **`website_url`**, **`spotify_url`**, **`youtube_url`**, **`apple_podcasts_url`**, **`google_podcasts_url`**, **`simplecast_url`**, and **`podlist_url`** (omit keys you do not have). Running **`just readme`** or **`just generate`** writes **[docs/greek-tech-podcasts.md](docs/greek-tech-podcasts.md)** and feeds **`podcasts.html`**. See the comments at the top of the YAML file.
 - **`_data/open_source_projects.yaml`**: Open source Greek tech projects on GitHub (`title`, `url`, `description`). Running **`just readme`** writes **[docs/open-source-projects.md](docs/open-source-projects.md)** (with **stars** and **forks** from the GitHub API) and links it from the generated readme overview.
-- **`_data/cafe_resources.yaml`**: Remote café and laptop-friendly workspace listings (`kind: directory` or `kind: cafe`, plus `title`, `url`, optional `description`, `details`, `note`, etc.). Running **`just readme`** or **`just generate`** writes **[docs/remote-cafe-resources.md](docs/remote-cafe-resources.md)** and feeds **`resources.html`**.
+- **`_data/cafe_resources.yaml`**: Laptop-friendly **cafés**, workspace **directories**, and **remote hubs** (`kind: cafe`, `directory`, or `remote_hub`; plus `title`, `url`, optional `google_maps_url`, `location`, `tags`, `description`, `details`, `note`). Running **`just readme`** or **`just generate`** writes **[docs/remote-cafe-resources.md](docs/remote-cafe-resources.md)** and the searchable **`workspaces.html`** table. See **How to Contribute via Pull Request** below for adding places (including from a Google Maps saved list).
 
 ## Generated Markdown (do not edit by hand)
 
@@ -52,6 +52,20 @@ You do not need to open a pull request if you only want to flag an error: use **
       - name: "Startup Pirate: Learn what matters in Greek tech and startups"
         url: https://startuppirate.gr/
       ```
+    - For **`_data/cafe_resources.yaml`**: Add an entry under `entries` with `kind: cafe` (single venue), `remote_hub` (coworking/coliving), or `directory` (a site listing many places). Include `title`, `url`, and ideally `location`, `description`, and **`google_maps_url`** (Share → Copy link from Google Maps). Example:
+      ```yaml
+      - kind: cafe
+        title: My Laptop Café
+        url: https://example.com/venue
+        google_maps_url: https://maps.app.goo.gl/your-link
+        location: Athens, Kolonaki
+        lat: 37.9838
+        lng: 23.7275
+        tags: [wifi, power, quiet]
+        description: |
+          Short note on Wi‑Fi, outlets, and laptop policy.
+      ```
+      Then run **`just generate`**. See **[contributing.md](contributing.md)** for the full flow (including Google Maps share links and map coordinates).
     - For **`_data/podcasts.yaml`**: Append a new list item under `podcasts` with `title`, `description` (markdown), and any of the URL fields you have (`website_url`, `spotify_url`, `youtube_url`, `apple_podcasts_url`, etc.). Then run **`just readme`** (or **`just generate`**) so **`docs/greek-tech-podcasts.md`** and **`podcasts.html`** stay in sync.
 4. **Commit Changes**: Use a clear commit message like `feat: add [Company Name] to _data/companies`.
 5. **Create Pull Request**: Go back to the original repository and click "New Pull Request".

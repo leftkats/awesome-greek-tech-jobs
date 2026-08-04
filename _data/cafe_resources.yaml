@@ -1,42 +1,175 @@
-# Source for docs/remote-cafe-resources.md (run `just readme` or `just generate`).
+# Laptop-friendly cafés, workspace directories, and remote hubs for Greece.
+# Feeds workspaces.html (searchable table) and docs/remote-cafe-resources.md (run `just generate`).
 #
 # Entry kinds:
-#   - directory — one website or article that lists or maps many laptop-friendly cafés
-#   - cafe      — a single venue or its official page
+#   directory  — a site or article that lists/maps many laptop-friendly places
+#   cafe       — a single coffee shop or venue
+#   remote_hub — coworking, coliving, or dedicated remote-work space
 #
-# Each entry needs: kind, title, url
-# Optional: description (markdown), details (mapping → two-column table), note (markdown after the table)
+# Required: kind, title, url
+# Recommended: location (city/area), description (markdown)
+# Optional: lat, lng (decimal degrees — powers the Workspaces map), google_maps_url,
+#           tags (list of short labels), details (key → value table), note (markdown)
 #
-# Examples:
+# Coordinates: right-click a place in Google Maps → copy latitude/longitude, or use a
+# Share link that contains @lat,lng (we parse those automatically when lat/lng are omitted).
 #
-#   - kind: directory
-#     title: Remote Work Café
-#     url: https://remotework.cafe/
-#     description: |
-#       Paragraph with markdown…
-#     details:
-#       Site: https://remotework.cafe/
-#     note: Extra tips in markdown…
+# --- Add a place from your Google Maps saved list ---
+# 1. Open Google Maps → Saved → pick your list (or open a place directly).
+# 2. Open the place → Share → Copy link (https://maps.google.com/... or https://maps.app.goo.gl/...).
+# 3. Add a new list item under `entries:` below (see commented examples).
+# 4. Open a pull request — see contributing.md on GitHub.
+#
+# Example café (uncomment and edit to submit):
 #
 #   - kind: cafe
-#     title: My Favourite Athens Laptop Spot
+#     title: Example Laptop Café
 #     url: https://example.com/venue
-#     location: Athens
-#     description: Short note about Wi‑Fi, noise, and power outlets.
+#     google_maps_url: https://maps.app.goo.gl/example
+#     lat: 37.9838
+#     lng: 23.7275
+#     location: Athens, Exarchia
+#     tags: [wifi, power, quiet]
+#     description: |
+#       Strong Wi‑Fi, plenty of outlets, laptop-friendly until late afternoon.
+#
+# Example remote hub:
+#
+#   - kind: remote_hub
+#     title: Example Coworking Space
+#     url: https://example.com/cowork
+#     google_maps_url: https://maps.app.goo.gl/example
+#     location: Thessaloniki
+#     tags: [coworking, meeting-rooms, day-pass]
+#     description: |
+#       Day passes and monthly desks; book online.
 
 intro: |
-  Curated links to **find coffee shops and spaces** where you can work on a laptop—Wi‑Fi, quiet areas, and practical filters. Complements the **remote job** links on **[Remote jobs & resources](search-queries-and-resources.md)** and the employer directory on **[engineering-hubs.md](engineering-hubs.md)**.
+  **Laptop-friendly cafés**, workspace finders, and **remote hubs** across Greece—curated for people who work away from a traditional office. Use the **table** or **map** view below (map pins need `lat`/`lng` in the YAML).
 
 disclaimer: |
-  **Disclaimer:** This list is community-maintained. Venues, hours, and policies change—confirm on the site or with the café before visiting.
+  **Disclaimer:** This list is community-maintained. Hours, Wi‑Fi quality, and laptop policies change—confirm with the venue before visiting.
 
 entries:
   - kind: directory
     title: Remote Work Café
     url: https://remotework.cafe/
+    location: Global (Greece listings included)
+    tags: [directory, filters, reviews]
     description: |
-      [**Remote Work Café**](https://remotework.cafe/) is a community-powered guide to **work-friendly cafés** around the world: explore by location or **near you**, filter by what matters (quiet, meal options, strong Wi‑Fi, natural light, outdoor seating, accessibility), and read short reviews from other remote workers.
+      [**Remote Work Café**](https://remotework.cafe/) is a community-powered guide to **work-friendly cafés** worldwide: explore by location or **near you**, filter by quiet, meals, Wi‑Fi, natural light, outdoor seating, and accessibility, and read short reviews from other remote workers.
     details:
       Site: https://remotework.cafe/
     note: |
-      Greek and regional examples appear among global listings (e.g. **Thessaloniki**, **Cyclades**); use the site’s search and filters to match your trip or neighbourhood.
+      Greek examples appear among global listings (e.g. **Thessaloniki**, **Cyclades**); use the site’s search and filters for your area.
+
+  - kind: cafe
+    title: Sync
+    url: https://www.instagram.com/sync.ath/
+    google_maps_url: https://www.google.com/maps/search/?api=1&query=Sync+Vissis+25+Athens
+    lat: 37.978533
+    lng: 23.727368
+    location: Athens, Monastiraki (Psiri)
+    tags: [wifi, power, all-day, brunch, coffee]
+    description: |
+      All-day **restaurant and coffee spot** on Vissis 25 (former Dope site): specialty coffee (Qahwa), brunch, and an upper **mezzanine suited for laptop work** with natural light. Evenings shift to dining and cocktails—confirm laptop policy if you stay late.
+
+  - kind: remote_hub
+    title: Stone Soup Coworking
+    url: https://www.stonesoup.io/
+    google_maps_url: https://www.google.com/maps/search/?api=1&query=Stone+Soup+Charilaou+Trikoupi+18+Athens
+    lat: 37.982983
+    lng: 23.733520
+    location: Athens, Exarchia
+    tags: [coworking, day-pass, meeting-rooms, private-offices]
+    description: |
+      Independent **coworking and private offices** on the 5th–6th floors at Akadimias & Charilaou Trikoupi 18—one of Athens’ longest-running shared workspaces, run by its founders with flexible desks and meeting rooms.
+
+  - kind: remote_hub
+    title: ViOS Coworking (Downtown Athens)
+    url: https://vios.gr/locations/vios-downtown/
+    google_maps_url: https://www.google.com/maps/search/?api=1&query=ViOS+Feidiou+9+Athens
+    lat: 37.9841
+    lng: 23.7289
+    location: Athens, Kaniggos / Omonia
+    tags: [coworking, wellness, 24-7, meeting-rooms]
+    description: |
+      **ViOS Downtown** at Feidiou 9: coworking, private offices, meeting rooms, and wellness-oriented design near Kaniggos and Omonia metro stations. 24/7 access on selected memberships.
+
+  - kind: remote_hub
+    title: Impact Hub Athens
+    url: https://athens.impacthub.net/?lang=en
+    google_maps_url: https://www.google.com/maps/search/?api=1&query=Impact+Hub+Karaiskaki+28+Athens
+    lat: 37.978107
+    lng: 23.724740
+    location: Athens, Psyrri
+    tags: [coworking, events, social-innovation, day-pass]
+    description: |
+      **Coworking, events, and community** for social innovation at Karaiskaki 28 (Psiri)—part of the global Impact Hub network, with open desks, private offices, and a garden-connected campus.
+
+  - kind: remote_hub
+    title: WHEN Hub
+    url: https://hub.when.org.gr/en/
+    google_maps_url: https://www.google.com/maps/search/?api=1&query=WHEN+Hub+Sokratous+29+Athens
+    lat: 37.983875
+    lng: 23.726721
+    location: Athens, Omonia
+    tags: [coworking, inclusion, childcare, meeting-rooms]
+    description: |
+      Co-working and advocacy hub at Sokratous 29 (Omonia) with desks, meeting rooms, a podcast studio, and **WHEN Mini Hub** creative childcare—focused on gender equality and inclusive workplaces.
+
+  - kind: remote_hub
+    title: SuiHub Athens
+    url: https://www.linkedin.com/company/suihub-athens/
+    google_maps_url: https://www.google.com/maps/search/?api=1&query=SuiHub+Agiou+Markou+22+Athens
+    lat: 37.978731
+    lng: 23.728988
+    location: Athens, Monastiraki
+    tags: [coworking, web3, free, community]
+    description: |
+      **Free coworking** and Web3 builder hub at Agiou Markou 22, powered by the Sui Foundation. Open Mon–Fri 10:00–19:00; email **suihubathens@sui.io** to reserve a slot.
+
+  - kind: remote_hub
+    title: The Snappi Hub
+    url: https://www.snappibank.com/en/snappi-hub-en/
+    google_maps_url: https://www.google.com/maps/search/?api=1&query=Snappi+Hub+Korai+5+Athens
+    lat: 37.980280
+    lng: 23.732370
+    location: Athens, Korai Square (Panepistimio)
+    tags: [coworking, wifi, free, snappi-customers]
+    description: |
+      **Free co-working** for Snappi bank customers at Korai 5, steps from Panepistimio metro—Wi‑Fi, coffee/tea, and a quiet city-centre space (book hourly slots on the Snappi site; Mon–Fri 10:00–17:00).
+
+  - kind: remote_hub
+    title: Spaces Solonos
+    url: https://www.spacesworks.com/en/gr/5296
+    google_maps_url: https://www.google.com/maps/search/?api=1&query=Spaces+Solonos+53+Athens
+    lat: 37.980549
+    lng: 23.736481
+    location: Athens, Kolonaki
+    tags: [coworking, day-pass, meeting-rooms]
+    description: |
+      **Spaces / Regus** location at Solonos 53 & Sina Street (Kolonaki)—hot desks, dedicated desks, private offices, and meeting rooms near the Parliament and Benaki Museum.
+
+  - kind: remote_hub
+    title: Spaces Ermou
+    url: https://www.spacesworks.com/en/gr/4697
+    google_maps_url: https://www.google.com/maps/search/?api=1&query=Spaces+Ermou+56+Athens
+    lat: 37.976459
+    lng: 23.728007
+    location: Athens, Ermou Street
+    tags: [coworking, day-pass, meeting-rooms]
+    description: |
+      **Spaces / Regus** on Ermou 56 in the retail heart of Athens—coworking, offices, and meeting rooms near Monastiraki and Syntagma metro.
+
+  - kind: remote_hub
+    title: NXT – Private Offices
+    url: https://thenxtcity.com/
+    google_maps_url: https://www.google.com/maps/search/?api=1&query=NXT+Private+Offices+Athens
+    lat: 37.977572
+    lng: 23.726599
+    location: Athens, central
+    tags: [private-offices, furnished, teams]
+    description: |
+      **THE NXT CITY** operates move-in-ready **premium private offices** across central Athens (multiple buildings; contact for availability). Furnished team spaces rather than hot-desk coworking.
+
