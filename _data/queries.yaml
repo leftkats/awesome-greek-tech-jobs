@@ -2,7 +2,7 @@
 # and as blocks on resources.html (generate_index).
 # Tips & Notes on that page come from _data/readme.yaml → footer.notes (same source as the readme).
 sections:
-  - title: "Remote job boards, portals & search"
+  - title: "Job boards, portals & search"
     queries:
       - name: "Jobs by Workable: Software Engineer in Greece"
         url: https://jobs.workable.com/search?location=Greece&query=Software+Engineer

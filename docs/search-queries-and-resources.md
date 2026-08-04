@@ -1,10 +1,10 @@
-# Remote jobs — queries & resources
+# Search queries & resources
 
 ← [README.md](../README.md)
 
-Hand-picked links for **remote tech jobs** in Greece (and broader remote hiring). Each entry includes a short note on what you'll find there. For **laptop-friendly cafés and remote workspaces**, see **[remote-cafe-resources.md](remote-cafe-resources.md)**. For the **sortable remote-first employer directory**, see **[engineering-hubs.md](engineering-hubs.md)**.
+Hand-picked links for Greek (and broader remote) job hunting. Each entry includes a short note on what you'll find there. For **laptop-friendly cafés and remote workspaces**, see **[remote-cafe-resources.md](remote-cafe-resources.md)**.
 
-## Remote job boards, portals & search
+## Job boards, portals & search
 
 - [Jobs by Workable: Software Engineer in Greece](https://jobs.workable.com/search?location=Greece&query=Software+Engineer) — Workable listings filtered for software engineering roles located in Greece.
 - [Data Engineer Jobs near Athens | Jobs By Innovative Greeks](https://www.igwork.gr/search?location=Athens&query=Data+Engineer) — Innovative Greeks (IGWork) search for data engineering roles with an Athens location focus.
