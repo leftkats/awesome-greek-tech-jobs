@@ -335,30 +335,34 @@ def build_open_source_projects_markdown(data: dict | None) -> str:
         stats_map = load_open_source_github_stats_yaml(
             Path("_data/open_source_github_stats.yaml")
         )
-        rows: list[tuple[dict, int | None, int | None]] = []
+        rows: list[tuple[dict, int | None, int | None, bool]] = []
         for p in valid:
             stars: int | None = None
             forks: int | None = None
+            is_archived = False
             parsed = parse_github_repo_url((p.get("url") or "").strip())
             if parsed:
                 key = f"{parsed[0]}/{parsed[1]}"
                 if key in stats_map:
-                    stars, forks = stats_map[key]
-            rows.append((p, stars, forks))
+                    stars, forks, is_archived = stats_map[key]
+            rows.append((p, stars, forks, is_archived))
         rows.sort(key=lambda r: r[1] if r[1] is not None else -1, reverse=True)
 
         lines.append("## Projects")
         lines.append("")
         lines.append(
             "Repositories are **sorted by GitHub stars** (highest first). **Star** and **fork** counts come from "
-            "`_data/open_source_github_stats.yaml` (run `just fetch-open-source-stats` to refresh them)."
+            "`_data/open_source_github_stats.yaml` (run `just fetch-open-source-stats` to refresh them). "
+            "Entries marked **archived** are read-only on GitHub."
         )
         lines.append("")
         lines.append("| Project | Stars | Forks | Description |")
         lines.append("| :------ | ----: | ----: | :---------- |")
-        for p, stars, forks in rows:
+        for p, stars, forks, is_archived in rows:
             title = (p.get("title") or "").strip()
             url = (p.get("url") or "").strip()
+            if is_archived:
+                title = f"{title} (archived)"
             desc = _open_source_table_cell((p.get("description") or "").strip())
             link = f"[{title}]({url})"
             star_cell = format_compact_github_count(stars)

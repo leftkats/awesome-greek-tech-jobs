@@ -63,15 +63,20 @@ def run_fetch() -> int:
         flush=True,
     )
 
-    out_repos: dict[str, dict[str, int | None]] = {}
+    out_repos: dict[str, dict[str, int | bool | None]] = {}
+    archived_count = 0
     for i, key in enumerate(keys_in_order, start=1):
         owner, _, repo = key.partition("/")
         if not repo:
             continue
-        stars, forks = fetch_github_repo_stats(owner, repo)
+        stars, forks, archived = fetch_github_repo_stats(owner, repo)
+        is_archived = bool(archived)
+        if is_archived:
+            archived_count += 1
         out_repos[key] = {
             "stars": stars,
             "forks": forks,
+            "archived": is_archived,
         }
         if total >= 15 and (i == 1 or i == total or i % 25 == 0):
             print(f"  Progress: {i}/{total}…", file=sys.stderr, flush=True)
@@ -90,7 +95,7 @@ def run_fetch() -> int:
         header + yaml.safe_dump(payload, allow_unicode=True, sort_keys=False),
         encoding="utf-8",
     )
-    print(f"Wrote {OSS_STATS_YAML} ({total} repos).", file=sys.stderr)
+    print(f"Wrote {OSS_STATS_YAML} ({total} repos, {archived_count} archived).", file=sys.stderr)
     return 0
 
 

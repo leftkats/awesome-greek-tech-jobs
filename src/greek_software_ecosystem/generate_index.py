@@ -1108,6 +1108,8 @@ def _open_source_row_search_text(
     desc_raw: str,
     stars_display: str,
     forks_display: str,
+    *,
+    is_archived: bool = False,
 ) -> str:
     """Lowercase, whitespace-normalised text for ``data-search`` (filter without ``innerText``)."""
     parts = [
@@ -1117,6 +1119,8 @@ def _open_source_row_search_text(
         stars_display.replace("—", " "),
         forks_display.replace("—", " "),
     ]
+    if is_archived:
+        parts.append("archived")
     s = " ".join(p for p in parts if p).lower()
     s = " ".join(s.split())
     if len(s) > 4096:
@@ -1163,7 +1167,7 @@ def load_open_source_projects_page(
         return out
 
     total = len(valid)
-    stats_cache: dict[str, tuple[int | None, int | None]] = {}
+    stats_cache: dict[str, tuple[int | None, int | None, bool]] = {}
     if not skip_github_stats:
         stats_cache = load_open_source_github_stats_yaml(OPEN_SOURCE_GITHUB_STATS_YAML)
         if not stats_cache and total > 0:
@@ -1187,20 +1191,21 @@ def load_open_source_projects_page(
             flush=True,
         )
 
-    rows_scored: list[tuple[dict, int | None, int | None]] = []
+    rows_scored: list[tuple[dict, int | None, int | None, bool]] = []
     for p in valid:
         stars: int | None = None
         forks: int | None = None
+        is_archived = False
         parsed = parse_github_repo_url((p.get("url") or "").strip())
         if parsed and not skip_github_stats:
             key = f"{parsed[0]}/{parsed[1]}"
             if key in stats_cache:
-                stars, forks = stats_cache[key]
-        rows_scored.append((p, stars, forks))
+                stars, forks, is_archived = stats_cache[key]
+        rows_scored.append((p, stars, forks, is_archived))
     rows_scored.sort(key=lambda r: r[1] if r[1] is not None else -1, reverse=True)
 
     rows: list[dict] = []
-    for p, stars, forks in rows_scored:
+    for p, stars, forks, is_archived in rows_scored:
         desc_raw = (p.get("description") or "").strip()
         desc_html = (
             markdown_to_html(
@@ -1224,8 +1229,9 @@ def load_open_source_projects_page(
                 "forks": forks,
                 "stars_display": stars_display,
                 "forks_display": forks_display,
+                "is_archived": is_archived,
                 "search_text": _open_source_row_search_text(
-                    title_s, url_s, desc_raw, stars_display, forks_display
+                    title_s, url_s, desc_raw, stars_display, forks_display, is_archived=is_archived
                 ),
                 "description_html": desc_html,
             }
@@ -1234,6 +1240,7 @@ def load_open_source_projects_page(
     out["rows"] = rows
     out["has_projects"] = True
     out["project_count"] = len(rows)
+    out["archived_count"] = sum(1 for r in rows if r.get("is_archived"))
     return out
 
 

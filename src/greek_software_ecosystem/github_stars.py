@@ -53,8 +53,8 @@ def format_compact_github_count(n: int | None) -> str:
 
 def load_open_source_github_stats_yaml(
     path: Path | None = None,
-) -> dict[str, tuple[int | None, int | None]]:
-    """Load ``owner/repo`` → ``(stars, forks)`` from ``_data/open_source_github_stats.yaml``."""
+) -> dict[str, tuple[int | None, int | None, bool]]:
+    """Load ``owner/repo`` → ``(stars, forks, archived)`` from stats YAML."""
     if path is None:
         path = Path("_data/open_source_github_stats.yaml")
     if not path.is_file():
@@ -69,19 +69,22 @@ def load_open_source_github_stats_yaml(
     repos = raw.get("repos")
     if not isinstance(repos, dict):
         return {}
-    out: dict[str, tuple[int | None, int | None]] = {}
+    out: dict[str, tuple[int | None, int | None, bool]] = {}
     for k, v in repos.items():
         if not isinstance(k, str) or not isinstance(v, dict):
             continue
         s, fk = v.get("stars"), v.get("forks")
         si = int(s) if isinstance(s, int) else None
         fi = int(fk) if isinstance(fk, int) else None
-        out[k] = (si, fi)
+        archived = bool(v.get("archived")) if "archived" in v else False
+        out[k] = (si, fi, archived)
     return out
 
 
-def fetch_github_repo_stats(owner: str, repo: str) -> tuple[int | None, int | None]:
-    """GET ``/repos/{owner}/{repo}`` → ``(stargazers_count, forks_count)``; ``None`` per field on failure."""
+def fetch_github_repo_stats(
+    owner: str, repo: str
+) -> tuple[int | None, int | None, bool | None]:
+    """GET ``/repos/{owner}/{repo}`` → ``(stars, forks, archived)``; ``None`` per field on failure."""
     api = f"https://api.github.com/repos/{owner}/{repo}"
     headers = {
         "Accept": "application/vnd.github+json",
@@ -103,21 +106,22 @@ def fetch_github_repo_stats(owner: str, repo: str) -> tuple[int | None, int | No
                 time.sleep(backoff_s)
                 backoff_s *= 2
                 continue
-            return None, None
+            return None, None, None, None
 
         if r.status_code == 200:
             try:
                 data = r.json()
             except (TypeError, ValueError):
-                return None, None
+                return None, None, None
             s = data.get("stargazers_count")
             f = data.get("forks")
             stars = int(s) if isinstance(s, int) else None
             forks = int(f) if isinstance(f, int) else None
-            return stars, forks
+            archived = bool(data.get("archived"))
+            return stars, forks, archived
 
         if r.status_code == 404:
-            return None, None
+            return None, None, None
 
         retryable = r.status_code in (403, 429, 502, 503)
         if retryable and attempt + 1 < max_attempts:
@@ -129,12 +133,12 @@ def fetch_github_repo_stats(owner: str, repo: str) -> tuple[int | None, int | No
                 backoff_s *= 2
             continue
 
-        return None, None
+        return None, None, None
 
-    return None, None
+    return None, None, None
 
 
 def fetch_github_stargazers(owner: str, repo: str) -> int | None:
     """GET ``/repos/{owner}/{repo}`` → ``stargazers_count``, or ``None`` on failure."""
-    stars, _ = fetch_github_repo_stats(owner, repo)
+    stars, _, _ = fetch_github_repo_stats(owner, repo)
     return stars
