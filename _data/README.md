@@ -10,7 +10,7 @@ This directory holds **structured source data** for the Greek Software Ecosystem
 | **`podcasts.yaml`** | Greek tech & startup podcasts (intro, disclaimer, and a `podcasts` list: `title`, `description`, and optional `website_url`, `spotify_url`, `youtube_url`, `apple_podcasts_url`, `google_podcasts_url`, `simplecast_url`, `podlist_url`). Drives **[docs/greek-tech-podcasts.md](../docs/greek-tech-podcasts.md)** and **`podcasts.html`**. |
 | **`open_source_projects.yaml`** | Greek-related **open source** GitHub projects (`title`, `url`, `description`). Feeds **[docs/open-source-projects.md](../docs/open-source-projects.md)**, **`open-source.html`**, and the main readme overview. |
 | **`open_source_github_stats.yaml`** | **Generated** star/fork counts per `owner/repo` (from the GitHub API). Written by **`just fetch-open-source-stats`**; read by **`just readme`** / **`just index`** for sorting and display. Do not edit by hand. |
-| **`cafe_resources.yaml`** | Laptop-friendly **cafés** and **directory** sites (`kind: cafe` vs `kind: directory`). Feeds **[docs/remote-cafe-resources.md](../docs/remote-cafe-resources.md)** and **`workspaces.html`**. |
+| **`cafe_resources.yaml`** | Laptop-friendly **cafés**, workspace **directories**, and **remote hubs** (`kind: cafe`, `directory`, or `remote_hub`). Feeds **[docs/remote-cafe-resources.md](../docs/remote-cafe-resources.md)** and searchable **`workspaces.html`**. |
 | **`workable_counts.yaml`** | **Generated** snapshot of open-role counts from Workable's public API (per slug, totals, timestamps). Refreshed by **`just fetch`** / CI—do not edit by hand unless you know what you are doing. |
 
 For contribution rules, validation, and examples, see **[contributing.md](../contributing.md)**.

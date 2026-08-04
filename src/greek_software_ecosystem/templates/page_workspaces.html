@@ -1,5 +1,12 @@
 {% extends "base.html" %}
-{% from "_macros_resources.html" import resource_details %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ assets_base }}/vendor/leaflet/leaflet.css" />
+{% endblock %}
+{% block body_scripts %}
+{{ super() }}
+<script src="{{ assets_base }}/vendor/leaflet/leaflet.js"></script>
+<script src="{{ assets_base }}/js/workspaces-page.js" defer></script>
+{% endblock %}
 {% block main %}
 <section class="max-w-6xl mx-auto px-4 pt-6 pb-3" aria-labelledby="ws-heading">
     <div
@@ -7,25 +14,190 @@
         <p class="text-[11px] font-mono uppercase tracking-widest text-cyan-700 dark:text-cyan-400">{{ page_kicker }}</p>
         <h1 id="ws-heading" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white mt-1.5">
             {{ page_title }}</h1>
+        {% if intro_html %}
+        <div class="mt-2 max-w-3xl text-sm sm:text-base leading-snug text-slate-600 dark:text-slate-300 [&_a]:text-cyan-700 [&_a]:underline dark:[&_a]:text-cyan-400 [&_p]:my-0">
+            {{ intro_html | safe }}
+        </div>
+        {% elif page_subtitle %}
         <p class="mt-2 max-w-3xl text-sm sm:text-base leading-snug text-slate-600 dark:text-slate-300">{{ page_subtitle }}</p>
-        <p class="mt-2 text-[11px] leading-snug text-slate-500 dark:text-slate-500 max-w-3xl">
-            <span class="font-mono">just generate</span> after edits · same content as <span class="font-mono">docs/remote-cafe-resources.md</span>
-        </p>
+        {% endif %}
     </div>
 </section>
 
-<div class="max-w-6xl mx-auto space-y-5 px-4 pb-14 sm:space-y-6">
-    {% if remote_workspace_html %}
-    {% call resource_details('workspaces-main', 'Venues & directories', 'Laptop-friendly cafés and workspace finders — same content as the repository docs', '') %}
-    <div
-        class="page-md-content agtj-resource-md max-w-none text-slate-700 dark:text-slate-300 [&_a]:text-cyan-700 dark:[&_a]:text-cyan-400 [&_table]:text-sm">
-        {{ remote_workspace_html | safe }}
+<div class="max-w-6xl mx-auto space-y-6 px-4 pb-14">
+    {% if has_workspace_rows %}
+    <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between lg:gap-4">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:gap-4">
+            <div class="w-full max-w-md" role="search" aria-label="Filter workspaces and cafés">
+                <label for="ws-filter-input" class="block text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Filter places</label>
+                <div class="relative">
+                    <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500" aria-hidden="true">
+                        <span class="material-symbols-outlined text-[1.25rem]">search</span>
+                    </span>
+                    <input type="search" id="ws-filter-input" name="q" autocomplete="off" enterkeyhint="search"
+                        placeholder="Search by type, name, location, tags, or description…"
+                        class="w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-10 pr-3 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-cyan-500" />
+                </div>
+            </div>
+            {% if workspace_location_filters %}
+            <div class="w-full sm:w-auto sm:min-w-[11rem]">
+                <label for="ws-location-filter" class="block text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Location</label>
+                <select id="ws-location-filter" name="location"
+                    class="w-full rounded-xl border border-slate-200 bg-white py-2.5 px-3 text-sm text-slate-900 shadow-sm focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-cyan-500">
+                    <option value="">All locations</option>
+                    {% for loc in workspace_location_filters %}
+                    <option value="{{ loc.key|e }}">{{ loc.label }}{% if loc.count %} ({{ loc.count }}){% endif %}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% endif %}
+            <div>
+                <span class="block text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">View</span>
+                <div class="ws-view-toggle" role="tablist" aria-label="Workspaces view">
+                    <button type="button" id="ws-view-table" class="ws-view-btn ws-view-active" role="tab"
+                        aria-selected="true" aria-controls="ws-table-panel">
+                        <span class="material-symbols-outlined ws-view-btn-icon" aria-hidden="true">table_rows</span>
+                        <span class="ws-view-btn-text">Table</span>
+                    </button>
+                    <button type="button" id="ws-view-map" class="ws-view-btn" role="tab" aria-selected="false"
+                        aria-controls="ws-map-panel">
+                        <span class="material-symbols-outlined ws-view-btn-icon" aria-hidden="true">public</span>
+                        <span class="ws-view-btn-text">Map{% if workspace_mapped_count %}<span class="ws-view-btn-meta"> ({{ workspace_mapped_count }})</span>{% endif %}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <p id="ws-filter-hint" class="text-sm text-slate-600 dark:text-slate-400 lg:pb-2 lg:text-right">
+            <span class="font-semibold text-slate-800 dark:text-slate-200">{{ workspace_count }}</span> places
+            {% if contribute_guide_url %}
+            · <a href="{{ contribute_guide_url }}" class="text-cyan-700 underline underline-offset-2 hover:no-underline dark:text-cyan-400" target="_blank" rel="noopener noreferrer">Add a place on GitHub</a>
+            {% endif %}
+        </p>
     </div>
-    {% endcall %}
+
+    <div id="ws-table-panel" role="tabpanel" aria-labelledby="ws-view-table">
+        <div
+            class="overflow-x-auto rounded-2xl border border-slate-200/90 dark:border-slate-700/90 bg-white/90 dark:bg-slate-900/50 shadow-sm ring-1 ring-slate-200/60 dark:ring-slate-700/50">
+            <div class="agtj-open-source-scroll max-h-[min(75vh,48rem)] overflow-y-auto overscroll-y-contain">
+                <table class="w-full min-w-[52rem] border-collapse text-left text-sm">
+                    <thead>
+                        <tr
+                            class="sticky top-0 z-10 border-b border-slate-200 bg-slate-100/95 text-xs font-mono uppercase tracking-wide text-slate-600 shadow-[0_1px_0_0_rgb(15_23_42_/_0.06)] dark:border-slate-600 dark:bg-slate-800/95 dark:text-slate-300 dark:shadow-[0_1px_0_0_rgb(0_0_0_/_0.35)]">
+                            <th scope="col" class="w-[7.5rem] min-w-[6.5rem] px-3 py-3 sm:px-4">Type</th>
+                            <th scope="col" class="min-w-[14rem] px-3 py-3 sm:px-4">Place</th>
+                            <th scope="col" class="w-[9rem] min-w-[7rem] px-3 py-3 sm:px-4">Location</th>
+                            <th scope="col" class="min-w-[12rem] px-3 py-3 sm:px-4">About</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ws-tbody" class="divide-y divide-slate-200/90 dark:divide-slate-700/80">
+                        {% for row in workspace_rows %}
+                        <tr
+                            class="agtj-ws-row align-top odd:bg-white/90 even:bg-slate-50/70 dark:odd:bg-slate-900/35 dark:even:bg-slate-900/55"
+                            id="{{ row.row_id }}"
+                            data-search="{{ row.search_text|e }}"
+                            data-location-filter="{{ row.location_filter|e }}"
+                            data-has-coords="{{ 'true' if row.has_coords else 'false' }}">
+                            <td class="px-3 py-3 sm:px-4">
+                                <span
+                                    class="inline-flex items-center rounded-md border px-2 py-0.5 text-[11px] font-mono uppercase tracking-wide {{ row.type_badge_class }}">{{ row.type_label }}</span>
+                            </td>
+                            <td class="px-3 py-3 sm:px-4">
+                                <a href="{{ row.url }}" target="_blank" rel="noopener noreferrer"
+                                    class="font-semibold text-cyan-800 underline-offset-2 hover:underline dark:text-cyan-300">{{ row.title }}</a>
+                                <div class="mt-1 flex flex-wrap items-center gap-2 text-[11px]">
+                                    {% if row.has_coords %}
+                                    <span class="inline-flex items-center gap-0.5 font-medium text-emerald-700 dark:text-emerald-400">
+                                        <span class="material-symbols-outlined text-sm" aria-hidden="true">pin_drop</span>
+                                        On map
+                                    </span>
+                                    {% endif %}
+                                    {% if row.google_maps_url %}
+                                    <a href="{{ row.google_maps_url }}" target="_blank" rel="noopener noreferrer"
+                                        class="inline-flex items-center gap-0.5 font-medium text-emerald-700 hover:underline dark:text-emerald-400">
+                                        <span class="material-symbols-outlined text-sm" aria-hidden="true">map</span>
+                                        Maps
+                                    </a>
+                                    {% endif %}
+                                    <span class="break-all font-mono text-slate-500 dark:text-slate-500">{{ row.url }}</span>
+                                </div>
+                            </td>
+                            <td class="px-3 py-3 text-slate-700 dark:text-slate-300 sm:px-4">
+                                {% if row.location %}
+                                {{ row.location }}
+                                {% else %}
+                                <span class="text-slate-400 dark:text-slate-600">—</span>
+                                {% endif %}
+                            </td>
+                            <td
+                                class="px-3 py-3 text-slate-600 dark:text-slate-400 sm:px-4 [&_a]:text-cyan-700 [&_a]:underline dark:[&_a]:text-cyan-400 [&_code]:rounded [&_code]:bg-slate-100 [&_code]:px-1 [&_code]:text-xs dark:[&_code]:bg-slate-800 [&_p]:my-1 [&_p:first-child]:mt-0 [&_p:last-child]:mb-0">
+                                {% if row.tags %}
+                                <div class="mb-2 flex flex-wrap gap-1.5">
+                                    {% for tag in row.tags %}
+                                    <span
+                                        class="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-slate-600 dark:bg-slate-800 dark:text-slate-400">{{ tag }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                {{ row.description_html | safe }}
+                                {% if row.note_html %}
+                                <div class="mt-2 border-t border-slate-200/80 pt-2 text-xs dark:border-slate-700/80">
+                                    {{ row.note_html | safe }}
+                                </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="ws-map-panel" role="tabpanel" aria-labelledby="ws-view-map" hidden>
+        <div class="mb-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+            <p id="ws-map-count-hint" class="text-xs text-slate-500 dark:text-slate-500"></p>
+            <ul class="ws-map-legend" aria-label="Map pin legend">
+                <li class="ws-map-legend-item ws-map-legend-item--cafe">Café</li>
+                <li class="ws-map-legend-item ws-map-legend-item--hub">Remote hub</li>
+            </ul>
+        </div>
+        <div
+            class="relative overflow-hidden rounded-2xl border border-slate-200/90 dark:border-slate-700/90 bg-white/90 dark:bg-slate-900/50 shadow-sm ring-1 ring-slate-200/60 dark:ring-slate-700/50">
+            <div id="ws-map" class="z-0" aria-label="Map of laptop-friendly workspaces"></div>
+            <div id="ws-map-empty"
+                class="pointer-events-none absolute inset-0 z-[500] flex items-center justify-center bg-slate-900/10 p-6 dark:bg-slate-950/30{% if has_mapped_places %} hidden{% endif %}">
+                <div
+                    class="max-w-sm rounded-xl border border-slate-200/90 bg-white/95 px-4 py-3 text-center text-sm text-slate-600 shadow-lg dark:border-slate-600 dark:bg-slate-900/95 dark:text-slate-300">
+                    <p class="font-semibold text-slate-800 dark:text-slate-100">No mapped places yet</p>
+                    <p class="mt-1 text-xs leading-relaxed">Add <code class="font-mono text-cyan-700 dark:text-cyan-400">lat</code> and
+                        <code class="font-mono text-cyan-700 dark:text-cyan-400">lng</code> to an entry in
+                        <code class="font-mono">cafe_resources.yaml</code>, or use a Google Maps share link that includes coordinates.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="application/json" id="ws-map-data">{{ workspace_map_markers_json | safe }}</script>
+    <script type="application/json" id="ws-location-bounds">{{ workspace_location_bounds_json | safe }}</script>
+
+    <p class="text-xs leading-relaxed text-slate-500 dark:text-slate-500">
+        Table search and location filter also apply on the map. Selecting a city focuses the map even before pins exist. Pins need <code class="font-mono">lat</code>/<code class="font-mono">lng</code>
+        (or a parseable Google Maps URL). Data: <code class="font-mono text-cyan-700 dark:text-cyan-400">_data/cafe_resources.yaml</code>.
+    </p>
     {% else %}
     <div
         class="rounded-2xl border border-dashed border-slate-300 dark:border-slate-600 bg-slate-50/50 dark:bg-slate-900/40 p-8 text-center text-sm text-slate-600 dark:text-slate-400">
-        No workspace entries are configured. Add data under <code class="font-mono text-cyan-700 dark:text-cyan-400">_data/cafe_resources.yaml</code>, then run <code class="font-mono">just generate</code>.
+        No workspace entries yet. Add <code class="font-mono text-cyan-700 dark:text-cyan-400">entries</code> under
+        <code class="font-mono text-cyan-700 dark:text-cyan-400">_data/cafe_resources.yaml</code>, then run
+        <code class="font-mono">just generate</code>.
+    </div>
+    {% endif %}
+
+    {% if disclaimer_html %}
+    <div
+        class="rounded-xl border border-slate-200/80 bg-slate-50/80 px-4 py-3 text-xs leading-relaxed text-slate-600 dark:border-slate-700/80 dark:bg-slate-900/40 dark:text-slate-400 [&_a]:text-cyan-700 [&_a]:underline dark:[&_a]:text-cyan-400">
+        {{ disclaimer_html | safe }}
     </div>
     {% endif %}
 </div>

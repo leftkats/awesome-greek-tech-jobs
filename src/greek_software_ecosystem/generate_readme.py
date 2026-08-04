@@ -470,11 +470,32 @@ def build_remote_cafe_resources_markdown(
         if kind == "cafe" and url:
             lines.append(f"**Venue:** [{url}]({url})")
             lines.append("")
+        elif kind == "remote_hub" and url:
+            lines.append(f"**Website:** [{url}]({url})")
+            lines.append("")
+
+        gmaps = (ent.get("google_maps_url") or "").strip()
+        if gmaps:
+            lines.append(f"**Google Maps:** [Open in Maps]({gmaps})")
+            lines.append("")
 
         loc = (ent.get("location") or "").strip()
         if loc:
             lines.append(f"*Location:* {loc}")
             lines.append("")
+
+        lat = ent.get("lat")
+        lng = ent.get("lng")
+        if lat is not None and lng is not None:
+            lines.append(f"*Coordinates:* `{lat}`, `{lng}` (for the Workspaces map)")
+            lines.append("")
+
+        tags = ent.get("tags")
+        if isinstance(tags, list):
+            tag_parts = [str(t).strip() for t in tags if str(t).strip()]
+            if tag_parts:
+                lines.append("**Tags:** " + ", ".join(f"`{t}`" for t in tag_parts))
+                lines.append("")
 
         desc = (ent.get("description") or "").strip()
         if desc:
@@ -509,6 +530,13 @@ def build_remote_cafe_resources_markdown(
         )
         lines.append("")
 
+    contribute_md = build_workspace_contribute_markdown()
+    if contribute_md:
+        lines.append("---")
+        lines.append("")
+        lines.append(contribute_md)
+        lines.append("")
+
     disclaimer = (data.get("disclaimer") or "").strip()
     if disclaimer:
         if valid_entries:
@@ -521,6 +549,14 @@ def build_remote_cafe_resources_markdown(
         lines.pop()
     lines.append("")
     return "\n".join(lines)
+
+
+def build_workspace_contribute_markdown() -> str:
+    """Short pointer to contributing.md (café / remote hub entries)."""
+    return (
+        "To add a café or remote hub, see **[contributing.md](../contributing.md)** "
+        "(*How to Contribute via Pull Request*)."
+    )
 
 
 def build_development_markdown(readme_data: dict) -> str:

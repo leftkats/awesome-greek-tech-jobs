@@ -37,6 +37,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 from pathlib import Path
 from urllib.parse import urlparse
@@ -50,9 +51,7 @@ from greek_software_ecosystem.industry_clusters import (
     industries_for_sectors,
     sort_industries_for_filter,
 )
-from greek_software_ecosystem.generate_readme import (
-    build_remote_cafe_resources_markdown,
-)
+from greek_software_ecosystem.generate_readme import build_remote_cafe_resources_markdown
 from greek_software_ecosystem.github_stars import (
     format_compact_github_count,
     load_open_source_github_stats_yaml,
@@ -715,6 +714,341 @@ def build_resources_table_rows(
     return rows
 
 
+_WORKSPACE_KIND_META: dict[str, tuple[str, str]] = {
+    "directory": (
+        "Directory",
+        "border-violet-200 bg-violet-50 text-violet-800 dark:border-violet-800/80 dark:bg-violet-950/50 dark:text-violet-200",
+    ),
+    "cafe": (
+        "Café",
+        "border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-800/80 dark:bg-amber-950/50 dark:text-amber-200",
+    ),
+    "remote_hub": (
+        "Remote hub",
+        "border-cyan-200 bg-cyan-50 text-cyan-900 dark:border-cyan-800/80 dark:bg-cyan-950/50 dark:text-cyan-200",
+    ),
+}
+
+
+def load_cafe_resources_data() -> dict:
+    """Load ``_data/cafe_resources.yaml`` (cafés, directories, remote hubs)."""
+    if not CAFE_RESOURCES_YAML.is_file():
+        return {}
+    try:
+        with CAFE_RESOURCES_YAML.open(encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+    except (yaml.YAMLError, OSError):
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def _workspace_row_search_text(
+    *,
+    type_label: str,
+    title: str,
+    url: str,
+    location: str,
+    google_maps_url: str,
+    tags: list[str],
+    desc_raw: str,
+    note_raw: str,
+) -> str:
+    parts = [type_label, title, url, location, google_maps_url, desc_raw, note_raw, *tags]
+    s = " ".join(p for p in parts if p).lower()
+    s = " ".join(s.split())
+    if len(s) > 4096:
+        s = s[:4096]
+    return s
+
+
+_GOOGLE_MAPS_COORD_PATTERNS = (
+    re.compile(r"@(-?\d+\.\d+),(-?\d+\.\d+)"),
+    re.compile(r"[?&]q=(-?\d+\.\d+),(-?\d+\.\d+)"),
+    re.compile(r"[?&]ll=(-?\d+\.\d+),(-?\d+\.\d+)"),
+    re.compile(r"!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)"),
+)
+
+
+def _coords_from_google_maps_url(url: str) -> tuple[float, float] | None:
+    """Best-effort lat/lng parse from a Google Maps share URL."""
+    text = (url or "").strip()
+    if not text:
+        return None
+    for pat in _GOOGLE_MAPS_COORD_PATTERNS:
+        m = pat.search(text)
+        if not m:
+            continue
+        try:
+            lat, lng = float(m.group(1)), float(m.group(2))
+        except (TypeError, ValueError):
+            continue
+        if -90 <= lat <= 90 and -180 <= lng <= 180:
+            return lat, lng
+    return None
+
+
+def _parse_entry_coordinates(ent: dict) -> tuple[float, float] | None:
+    """Read ``lat``/``lng``, ``coordinates``, or coords embedded in ``google_maps_url``."""
+    lat_raw = ent.get("lat")
+    lng_raw = ent.get("lng")
+    if lat_raw is not None and lng_raw is not None:
+        try:
+            lat, lng = float(lat_raw), float(lng_raw)
+            if -90 <= lat <= 90 and -180 <= lng <= 180:
+                return lat, lng
+        except (TypeError, ValueError):
+            pass
+
+    coords = ent.get("coordinates")
+    if isinstance(coords, dict):
+        lat_raw = coords.get("lat")
+        lng_raw = coords.get("lng")
+        if lat_raw is not None and lng_raw is not None:
+            try:
+                lat, lng = float(lat_raw), float(lng_raw)
+                if -90 <= lat <= 90 and -180 <= lng <= 180:
+                    return lat, lng
+            except (TypeError, ValueError):
+                pass
+    elif isinstance(coords, (list, tuple)) and len(coords) >= 2:
+        try:
+            lat, lng = float(coords[0]), float(coords[1])
+            if -90 <= lat <= 90 and -180 <= lng <= 180:
+                return lat, lng
+        except (TypeError, ValueError):
+            pass
+
+    return _coords_from_google_maps_url(str(ent.get("google_maps_url") or ""))
+
+
+# Map focus when a location filter is selected but no pins match (city centre + zoom).
+_WORKSPACE_CITY_MAP_VIEWS: dict[str, dict[str, float | list[float]]] = {
+    "athens": {"center": [37.9838, 23.7275], "zoom": 12},
+    "thessaloniki": {"center": [40.6401, 22.9444], "zoom": 12},
+    "patras": {"center": [38.2466, 21.7346], "zoom": 12},
+    "heraklion": {"center": [35.3387, 25.1442], "zoom": 12},
+    "larissa": {"center": [39.639, 22.4191], "zoom": 12},
+    "volos": {"center": [39.361, 22.942], "zoom": 12},
+    "ioannina": {"center": [39.665, 20.853], "zoom": 12},
+    "chania": {"center": [35.5138, 24.018], "zoom": 12},
+    "rhodes": {"center": [36.4341, 28.2176], "zoom": 12},
+    "corfu": {"center": [39.6243, 19.9217], "zoom": 12},
+}
+
+
+def _workspace_location_filter_keys(location: str) -> str:
+    """Lowercase tokens for ``data-location-filter`` (city, area, etc.)."""
+    loc = (location or "").strip().lower()
+    if not loc or loc.startswith("global"):
+        return ""
+    tokens: list[str] = []
+    for part in re.split(r"[,/|–—-]+", loc):
+        chunk = part.strip()
+        if not chunk:
+            continue
+        for word in re.split(r"\s+", chunk):
+            w = word.strip("()")
+            if len(w) >= 2:
+                tokens.append(w)
+    # de-dupe preserving order
+    seen: set[str] = set()
+    out: list[str] = []
+    for t in tokens:
+        if t not in seen:
+            seen.add(t)
+            out.append(t)
+    return " ".join(out)
+
+
+def _workspace_primary_location_label(location: str) -> str | None:
+    """First meaningful place name for location filter dropdown labels."""
+    loc = (location or "").strip()
+    if not loc or loc.lower().startswith("global"):
+        return None
+    primary = re.split(r"[,/|–—-]", loc, maxsplit=1)[0].strip()
+    if not primary or len(primary) < 2:
+        return None
+    return primary
+
+
+def build_workspace_location_filters(rows: list[dict]) -> list[dict]:
+    """Distinct location labels from entries (with counts), plus major Greek cities for map focus."""
+    counts: Counter[str] = Counter()
+    for row in rows:
+        label = _workspace_primary_location_label(row.get("location") or "")
+        if label:
+            counts[label] += 1
+    from_data = [
+        {"label": label, "key": label.lower(), "count": count}
+        for label, count in sorted(counts.items(), key=lambda x: (-x[1], x[0].lower()))
+    ]
+    seen_keys = {item["key"] for item in from_data}
+    extras: list[dict] = []
+    for key in sorted(_WORKSPACE_CITY_MAP_VIEWS.keys()):
+        if key in seen_keys:
+            continue
+        label = key.replace("-", " ").title()
+        if key == "thessaloniki":
+            label = "Thessaloniki"
+        extras.append({"label": label, "key": key, "count": 0})
+    return from_data + sorted(extras, key=lambda x: x["label"].lower())
+
+
+def build_workspace_table_rows(
+    data: dict,
+    *,
+    github_repo_url: str,
+    site_baseurl: str = "",
+    local_flat: bool = False,
+) -> list[dict]:
+    """Flatten ``cafe_resources.yaml`` entries → searchable rows for ``workspaces.html``."""
+    rows: list[dict] = []
+    raw_entries = data.get("entries") or []
+    if not isinstance(raw_entries, list):
+        return rows
+
+    for idx, ent in enumerate(raw_entries):
+        if not isinstance(ent, dict):
+            continue
+        title = (ent.get("title") or "").strip()
+        url = (ent.get("url") or "").strip()
+        if not title or not url:
+            continue
+        kind = str(ent.get("kind") or "cafe").strip().lower()
+        row_id = f"ws-{idx}"
+        coords = _parse_entry_coordinates(ent)
+        lat = coords[0] if coords else None
+        lng = coords[1] if coords else None
+        type_label, type_badge_class = _WORKSPACE_KIND_META.get(
+            kind, ("Place", "border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300")
+        )
+        location = (ent.get("location") or "").strip()
+        google_maps_url = (ent.get("google_maps_url") or "").strip()
+        raw_tags = ent.get("tags")
+        tags: list[str] = []
+        if isinstance(raw_tags, list):
+            tags = [str(t).strip() for t in raw_tags if str(t).strip()]
+        desc_raw = (ent.get("description") or "").strip()
+        note_raw = (ent.get("note") or "").strip()
+        desc_html = (
+            markdown_to_html(
+                desc_raw,
+                github_repo_url=github_repo_url,
+                site_baseurl=site_baseurl,
+                local_flat=local_flat,
+            )
+            if desc_raw
+            else ""
+        )
+        note_html = (
+            markdown_to_html(
+                note_raw,
+                github_repo_url=github_repo_url,
+                site_baseurl=site_baseurl,
+                local_flat=local_flat,
+            )
+            if note_raw
+            else ""
+        )
+        rows.append(
+            {
+                "row_id": row_id,
+                "type_label": type_label,
+                "type_kind": kind,
+                "type_badge_class": type_badge_class,
+                "title": title,
+                "url": url,
+                "location": location,
+                "location_filter": _workspace_location_filter_keys(location),
+                "google_maps_url": google_maps_url,
+                "lat": lat,
+                "lng": lng,
+                "has_coords": lat is not None and lng is not None,
+                "tags": tags,
+                "description_html": desc_html,
+                "note_html": note_html,
+                "search_text": _workspace_row_search_text(
+                    type_label=type_label,
+                    title=title,
+                    url=url,
+                    location=location,
+                    google_maps_url=google_maps_url,
+                    tags=tags,
+                    desc_raw=desc_raw,
+                    note_raw=note_raw,
+                ),
+            }
+        )
+    return rows
+
+
+def build_workspace_map_markers(rows: list[dict]) -> list[dict]:
+    """JSON-serialisable marker payloads for the Workspaces Leaflet map."""
+    markers: list[dict] = []
+    for row in rows:
+        lat = row.get("lat")
+        lng = row.get("lng")
+        if lat is None or lng is None:
+            continue
+        markers.append(
+            {
+                "id": row["row_id"],
+                "lat": lat,
+                "lng": lng,
+                "title": row["title"],
+                "type": row["type_label"],
+                "type_kind": row.get("type_kind") or "",
+                "location": row.get("location") or "",
+                "location_filter": row.get("location_filter") or "",
+                "url": row["url"],
+                "google_maps_url": row.get("google_maps_url") or "",
+                "search_text": row.get("search_text") or "",
+            }
+        )
+    return markers
+
+
+def load_workspace_page_context(
+    *,
+    github_repo_url: str,
+    site_baseurl: str = "",
+    local_flat: bool = False,
+) -> dict:
+    """Intro, disclaimer, table rows, and edit link for ``workspaces.html``."""
+    data = load_cafe_resources_data()
+    intro_raw = (data.get("intro") or "").strip()
+    disclaimer_raw = (data.get("disclaimer") or "").strip()
+    md_kw = {
+        "github_repo_url": github_repo_url,
+        "site_baseurl": site_baseurl,
+        "local_flat": local_flat,
+    }
+    edit_url = f"{github_repo_url.rstrip('/')}/edit/main/_data/cafe_resources.yaml"
+    contribute_guide_url = (
+        f"{github_repo_url.rstrip('/')}/blob/main/contributing.md"
+        "#how-to-contribute-via-pull-request"
+    )
+    workspace_rows = build_workspace_table_rows(
+        data, github_repo_url=github_repo_url, site_baseurl=site_baseurl, local_flat=local_flat
+    )
+    map_markers = build_workspace_map_markers(workspace_rows)
+    location_filters = build_workspace_location_filters(workspace_rows)
+    return {
+        "intro_html": markdown_to_html(intro_raw, **md_kw) if intro_raw else "",
+        "disclaimer_html": markdown_to_html(disclaimer_raw, **md_kw) if disclaimer_raw else "",
+        "contribute_guide_url": contribute_guide_url,
+        "workspace_rows": workspace_rows,
+        "workspace_location_filters": location_filters,
+        "workspace_location_bounds_json": json.dumps(
+            _WORKSPACE_CITY_MAP_VIEWS, ensure_ascii=False
+        ),
+        "workspace_map_markers_json": json.dumps(map_markers, ensure_ascii=False),
+        "workspace_mapped_count": len(map_markers),
+        "has_mapped_places": bool(map_markers),
+        "cafe_yaml_edit_url": edit_url,
+    }
+
+
 def load_podcasts_page_data() -> dict:
     """YAML → structured data for ``page_podcasts.html`` (summary table)."""
     out: dict = {
@@ -1281,11 +1615,6 @@ def run_generate_index(
             _meta["site_origin"], "Resources", OUTPUT_RESOURCES
         ),
     )
-    remote_html = load_remote_workspace_html(
-        _meta["github_repo_url"],
-        site_baseurl=_meta["site_baseurl"],
-        local_flat=local_flat,
-    )
     resource_rows = build_resources_table_rows(
         query_sections=job_sections,
         awesome_queries=awesome_queries,
@@ -1349,7 +1678,7 @@ def run_generate_index(
     )
 
     ws_desc = _truncate_first_card_description(
-        "Laptop-friendly cafés & workspace finders for Greece—YAML: _data/cafe_resources.yaml."
+        "Laptop-friendly cafés, workspace directories, and remote hubs in Greece—searchable table; add venues via YAML."
     )
     ws_meta = meta_page(
         _meta,
@@ -1369,15 +1698,22 @@ def run_generate_index(
             _meta["site_origin"], "Workspaces & cafés", OUTPUT_WORKSPACES
         ),
     )
+    ws_page = load_workspace_page_context(
+        github_repo_url=_meta["github_repo_url"],
+        site_baseurl=_meta["site_baseurl"],
+        local_flat=local_flat,
+    )
     write_jekyll_html(
         Path(OUTPUT_WORKSPACES),
         env.get_template("page_workspaces.html").render(
             current_page="workspaces",
-            remote_workspace_html=remote_html,
             schema_json_ld=ws_schema,
             page_kicker="Workspaces · Cafés & places",
             page_title="Workspaces & laptop-friendly cafés",
             page_subtitle=ws_desc,
+            has_workspace_rows=bool(ws_page["workspace_rows"]),
+            workspace_count=len(ws_page["workspace_rows"]),
+            **ws_page,
             **ws_meta,
         ),
         local_flat=local_flat,
