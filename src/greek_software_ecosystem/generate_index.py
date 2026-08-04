@@ -96,12 +96,12 @@ OSP_HERO_SUBTITLE = "Greek-related GitHub repos sorted by stars (counts at build
 
 # Per-page ``meta name="keywords"`` (unique, topical; home keeps ``load_site_meta`` defaults).
 _SEO_KW_JOB = (
-    "Greek tech jobs, software engineer Greece, IT employer directory, Workable jobs Greece, "
+    "Greek tech jobs, software engineer Greece, IT employer directory, "
     "remote work Greece tech, hybrid jobs Athens, developer careers Thessaloniki"
 )
 _SEO_KW_RES = (
-    "Greek tech job boards, open data Greece, GitHub awesome lists, startup resources Greece, "
-    "engineering links Greece"
+    "remote jobs Greece, Greek tech job boards, open data Greece, GitHub awesome lists, "
+    "startup resources Greece, engineering links Greece"
 )
 _SEO_KW_POD = "Greek tech podcasts, startup podcast Greece, software engineering Greece, IT careers audio"
 _SEO_KW_WS = "laptop friendly cafes Greece, remote work cafes Athens, coworking Greece, workspace YAML Greece"
@@ -215,7 +215,7 @@ def load_site_meta() -> dict:
     title = "Greek Software Ecosystem"
     desc = (
         "A community-maintained list of remote-first employers hiring for technology roles in Greece — "
-        "sectors, careers, and weekly Workable snapshots."
+        "sectors, careers, and remote job resources."
     )
     repo_slug = "leftkats/greek-software-ecosystem"
     if _README_YAML.is_file():
@@ -338,7 +338,7 @@ def build_schema_employers_directory(
     total_companies: int,
     github_repo_url: str,
 ) -> str:
-    """JSON-LD for the job search page including employer directory ``CollectionPage``."""
+    """JSON-LD for the remote jobs page including employer directory ``CollectionPage``."""
     website_id = f"{origin}/#website"
     org_id = f"{origin}/#organization"
     employers_search = f"{origin}/job-search/?q={{search_term_string}}"
@@ -378,13 +378,13 @@ def build_schema_employers_directory(
             "isPartOf": {"@id": website_id},
             "about": {
                 "@type": "Thing",
-                "name": "Technology and software hiring in Greece",
+                "name": "Remote technology and software jobs in Greece",
             },
         },
         {
             "@type": "CollectionPage",
             "@id": f"{employers_canonical_url}#employers",
-            "name": "Technology employers hiring in Greece",
+            "name": "Remote-first employers hiring in Greece",
             "isPartOf": {"@id": employers_canonical_url},
             "numberOfItems": total_companies,
         },
@@ -392,7 +392,7 @@ def build_schema_employers_directory(
             page_url=employers_canonical_url,
             crumbs=[
                 ("Home", home_canonical_url),
-                ("Job search", employers_canonical_url),
+                ("Remote jobs", employers_canonical_url),
             ],
         ),
     ]
@@ -513,14 +513,14 @@ def load_workable_job_counts_enabled() -> bool:
     wjc = feat.get("workable_job_counts") or {}
     if "enabled" in wjc:
         return bool(wjc["enabled"])
-    return True
+    return False
 
 
 def load_readme_hero() -> tuple[str, str]:
     """Tagline and short intro for the home hub (from ``_data/readme.yaml``)."""
     default_tag = "The open-source pulse on remote-first IT and software jobs in Greece"
     default_intro = (
-        "Browse remote-first employers, job boards, curated lists, remote café guides, and "
+        "Browse remote jobs, remote-first employers, job boards, curated lists, remote café guides, and "
         "podcasts—aligned with the GitHub repository."
     )
     if not _README_YAML.is_file():
@@ -557,7 +557,7 @@ def load_queries_split() -> tuple[list[dict], list[dict]]:
         if not isinstance(sec, dict):
             continue
         title = (sec.get("title") or "").strip()
-        if title == "Job boards, portals & search":
+        if title == "Remote job boards, portals & search":
             job_sections.append(sec)
         elif title == "Curated awesome lists (GitHub)":
             q = sec.get("queries") or []
@@ -1204,12 +1204,12 @@ def run_generate_index(
     site_name = _meta["og_site_name"]
 
     job_combined_desc = _truncate_first_card_description(
-        "Searchable remote-first Greek tech employers: sectors, locations, and Workable Greece role counts."
+        "Remote tech jobs in Greece — searchable remote-first employers, sectors, locations, and careers links."
     )
     job_meta = meta_page(
         _meta,
         relpath=OUTPUT_JOB_SEARCH,
-        document_title=f"{site_name} | Job search",
+        document_title=f"{site_name} | Remote jobs",
         og_description=job_combined_desc,
         seo_keywords=_SEO_KW_JOB,
     )
@@ -1244,8 +1244,8 @@ def run_generate_index(
             workable_snapshot_json=json.dumps(_workable_snapshot, ensure_ascii=False),
             schema_json_ld=job_schema_combined,
             current_page="job-search",
-            page_kicker="Job search · Directory & links",
-            page_title="Job search",
+            page_kicker="Remote jobs · Employers & links",
+            page_title="Remote jobs",
             **job_meta,
         ),
         local_flat=local_flat,
@@ -1260,8 +1260,8 @@ def run_generate_index(
     )
 
     res_desc = _truncate_first_card_description(
-        "Job boards, awesome GitHub lists, open Greek data—all YAML-driven. "
-        "Laptop cafés: Workspaces page."
+        "Remote job boards, awesome GitHub lists, open Greek data—all YAML-driven. "
+        "Remote employers: Remote jobs page. Laptop cafés: Workspaces page."
     )
     res_meta = meta_page(
         _meta,
@@ -1297,8 +1297,8 @@ def run_generate_index(
     write_jekyll_html(
         Path(OUTPUT_RESOURCES),
         env.get_template("page_resources.html").render(
-            page_kicker="Resources · Lists & data",
-            page_title="Resources & curated links",
+            page_kicker="Resources · Remote jobs & data",
+            page_title="Remote job resources & curated links",
             page_subtitle=res_desc,
             resource_rows=resource_rows,
             resource_count=len(resource_rows),

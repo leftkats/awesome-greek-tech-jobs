@@ -1,33 +1,26 @@
-# Regenerates `docs/*.md` + root `README.md` on `main`, builds static HTML with Python,
-# runs **Jekyll** (`jekyll-pages/`), copies **Python-generated** `sitemap.xml` / `robots.txt`, then
-# force-pushes `_site/` (+ `.nojekyll`) to branch `live` for GitHub Pages.
+# Fetches GitHub stars/forks for _data/open_source_projects.yaml, updates
+# _data/open_source_github_stats.yaml + docs/open-source-projects.md, regenerates
+# static HTML, and deploys branch `live` (GitHub Pages). Does not run full readme
+# or Workable fetches.
 #
-# Skips when the triggering push was the bot follow-up (`[skip ci]` in the message).
-# **Settings → Pages → Branch `live`, folder `/`.**
+# Schedule: 04:00 UTC on the 1st of each month. Manual: Actions → Run workflow.
 
-name: Update Docs and README on Merge
+name: Update open source GitHub stats
 
 on:
-  push:
-    branches:
-      - main
+  schedule:
+    - cron: "0 4 1 * *"
   workflow_dispatch:
 
 permissions:
   contents: write
-  pull-requests: write
-  issues: write
 
 concurrency:
   group: sync-main-${{ github.repository }}
   cancel-in-progress: false
 
 jobs:
-  deploy:
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'push' &&
-       !contains(github.event.head_commit.message, '[skip ci]'))
+  update:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -54,20 +47,13 @@ jobs:
           bundler-cache: true
           working-directory: jekyll-pages
 
-      - name: Sync content and deploy site to live
+      - name: Refresh open source stats, docs, and deploy site
         env:
           EVENT_NAME: ${{ github.event_name }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
 
-          run_gen_index() {
-            just index
-          }
-
-          # Jekyll build → _site/ (HTML + assets). sitemap.xml / robots.txt from Python (just index).
-          # Open-source GitHub stars/forks: monthly workflow open-source-stats-monthly.yaml.
-          # .nojekyll: GitHub Pages serves files as-is (no second Jekyll pass on `live`).
           deploy_live() {
             LIVE_MSG="$1"
             WORK="$(mktemp -d)"
@@ -101,29 +87,26 @@ jobs:
             rm -rf "${WORK}"
           }
 
-          if [ "$EVENT_NAME" = "push" ] || [ "$EVENT_NAME" = "workflow_dispatch" ]; then
-            just readme
-            run_gen_index
+          just open-source-stats-update
 
-            git config --local user.email "github-actions[bot]@users.noreply.github.com"
-            git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
 
-            git add README.md docs/*.md _data/readme.yaml _data/open_source_projects.yaml
-            MAIN_CHANGED=0
-            if git diff --staged --quiet; then
-              echo "No main-branch doc changes to commit."
+          git add _data/open_source_github_stats.yaml docs/open-source-projects.md
+          MAIN_CHANGED=0
+          if git diff --staged --quiet; then
+            echo "No open source stats changes to commit on main."
+          else
+            if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+              git commit -m "chore: refresh open source GitHub stats (manual) [skip ci]"
             else
-              if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
-                git commit -m "chore: regenerate docs and site (manual) [skip ci]"
-              else
-                git commit -m "chore(📚): auto-update docs with fresh content [skip ci]"
-              fi
-              MAIN_CHANGED=1
+              git commit -m "chore(📊): refresh open source GitHub stats [skip ci]"
             fi
+            MAIN_CHANGED=1
+          fi
 
-            deploy_live "chore: deploy static site from main [skip ci]"
+          deploy_live "chore: deploy static site after open source stats refresh [skip ci]"
 
-            if [ "$MAIN_CHANGED" -eq 1 ]; then
-              git push origin main
-            fi
+          if [ "$MAIN_CHANGED" -eq 1 ]; then
+            git push origin main
           fi

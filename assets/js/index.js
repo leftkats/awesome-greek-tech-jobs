@@ -1,7 +1,7 @@
 (function initAgtjConfigFromDom() {
     const el = document.getElementById("agtj-config");
     let itemsPerPage = 20;
-    let showWorkableJobCounts = true;
+    let showWorkableJobCounts = false;
     if (el?.textContent?.trim()) {
         try {
             const c = JSON.parse(el.textContent);
@@ -19,6 +19,8 @@
     window.AGTJ_CONFIG = { itemsPerPage, showWorkableJobCounts };
 })();
 
+const workableCountsEnabled = Boolean(window.AGTJ_CONFIG?.showWorkableJobCounts);
+
 let currentPage = 1;
 const itemsPerPage = Number(window.AGTJ_CONFIG?.itemsPerPage) || 20;
 let activeSectors = [];
@@ -26,8 +28,8 @@ let activeLocations = [];
 let activePolicies = [];
 let activeIndustries = [];
 let filterWorkableHiringOnly = false;
-let activeSort = "open_desc";
-const ALLOWED_SORTS = new Set(["open_desc", "open_asc"]);
+let activeSort = workableCountsEnabled ? "open_desc" : "name";
+const ALLOWED_SORTS = new Set(["open_desc", "open_asc", "name"]);
 
 function normalizeSector(sector) {
     return (sector ?? "").toString().trim().toLowerCase();
@@ -311,6 +313,11 @@ function compareByName(a, b) {
 }
 
 function sortRows(rows) {
+    if (!workableCountsEnabled || activeSort === "name") {
+        rows.sort(compareByName);
+        return rows;
+    }
+
     rows.sort((a, b) => {
         const ka = workableOpeningsSortKey(a);
         const kb = workableOpeningsSortKey(b);
@@ -355,6 +362,7 @@ function updateStatHeaderTriggersUI() {
         btn.classList.toggle("stat-header-active", on);
         btn.setAttribute("aria-pressed", on ? "true" : "false");
     });
+    if (!workableCountsEnabled) return;
     const wBtn = document.getElementById("statWorkableHiringBtn");
     if (wBtn) {
         if (wBtn.disabled) {
@@ -406,7 +414,8 @@ function updatePagination() {
             activeLocations.length === 0 || locationsList.some((l) => activeLocations.includes(l));
         const rowPolicy = normalizePolicy(row.dataset.policy);
         const matchesPolicy = activePolicies.length === 0 || activePolicies.includes(rowPolicy);
-        const matchesWorkableHiring = !filterWorkableHiringOnly || workableOpeningsSortKey(row) > 0;
+        const matchesWorkableHiring =
+            !workableCountsEnabled || !filterWorkableHiringOnly || workableOpeningsSortKey(row) > 0;
         return (
             matchesText &&
             matchesSector &&
@@ -462,10 +471,11 @@ function syncUrlFromState() {
     else params.delete("ind");
     if (activeLocations.length) params.set("loc", activeLocations.join(","));
     else params.delete("loc");
-    if (filterWorkableHiringOnly) params.set("hire", "1");
+    if (workableCountsEnabled && filterWorkableHiringOnly) params.set("hire", "1");
     else params.delete("hire");
-    if (activeSort && ALLOWED_SORTS.has(activeSort)) params.set("sort", activeSort);
-    else params.delete("sort");
+    if (workableCountsEnabled && activeSort && ALLOWED_SORTS.has(activeSort) && activeSort !== "name") {
+        params.set("sort", activeSort);
+    } else params.delete("sort");
     const next = `${window.location.pathname}?${params.toString()}`;
     window.history.replaceState({}, "", next);
 }
@@ -493,9 +503,14 @@ function applyStateFromUrl() {
         .map((s) => s.trim())
         .filter(Boolean);
 
-    filterWorkableHiringOnly = params.get("hire") === "1";
-    if (ALLOWED_SORTS.has(sort)) {
-        activeSort = sort;
+    if (workableCountsEnabled) {
+        filterWorkableHiringOnly = params.get("hire") === "1";
+        if (ALLOWED_SORTS.has(sort) && sort !== "name") {
+            activeSort = sort;
+        }
+    } else {
+        filterWorkableHiringOnly = false;
+        activeSort = "name";
     }
 
     setActivePolicies(pol);
@@ -574,7 +589,7 @@ document.getElementById("clearDropdownFiltersBtn")?.addEventListener("click", (e
     syncUrlFromState();
 });
 
-document.getElementById("sortOpenRolesBtn").addEventListener("click", () => {
+document.getElementById("sortOpenRolesBtn")?.addEventListener("click", () => {
     if (activeSort === "open_desc") {
         activeSort = "open_asc";
     } else {
@@ -605,7 +620,7 @@ if (statWorkableHiringBtn) {
 }
 
 function initWorkableJobCounts() {
-    if (window.AGTJ_CONFIG?.showWorkableJobCounts === false) {
+    if (!workableCountsEnabled) {
         return;
     }
     const wBtn = document.getElementById("statWorkableHiringBtn");
