@@ -56,12 +56,10 @@ README_BACKLINK_MD = "← [README.md](../README.md)"
 
 # Fallbacks when ``_data/readme.yaml`` → ``generated_markdown`` omits a key.
 _DEFAULT_SEARCH_QUERIES_INTRO = (
-    "Hand-picked links for **remote tech jobs** in Greece (and broader remote hiring). "
-    "Each entry includes a short note on what you’ll find there. "
+    "Hand-picked links for Greek (and broader remote) job hunting. "
+    "Each entry includes a short note on what you'll find there. "
     f"For **laptop-friendly cafés and remote workspaces**, see "
-    f"**[{REMOTE_CAFE_RESOURCES_MD}]({REMOTE_CAFE_RESOURCES_MD})**. "
-    f"For the **sortable remote-first employer directory**, see "
-    f"**[{ENGINEERING_HUBS_MD}]({ENGINEERING_HUBS_MD})**."
+    f"**[{REMOTE_CAFE_RESOURCES_MD}]({REMOTE_CAFE_RESOURCES_MD})**."
 )
 _DEFAULT_EH_TITLE = "Remote-first Employers & Career Portals"
 _DEFAULT_EH_INTRO = (
@@ -77,7 +75,7 @@ _DEFAULT_README_OVERVIEW_LINKS = (
     "**What’s in this repository**\n\n"
     f"- **[{ENGINEERING_HUBS_MD}]({ENGINEERING_HUBS_MD})** — the sortable remote-first employer "
     "table: sectors, work policy, and talent portals.\n"
-    f"- **[{SEARCH_QUERIES_MD}]({SEARCH_QUERIES_MD})** — remote job links, "
+    f"- **[{SEARCH_QUERIES_MD}]({SEARCH_QUERIES_MD})** — job search links, "
     "curated lists, and tips & notes.\n"
     f"- **[{GREEK_TECH_PODCASTS_MD}]({GREEK_TECH_PODCASTS_MD})** — Greek tech "
     "& startup podcasts (video and audio).\n"
@@ -204,7 +202,7 @@ def build_search_queries_markdown(
     sq_meta = gm.get("search_queries") or {}
     intro_text = (sq_meta.get("intro") or _DEFAULT_SEARCH_QUERIES_INTRO).strip()
     body: list[str] = [
-        "# Remote jobs — queries & resources",
+        "# Search queries & resources",
         "",
         README_BACKLINK_MD,
         "",

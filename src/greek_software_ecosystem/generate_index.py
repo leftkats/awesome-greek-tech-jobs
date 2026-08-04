@@ -557,12 +557,12 @@ def load_queries_split() -> tuple[list[dict], list[dict]]:
         if not isinstance(sec, dict):
             continue
         title = (sec.get("title") or "").strip()
-        if title == "Remote job boards, portals & search":
-            job_sections.append(sec)
-        elif title == "Curated awesome lists (GitHub)":
+        if title == "Curated awesome lists (GitHub)":
             q = sec.get("queries") or []
             if isinstance(q, list):
                 awesome_queries = [x for x in q if isinstance(x, dict)]
+        elif title:
+            job_sections.append(sec)
     return job_sections, awesome_queries
 
 
@@ -1260,8 +1260,8 @@ def run_generate_index(
     )
 
     res_desc = _truncate_first_card_description(
-        "Remote job boards, awesome GitHub lists, open Greek data—all YAML-driven. "
-        "Remote employers: Remote jobs page. Laptop cafés: Workspaces page."
+        "Job boards, awesome GitHub lists, open Greek data—all YAML-driven. "
+        "Laptop cafés: Workspaces page."
     )
     res_meta = meta_page(
         _meta,
@@ -1297,8 +1297,8 @@ def run_generate_index(
     write_jekyll_html(
         Path(OUTPUT_RESOURCES),
         env.get_template("page_resources.html").render(
-            page_kicker="Resources · Remote jobs & data",
-            page_title="Remote job resources & curated links",
+            page_kicker="Resources · Lists & data",
+            page_title="Resources & curated links",
             page_subtitle=res_desc,
             resource_rows=resource_rows,
             resource_count=len(resource_rows),

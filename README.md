@@ -32,7 +32,7 @@ Currently tracking **59** remote-first companies. The most common sectors are **
 **What's in this repository**
 
 - **[engineering-hubs.md](docs/engineering-hubs.md)** — the sortable remote-first employer table: sectors, work policy, and talent portals.
-- **[search-queries-and-resources.md](docs/search-queries-and-resources.md)** — remote job links, curated lists, and tips & notes.
+- **[search-queries-and-resources.md](docs/search-queries-and-resources.md)** — job search links, curated lists, and tips & notes.
 - **[greek-tech-podcasts.md](docs/greek-tech-podcasts.md)** — Greek tech & startup podcasts (video and audio).
 - **[open-source-projects.md](docs/open-source-projects.md)** — open source Greek tech projects on GitHub you can contribute to.
 - **[remote-cafe-resources.md](docs/remote-cafe-resources.md)** — remote café & laptop-friendly workspace guides (e.g. [Remote Work Café](https://remotework.cafe/)).
