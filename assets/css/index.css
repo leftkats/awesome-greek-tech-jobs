@@ -97,6 +97,42 @@
     background-color: rgb(71 85 105 / 0.65);
 }
 
+.agtj-osp-archived-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    border-radius: 9999px;
+    border: 1px solid rgb(251 191 36 / 0.55);
+    background: rgb(254 243 199 / 0.85);
+    padding: 0.1rem 0.45rem 0.1rem 0.35rem;
+    font-size: 0.625rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgb(146 64 14);
+    white-space: nowrap;
+}
+
+.dark .agtj-osp-archived-badge {
+    border-color: rgb(180 83 9 / 0.45);
+    background: rgb(69 26 3 / 0.55);
+    color: rgb(253 230 138);
+}
+
+.agtj-osp-archived-badge--inline {
+    vertical-align: middle;
+    padding: 0.05rem 0.35rem 0.05rem 0.25rem;
+}
+
+.agtj-osp-row--archived {
+    opacity: 0.88;
+}
+
+.dark .agtj-osp-row--archived {
+    opacity: 0.92;
+}
+
 .policy-filter:focus-visible {
     outline: 2px solid rgb(6 182 212);
     outline-offset: 2px;

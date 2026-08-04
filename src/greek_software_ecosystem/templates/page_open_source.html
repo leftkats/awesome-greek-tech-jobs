@@ -29,7 +29,7 @@
             </div>
         </div>
         <p id="osp-filter-hint" class="text-sm text-slate-600 dark:text-slate-400 sm:pb-2 sm:text-right">
-            <span class="font-semibold text-slate-800 dark:text-slate-200">{{ project_count }}</span> repositories · sorted by <span class="font-medium">GitHub stars</span> (highest first)
+            <span class="font-semibold text-slate-800 dark:text-slate-200">{{ project_count }}</span> repositories · sorted by <span class="font-medium">GitHub stars</span> (highest first){% if archived_count %} · <span class="font-medium">{{ archived_count }}</span> archived{% endif %}
         </p>
     </div>
     {# Horizontal scroll on narrow viewports; vertical scroll for long lists so the nav stays usable. #}
@@ -49,11 +49,19 @@
                 <tbody id="osp-tbody" class="divide-y divide-slate-200/90 dark:divide-slate-700/80">
                     {% for row in rows %}
                     <tr
-                        class="agtj-osp-row align-top odd:bg-white/90 even:bg-slate-50/70 dark:odd:bg-slate-900/35 dark:even:bg-slate-900/55"
+                        class="agtj-osp-row align-top odd:bg-white/90 even:bg-slate-50/70 dark:odd:bg-slate-900/35 dark:even:bg-slate-900/55{% if row.is_archived %} agtj-osp-row--archived{% endif %}"
                         data-search="{{ row.search_text|e }}">
                         <td class="px-3 py-3 sm:px-4">
-                            <a href="{{ row.url }}" target="_blank" rel="noopener noreferrer"
-                                class="font-semibold text-cyan-800 underline-offset-2 hover:underline dark:text-cyan-300">{{ row.title }}</a>
+                            <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+                                <a href="{{ row.url }}" target="_blank" rel="noopener noreferrer"
+                                    class="font-semibold text-cyan-800 underline-offset-2 hover:underline dark:text-cyan-300{% if row.is_archived %} text-slate-600 dark:text-slate-400{% endif %}">{{ row.title }}</a>
+                                {% if row.is_archived %}
+                                <span class="agtj-osp-archived-badge" title="This repository is archived on GitHub (read-only)">
+                                    <span class="material-symbols-outlined text-[0.875rem]" aria-hidden="true">inventory_2</span>
+                                    Archived
+                                </span>
+                                {% endif %}
+                            </div>
                         </td>
                         <td class="px-2 py-3 text-right tabular-nums text-slate-800 dark:text-slate-200 sm:px-3">
                             {{ row.stars_display }}
@@ -73,6 +81,7 @@
     </div>
     <p class="mt-4 text-xs leading-relaxed text-slate-500 dark:text-slate-500">
         Star and fork counts come from the GitHub API when the site is built (CI includes this step). If a cell shows “—”, the API request failed or the URL is not a public GitHub repo.
+        Repositories marked <span class="agtj-osp-archived-badge agtj-osp-archived-badge--inline"><span class="material-symbols-outlined text-[0.75rem]" aria-hidden="true">inventory_2</span>Archived</span> are read-only on GitHub.
         Search uses a precomputed text index per row so filtering stays fast with hundreds of entries (no per-keystroke layout reads).
     </p>
     {% else %}
