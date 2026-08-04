@@ -2,7 +2,6 @@
 # runs **Jekyll** (`jekyll-pages/`), copies **Python-generated** `sitemap.xml` / `robots.txt`, then
 # force-pushes `_site/` (+ `.nojekyll`) to branch `live` for GitHub Pages.
 #
-# **Currently disabled** — the `deploy` job uses `if: false`. Remove that guard to re-enable.
 # Skips when the triggering push was the bot follow-up (`[skip ci]` in the message).
 # **Settings → Pages → Branch `live`, folder `/`.**
 
@@ -25,12 +24,10 @@ concurrency:
 
 jobs:
   deploy:
-    # Disabled — delete the next line and uncomment the block below to re-enable.
-    if: false
-    # if: >-
-    #   github.event_name == 'workflow_dispatch' ||
-    #   (github.event_name == 'push' &&
-    #    !contains(github.event.head_commit.message, '[skip ci]'))
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'push' &&
+       !contains(github.event.head_commit.message, '[skip ci]'))
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
